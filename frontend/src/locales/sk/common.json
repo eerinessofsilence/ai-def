@@ -3,7 +3,7 @@
     "hero": {
       "title": "Autonómne bojové bezpilotné lietadlá a robotické systémy",
       "description": "Sme systémový integrátor dodávajúci kamikadze UAV, UGV a GCS, integrované do systémov vojenských vozidiel prostredníctvom otvorených C2 API a integrácie systémov tretích strán.",
-      "cta": "Vyžiadajte si ukážku",
+      "cta": "Informácie",
       "slideAlt": "Pozadie {{index}}",
       "slideAria": "Prejsť na snímku {{index}}"
     },
@@ -596,6 +596,13 @@
     "rightsSubtitle": "Dotknutá osoba má právo na:"
   },
   "contactForm": {
+    "general": {
+      "title": "Kontaktujte nás",
+      "description": "Pošlite nášmu tímu správu.",
+      "messagePlaceholder": "Napíšte svoju správu...",
+      "success": "Ďakujeme. Vaša správa bola odoslaná.",
+      "loading": "Načítava sa kontaktný formulár"
+    },
     "description": "Ozveme sa do jedného pracovného dňa.",
     "default": {
       "kicker": "Kontakt",
@@ -1009,7 +1016,7 @@
     }
   },
   "store": {
-    "brand": "Showcase",
+    "brand": "Katalóg",
     "details": {
       "backToCatalog": "Späť do katalógu",
       "galleryLabel": "Fotogaléria produktu",
@@ -1019,7 +1026,7 @@
       "closeFullscreen": "Zavrieť fotografiu na celú obrazovku",
       "selectPhoto": "Zobraziť fotografiu {{current}}",
       "photoCredit": "Autor fotografie: {{artist}} · {{license}}",
-      "characteristics": "Informácie o modeli",
+      "characteristics": "Technické údaje",
       "model": "Model",
       "manufacturer": "Výrobca",
       "category": "Kategória",
@@ -1043,9 +1050,12 @@
         "compensator": "Kompenzátor",
         "light": "Taktické svetlo",
         "laser": "Laserový modul"
-      }
+      },
+      "variants": "Vizuálne varianty",
+      "variantNote": "Označenia opisujú dodané fotografie; presné konfigurácie nie sú overené.",
+      "specificationSource": "Zdroj: dodaný technický list NYX Guard. Hodnoty opisujú model, nejde o samostatné merania každého fotografovaného variantu.",
+      "specificationsPending": "Overené technické údaje pre tento model AI DEF zatiaľ nie sú k dispozícii."
     },
-    "demoNotice": "Kolekcia herných prvkov. Modely a doplnky sú digitálne ukážky, nie fyzické produkty.",
     "photo": "Fotografia",
     "credits": "Fotografie a autori",
     "navigation": {
@@ -1076,8 +1086,8 @@
       "baseModel": "Základný model"
     },
     "footer": {
-      "title": "Prehliadka produktov",
-      "description": "Preskúmajte vybrané modely a pošlite dopyt nášmu tímu.",
+      "title": "Produktový katalóg",
+      "description": "Fotografie a referenčné informácie o NYX Guard a AR15.",
       "collection": "Kolekcia"
     },
     "stats": {
@@ -1087,13 +1097,11 @@
     },
     "categories": {
       "pistols": "Pištole",
-      "automatic": "Automatické modely",
-      "accessories": "Doplnky"
+      "automatic": "Pušky"
     },
     "categoryDescriptions": {
-      "pistols": "Prezrite si pištoľové modely z hernej kolekcie.",
-      "automatic": "Preskúmajte automatické modely a vyberte si k nim doplnky.",
-      "accessories": "Vyberte si mieridlá, tlmiče a ďalšie doplnky pre svoju zostavu."
+      "pistols": "NYX Guard: dodané fotografie a referenčné technické údaje.",
+      "automatic": "AR15: dodané fotografie zoskupené podľa vizuálneho variantu."
     },
     "accessories": {
       "all": "Všetky doplnky",
@@ -1121,10 +1129,10 @@
       "luma-light": "Kompaktný svetelný modul pre vzhľad pripravený na akciu."
     },
     "featured": {
-      "kicker": "Domov",
-      "title": "Tri modely. Bližší pohľad.",
-      "description": "Výber z kolekcie s priestorom na podrobnejšie preskúmanie každého modelu.",
-      "badge": "Vybrané"
+      "kicker": "Modely",
+      "title": "Dva modely v katalógu",
+      "description": "Referenčné fotografie a dostupné technické údaje.",
+      "badge": "Model"
     },
     "contact": {
       "kicker": "Kontakt",
@@ -1140,26 +1148,18 @@
       "loading": "Načítava sa formulár dopytu"
     },
     "descriptions": {
-      "g36": "Model z rodiny G36 s charakteristickou rukoväťou na prenášanie a otvorenou rámovou pažbou.",
-      "mp7": "Kompaktný model z rodiny MP7. Fotografia zobrazuje exemplár Bundeswehru.",
-      "usp": "Model z rodiny USP. Fotografia zobrazuje skorý USP9 s textúrovanou rukoväťou.",
-      "hk416n": "Nórsky model HK416N. Fotografia zobrazuje konkrétnu konfiguráciu rodiny HK416.",
-      "g27": "G27 z rodiny HK417, fotografovaný vo výstavnej konfigurácii s namontovaným príslušenstvom.",
-      "g3": "Skorý G3 s drevenou pažbou a predpažbím. Obrázok zobrazuje dva pohľady na model.",
-      "mp5-a3": "Model MP5 A3 s výsuvnou pažbou a rozpoznateľnou siluetou MP5.",
-      "p30l": "Model P30L z rodiny P30 v bočnom pohľade s predĺženým profilom a textúrovanou rukoväťou.",
-      "p99": "Skorý Walther P99 so zeleným polymérovým rámom. Obrázok zobrazuje túto konkrétnu verziu.",
-      "ppk-l": "Model Walther PPK-L. Fotografia zobrazuje tento konkrétny variant rodiny PPK."
+      "nyx-guard": "NYX Guard na dodaných fotografiách. Technické údaje pochádzajú z dodaného technického listu.",
+      "ar15": "AI DEF AR15 v čiernom, pieskovom a olivovom vyhotovení. Galéria zoskupuje dodané fotografie podľa vzhľadu."
     },
     "hero": {
-      "kicker": "Herné modely a výbava",
-      "title": "Osobité modely v jednej kolekcii",
-      "description": "Objavte herné modely, porovnajte vizuálne doplnky a zostavte kolekciu pre svoj projekt.",
+      "kicker": "Referenčný katalóg",
+      "title": "NYX Guard & AR15",
+      "description": "Fotografie, vizuálne varianty a dostupné technické údaje dvoch modelov AI DEF.",
       "cta": "Zobraziť katalóg"
     },
     "catalog": {
       "kicker": "Katalóg",
-      "title": "Nakupovať podľa kategórie",
+      "title": "Prehliadať podľa kategórie",
       "count": "{{count}} / {{total}} modelov",
       "filters": "Filtrovať podľa kategórie produktu",
       "modelCount": "{{count}} položiek",
@@ -1170,6 +1170,34 @@
       "sortName": "Názov: A–Z",
       "accessoriesComingSoon": "V tejto kategórii zatiaľ nie sú žiadne položky.",
       "categoryNotFound": "Táto kategória sa nenašla."
+    },
+    "specifications": {
+      "caliber": "Kaliber",
+      "magazineCapacity": "Kapacita zásobníka",
+      "overallLength": "Celková dĺžka",
+      "width": "Šírka",
+      "heightWithMagazine": "Výška so zásobníkom",
+      "heightWithoutMagazine": "Výška bez zásobníka",
+      "barrelLength": "Dĺžka hlavne",
+      "weightWithoutMagazine": "Hmotnosť bez zásobníka",
+      "magazineWeight": "Hmotnosť zásobníka",
+      "material": "Materiál",
+      "mountingRail": "Montážna lišta"
+    },
+    "specificationValues": {
+      "standardCapacity": "16 nábojov (štandard)",
+      "material": "Polymérový rám; oceľový záver a hlaveň"
+    },
+    "variants": {
+      "standard": "Štandardný profil",
+      "threaded": "Zobrazený závit hlavne",
+      "withSuppressor": "Zobrazený tlmič",
+      "blackLonger": "Čierna · dlhší profil",
+      "blackShorter": "Čierna · kratší profil",
+      "blackOptic": "Čierna · zobrazená optika",
+      "sandLonger": "Piesková · dlhší profil",
+      "sandShorter": "Piesková · kratší profil",
+      "oliveOptic": "Olivová · zobrazená optika"
     }
   },
   "notFound": {

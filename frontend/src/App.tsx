@@ -69,7 +69,11 @@ function LanguageLayout() {
   const isHomeRoute =
     stripSupportedLanguageFromPath(normalizedPathname) === "/";
   const normalizedRoutePath = stripSupportedLanguageFromPath(normalizedPathname);
+  const isArmsStoreHost =
+    typeof window !== "undefined" &&
+    window.location.hostname === "arms.ai-def.com";
   const isStoreRoute =
+    isArmsStoreHost ||
     normalizedRoutePath === "/store" ||
     normalizedRoutePath.startsWith("/store/") ||
     normalizedRoutePath === "/permits-certificates";
@@ -312,9 +316,13 @@ function LanguageLayout() {
 }
 
 function PageRoutes() {
+  const isArmsStoreHost =
+    typeof window !== "undefined" &&
+    window.location.hostname === "arms.ai-def.com";
+
   return (
     <>
-      <Route index element={<Home />} />
+      <Route index element={isArmsStoreHost ? <Store /> : <Home />} />
       <Route path="solutions" element={<Solutions />} />
       <Route path="products/:slug" element={<ProductDetail />} />
       <Route path="store" element={<Store />} />

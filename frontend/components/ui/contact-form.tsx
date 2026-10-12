@@ -10,6 +10,7 @@ type ContactFormProps = {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
   showDetails?: boolean;
   variant?: "default" | "support";
+  generalContact?: boolean;
   catalogProducts?: ProductOption[];
   initialProduct?: string;
   productSelections?: ProductOption[];
@@ -106,6 +107,7 @@ export const ContactForm = ({
   onSubmit,
   showDetails = true,
   variant = "default",
+  generalContact = false,
   catalogProducts,
   initialProduct = "",
   productSelections,
@@ -113,8 +115,9 @@ export const ContactForm = ({
   const { t, i18n } = useTranslation();
   const { lng } = useParams();
   const currentLanguage = resolveLanguage(lng);
-  const isSupportForm = variant === "support";
-  const isStoreForm = catalogProducts !== undefined;
+  const isSupportForm = variant === "support" && !generalContact;
+  const isCompactForm = variant === "support" || generalContact;
+  const isStoreForm = !generalContact && catalogProducts !== undefined;
   const countryDatalistId = React.useId();
   const productSuggestionsId = React.useId();
   const solutionsLink = buildLocalizedPath(currentLanguage, "/solutions");
@@ -169,7 +172,7 @@ export const ContactForm = ({
   );
 
   React.useEffect(() => {
-    if (isSupportForm) {
+    if (isCompactForm) {
       return;
     }
     const controller = new AbortController();
@@ -222,7 +225,7 @@ export const ContactForm = ({
 
     fetchCountries();
     return () => controller.abort();
-  }, [i18n.language, isSupportForm, t]);
+  }, [i18n.language, isCompactForm, t]);
 
   const inputClass = isSupportForm
     ? "text-foreground placeholder:text-foreground/50 focus:border-foreground/50 focus:ring-foreground/40 w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-base transition focus:ring-2 focus:outline-none"
@@ -233,17 +236,21 @@ export const ContactForm = ({
     : isSupportForm
       ? t("contactForm.support.kicker")
       : t("contactForm.default.kicker");
-  const formTitle = isStoreForm
-    ? t("store.contact.title")
-    : isSupportForm
-      ? t("contactForm.support.title")
-      : t("contactForm.default.title");
+  const formTitle = generalContact
+    ? t("contactForm.general.title")
+    : isStoreForm
+      ? t("store.contact.title")
+      : isSupportForm
+        ? t("contactForm.support.title")
+        : t("contactForm.default.title");
   const messageLabel = isSupportForm
     ? t("contactForm.support.messageLabel")
     : t("contactForm.default.messageLabel");
-  const messagePlaceholder = isSupportForm
-    ? t("contactForm.support.messagePlaceholder")
-    : t("contactForm.default.messagePlaceholder");
+  const messagePlaceholder = generalContact
+    ? t("contactForm.general.messagePlaceholder")
+    : isSupportForm
+      ? t("contactForm.support.messagePlaceholder")
+      : t("contactForm.default.messagePlaceholder");
   const formClass = isSupportForm ? "flex flex-col gap-y-5" : "space-y-5";
   const labelClass = isSupportForm
     ? "flex flex-col gap-y-1 text-sm"
@@ -320,7 +327,7 @@ export const ContactForm = ({
       return;
     }
     let resolvedCountry: CountryOption | null = null;
-    if (!isSupportForm) {
+    if (!isCompactForm) {
       resolvedCountry = selectedCountry ?? findCountryFromInput(countryQuery);
       if (!resolvedCountry) {
         setCountryError(t("contactForm.errors.countryRequired"));
@@ -343,9 +350,12 @@ export const ContactForm = ({
       payload.country = resolvedCountry.code;
       payload.countryName = resolvedCountry.name;
     }
-    payload.variant = variant;
+    // The existing support API accepts messages without product, phone or country.
+    payload.variant = generalContact ? "support" : variant;
     payload.language = i18n.language;
-    if (typeof window !== "undefined") {
+    if (generalContact) {
+      payload.source = "general-contact";
+    } else if (typeof window !== "undefined") {
       payload.source = window.location.pathname;
     }
 
@@ -428,7 +438,9 @@ export const ContactForm = ({
         <p className={kickerClass}>{formKicker}</p>
         <h3 className={titleClass}>{formTitle}</h3>
         <p className={descriptionClass}>
-          {t(isStoreForm ? "store.contact.description" : "contactForm.description")}
+          {t(generalContact
+            ? "contactForm.general.description"
+            : isStoreForm ? "store.contact.description" : "contactForm.description")}
         </p>
       </div>
       <form
@@ -436,7 +448,7 @@ export const ContactForm = ({
         onSubmit={handleSubmit}
         onChange={handleFormChange}
       >
-        {isSupportForm ? (
+        {isCompactForm ? (
           <>
             <div className="grid gap-4 md:grid-cols-2">
               <label className={labelClass}>
@@ -801,7 +813,9 @@ export const ContactForm = ({
         </div>
         {submitStatus === "success" ? (
           <p className={successMessageClass} role="status" aria-live="polite">
-            {t(isStoreForm ? "store.contact.success" : "contactForm.success")}
+            {t(generalContact
+              ? "contactForm.general.success"
+              : isStoreForm ? "store.contact.success" : "contactForm.success")}
           </p>
         ) : submitStatus === "error" ? (
           <p className={errorMessageClass} role="alert">

@@ -47,7 +47,7 @@ const NAV_LINKS: Array<{
   { key: "products", href: "#", hasDropdown: true },
   { key: "civilProducts", href: "#", hasDropdown: true },
   { key: "technology", href: "/technology" },
-  { key: "store", href: "/store" },
+  { key: "store", href: "https://arms.ai-def.com" },
   { key: "company", href: "#", hasDropdown: true },
   { key: "support", href: "/support" },
   { key: "contact", href: "/support#contact" },

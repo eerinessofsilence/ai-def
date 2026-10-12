@@ -3,7 +3,7 @@
     "hero": {
       "title": "UAV de combat autonomes et systèmes robotiques",
       "description": "Nous sommes un intégrateur de systèmes fournissant des UAV kamikazes, UGV et GCS, intégrés aux systèmes de véhicules militaires via des API C2 ouvertes et l'intégration de systèmes tiers.",
-      "cta": "Demander une démonstration",
+      "cta": "Informations",
       "slideAlt": "Arrière-plan {{index}}",
       "slideAria": "Aller à la diapositive {{index}}"
     },
@@ -597,6 +597,13 @@
     "rightsSubtitle": "La personne concernée a le droit de :"
   },
   "contactForm": {
+    "general": {
+      "title": "Contactez notre équipe",
+      "description": "Envoyez un message à notre équipe.",
+      "messagePlaceholder": "Écrivez votre message...",
+      "success": "Merci. Votre message a été envoyé.",
+      "loading": "Chargement du formulaire de contact"
+    },
     "description": "Nous vous répondrons sous un jour ouvré.",
     "default": {
       "kicker": "Contact",
@@ -1010,7 +1017,7 @@
     }
   },
   "store": {
-    "brand": "Showcase",
+    "brand": "Catalogue",
     "details": {
       "backToCatalog": "Retour au catalogue",
       "galleryLabel": "Galerie de photos du produit",
@@ -1020,7 +1027,7 @@
       "closeFullscreen": "Fermer la photo en plein écran",
       "selectPhoto": "Afficher la photo {{current}}",
       "photoCredit": "Photo de {{artist}} · {{license}}",
-      "characteristics": "Détails du modèle",
+      "characteristics": "Données techniques",
       "model": "Modèle",
       "manufacturer": "Fabricant",
       "category": "Catégorie",
@@ -1044,9 +1051,12 @@
         "compensator": "Compensateur",
         "light": "Lampe tactique",
         "laser": "Module laser"
-      }
+      },
+      "variants": "Variantes visuelles",
+      "variantNote": "Les intitulés décrivent les photos fournies ; les configurations exactes ne sont pas vérifiées.",
+      "specificationSource": "Source : fiche technique NYX Guard fournie. Ces valeurs décrivent le modèle et ne constituent pas des mesures distinctes de chaque variante photographiée.",
+      "specificationsPending": "Les caractéristiques techniques vérifiées de ce modèle AI DEF ne sont pas encore disponibles."
     },
-    "demoNotice": "Collection illustrative. Les modèles présentés ne confirment ni les stocks ni la disponibilité.",
     "photo": "Photo",
     "credits": "Photographies et crédits",
     "navigation": {
@@ -1077,8 +1087,8 @@
       "baseModel": "Modèle de base"
     },
     "footer": {
-      "title": "Vitrine de produits",
-      "description": "Découvrez une sélection de modèles et envoyez une demande à notre équipe.",
+      "title": "Catalogue de produits",
+      "description": "Photos et informations de référence sur NYX Guard et AR15.",
       "collection": "Collection"
     },
     "stats": {
@@ -1088,13 +1098,11 @@
     },
     "categories": {
       "pistols": "Pistolets",
-      "automatic": "Modèles automatiques",
-      "accessories": "Accessoires"
+      "automatic": "Carabines"
     },
     "categoryDescriptions": {
-      "pistols": "Découvrez les modèles de pistolet de la collection de jeu.",
-      "automatic": "Parcourez les modèles automatiques et choisissez leurs accessoires.",
-      "accessories": "Choisissez des viseurs, silencieux et autres accessoires pour votre configuration."
+      "pistols": "NYX Guard : photos fournies et données techniques de référence.",
+      "automatic": "AR15 : photos fournies regroupées par variante visuelle."
     },
     "accessories": {
       "all": "Tous les accessoires",
@@ -1122,10 +1130,10 @@
       "luma-light": "Un module d’éclairage compact pour un style prêt pour la mission."
     },
     "featured": {
-      "kicker": "Accueil",
-      "title": "Trois modèles. Regardez de plus près.",
-      "description": "Une sélection de la collection, avec la place pour découvrir chaque modèle en détail.",
-      "badge": "À la une"
+      "kicker": "Modèles",
+      "title": "Deux modèles dans le catalogue",
+      "description": "Photos de référence et données techniques disponibles.",
+      "badge": "Modèle"
     },
     "contact": {
       "kicker": "Contact",
@@ -1141,26 +1149,18 @@
       "loading": "Chargement du formulaire"
     },
     "descriptions": {
-      "g36": "Un modèle de la famille G36, avec sa poignée de transport caractéristique et sa crosse à cadre ouvert.",
-      "mp7": "Un modèle compact de la famille MP7. Cette photographie présente un exemplaire de la Bundeswehr.",
-      "usp": "Un modèle de la famille USP. La photographie présente un USP9 ancien avec une poignée texturée.",
-      "hk416n": "Le modèle norvégien HK416N. Cette photographie présente une configuration précise de la famille HK416.",
-      "g27": "Un G27 de la famille HK417, photographié dans une configuration d’exposition avec ses accessoires.",
-      "g3": "Un G3 ancien avec crosse et garde-main en bois. L’image présente deux vues du modèle.",
-      "mp5-a3": "Le modèle MP5 A3, avec sa crosse rétractable et la silhouette reconnaissable du MP5.",
-      "p30l": "Le modèle P30L de la famille P30, vu de profil avec une silhouette allongée et une poignée texturée.",
-      "p99": "Un Walther P99 ancien avec un cadre en polymère vert. Cette image présente cette version précise.",
-      "ppk-l": "Le modèle Walther PPK-L. La photographie présente cette variante particulière de la famille PPK."
+      "nyx-guard": "NYX Guard sur les photos fournies. Les données techniques proviennent de la fiche technique fournie.",
+      "ar15": "AI DEF AR15 en finitions noire, sable et olive. La galerie regroupe les photos fournies selon leur apparence."
     },
     "hero": {
-      "kicker": "Modèles et équipement de jeu",
-      "title": "Des modèles distincts dans une collection",
-      "description": "Découvrez des modèles de jeu, comparez les accessoires visuels et composez une collection adaptée à votre projet.",
+      "kicker": "Catalogue de référence",
+      "title": "NYX Guard & AR15",
+      "description": "Photos, variantes visuelles et données techniques disponibles pour deux modèles AI DEF.",
       "cta": "Voir le catalogue"
     },
     "catalog": {
       "kicker": "Catalogue",
-      "title": "Acheter par catégorie",
+      "title": "Parcourir par catégorie",
       "count": "{{count}} / {{total}} modèles",
       "filters": "Filtrer par catégorie de produit",
       "modelCount": "{{count}} articles",
@@ -1171,6 +1171,34 @@
       "sortName": "Nom : A–Z",
       "accessoriesComingSoon": "Aucun article dans cette catégorie pour le moment.",
       "categoryNotFound": "Cette catégorie est introuvable."
+    },
+    "specifications": {
+      "caliber": "Calibre",
+      "magazineCapacity": "Capacité du chargeur",
+      "overallLength": "Longueur totale",
+      "width": "Largeur",
+      "heightWithMagazine": "Hauteur avec chargeur",
+      "heightWithoutMagazine": "Hauteur sans chargeur",
+      "barrelLength": "Longueur du canon",
+      "weightWithoutMagazine": "Poids sans chargeur",
+      "magazineWeight": "Poids du chargeur",
+      "material": "Matériaux",
+      "mountingRail": "Rail de montage"
+    },
+    "specificationValues": {
+      "standardCapacity": "16 cartouches (standard)",
+      "material": "Carcasse en polymère ; culasse et canon en acier"
+    },
+    "variants": {
+      "standard": "Profil standard",
+      "threaded": "Filetage du canon visible",
+      "withSuppressor": "Silencieux visible",
+      "blackLonger": "Noir · profil plus long",
+      "blackShorter": "Noir · profil plus court",
+      "blackOptic": "Noir · optique visible",
+      "sandLonger": "Sable · profil plus long",
+      "sandShorter": "Sable · profil plus court",
+      "oliveOptic": "Olive · optique visible"
     }
   },
   "notFound": {

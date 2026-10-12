@@ -6,7 +6,7 @@
     --gs-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
     display: inline-block;
-    width: 15rem;
+    width: 22rem;
     max-width: 100%;
     flex-shrink: 0;
   }
@@ -14,16 +14,16 @@
   .store-glide-select__trigger {
     display: inline-flex;
     width: 100%;
-    min-height: 44px;
+    min-height: 64px;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     border: 1px solid #ffffff26;
-    border-radius: 12px;
+    border-radius: 24px;
     background: var(--gs-surface);
-    padding: 0 14px;
+    padding: 0 22px;
     color: white;
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 1.125rem;
     font-weight: 500;
     cursor: pointer;
     user-select: none;
@@ -50,7 +50,7 @@
     min-width: 0;
     flex: 1;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     text-align: left;
   }
 

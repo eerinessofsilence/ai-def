@@ -80,9 +80,10 @@ and obtains and renews Let's Encrypt certificates automatically — there is no
 `certs/` directory to populate or rotate by hand. Nginx sits behind it serving
 the SPA and static/media files, and proxying `/api` and `/admin` to Gunicorn.
 
-**Before the first start**, point DNS `A` records for both `DOMAIN` and
-`DOMAIN_WWW` at the server and leave port 80 open — Traefik needs it for the
-Let's Encrypt HTTP-01 challenge, even though all traffic is redirected to HTTPS.
+**Before the first start**, point DNS `A` records for `DOMAIN`, `DOMAIN_WWW`,
+and `arms.ai-def.com` at the server and leave port 80 open — Traefik needs it
+for the Let's Encrypt HTTP-01 challenge, even though all traffic is redirected
+to HTTPS. The `arms.ai-def.com` host serves the store at `/`.
 
 ```bash
 cp .env.example .env   # then fill in secrets, DOMAIN, ACME_EMAIL, DATA_DIR

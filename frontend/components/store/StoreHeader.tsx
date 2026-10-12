@@ -14,7 +14,6 @@ import { storeProducts, type StoreProduct } from "../../src/pages/store-products
 type CatalogMenuItem = {
   key: string;
   category: StoreProduct["category"];
-  accessoryCategory?: NonNullable<StoreProduct["accessoryCategory"]>;
   labelKey?: string;
   image?: string;
 };
@@ -22,10 +21,6 @@ type CatalogMenuItem = {
 const catalogMenuItems: CatalogMenuItem[] = [
   { key: "pistols", category: "pistols" },
   { key: "automatic", category: "automatic" },
-  { key: "accessories", category: "accessories", image: "/store/accessories/accessories-category.png" },
-  { key: "sights", category: "accessories", accessoryCategory: "sights", labelKey: "store.accessories.sights", image: "/store/accessories/sights-category.png" },
-  { key: "suppressors", category: "accessories", accessoryCategory: "suppressors", labelKey: "store.accessories.suppressors", image: "/store/accessories/suppressors-category.png" },
-  { key: "other-accessories", category: "accessories", accessoryCategory: "other", labelKey: "store.accessories.other", image: "/store/accessories/other-accessories-category.png" },
 ] as const;
 
 const languages: Record<SupportedLanguage, { label: string; image: string }> = {
@@ -38,14 +33,15 @@ const languages: Record<SupportedLanguage, { label: string; image: string }> = {
 };
 
 type StoreHeaderProps = {
-  cartCount: number;
-  onCartClick: () => void;
-  onContactClick: () => void;
+  cartCount?: number;
+  onCartClick?: () => void;
+  onContactClick?: () => void;
   detailPage?: boolean;
   hideCart?: boolean;
+  readOnly?: boolean;
 };
 
-export default function StoreHeader({ cartCount, onCartClick, onContactClick, detailPage = false, hideCart = false }: StoreHeaderProps) {
+export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick, detailPage = false, hideCart = false, readOnly = false }: StoreHeaderProps) {
   const { t } = useTranslation();
   const { lng } = useParams();
   const location = useLocation();
@@ -94,14 +90,13 @@ export default function StoreHeader({ cartCount, onCartClick, onContactClick, de
                     <div className="grid max-h-[min(26rem,70vh)] grid-cols-2 gap-2 overflow-y-auto">
                       {catalogMenuItems.map((item) => {
                         const categoryProducts = storeProducts.filter((product) =>
-                          product.category === item.category &&
-                          (!item.accessoryCategory || product.accessoryCategory === item.accessoryCategory),
+                          product.category === item.category,
                         );
                         const count = categoryProducts.length;
                         const previewProduct = categoryProducts[0];
                         const previewImage = item.image ?? previewProduct?.image;
                         const categoryPath = buildLocalizedPath(currentLanguage, `/store/category/${item.category}`);
-                        const href = item.accessoryCategory ? `${categoryPath}?type=${item.accessoryCategory}` : categoryPath;
+                        const href = categoryPath;
                         return (
                           <Link key={item.key} to={href} onClick={() => setCatalogOpen(false)} className="flex min-w-0 items-center gap-3 rounded-xl p-2 transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white/70">
                             <span className="grid h-14 w-20 shrink-0 place-items-center overflow-hidden rounded-lg bg-white/[0.06] p-1">
@@ -174,7 +169,7 @@ export default function StoreHeader({ cartCount, onCartClick, onContactClick, de
               </div>
             </div>
 
-            {!hideCart ? <button
+            {!readOnly && !hideCart && onCartClick ? <button
               type="button"
               onClick={onCartClick}
               aria-label={t("store.cart.open", { count: cartCount })}
@@ -184,9 +179,9 @@ export default function StoreHeader({ cartCount, onCartClick, onContactClick, de
               {cartCount > 0 ? <span className="absolute -right-1.5 -bottom-1.5 min-w-5 rounded-full bg-white px-1 py-0.5 text-center text-[10px] leading-none font-bold text-black shadow-sm">{cartCount}</span> : null}
             </button> : null}
 
-            <button type="button" onClick={onContactClick} className="rounded-xl bg-white px-2.5 py-2.5 text-xs font-semibold text-[#14243d] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:px-5 md:py-3 md:text-sm">
+            {onContactClick ? <button type="button" onClick={onContactClick} className="rounded-xl bg-white px-2.5 py-2.5 text-xs font-semibold text-[#14243d] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:px-5 md:py-3 md:text-sm">
               {t("store.contact.kicker")}
-            </button>
+            </button> : null}
 
             <button type="button" onClick={() => setMobileOpen((open) => !open)} aria-label={t(mobileOpen ? "store.actions.close" : "store.navigation.openMenu")} aria-expanded={mobileOpen} className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-[10px] border border-white/25 bg-white/5 text-white xl:hidden">
               {mobileOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
@@ -205,12 +200,11 @@ export default function StoreHeader({ cartCount, onCartClick, onContactClick, de
                   <div className="mt-1 grid grid-cols-2 gap-1 rounded-xl bg-black/15 p-2">
                     {catalogMenuItems.map((item) => {
                       const previewProduct = storeProducts.find((product) =>
-                        product.category === item.category &&
-                        (!item.accessoryCategory || product.accessoryCategory === item.accessoryCategory),
+                        product.category === item.category,
                       );
                       const previewImage = item.image ?? previewProduct?.image;
                       const categoryPath = buildLocalizedPath(currentLanguage, `/store/category/${item.category}`);
-                      const href = item.accessoryCategory ? `${categoryPath}?type=${item.accessoryCategory}` : categoryPath;
+                      const href = categoryPath;
                       return (
                         <Link key={item.key} to={href} onClick={() => { setMobileOpen(false); setMobileCatalogOpen(false); }} className="flex min-w-0 flex-col gap-2 rounded-lg p-2 text-sm text-white/75 transition-colors hover:bg-white/10 hover:text-white">
                           <span className="grid aspect-[16/9] w-full place-items-center overflow-hidden rounded-md bg-white/[0.06] p-1">

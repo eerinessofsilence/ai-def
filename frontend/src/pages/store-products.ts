@@ -1,113 +1,141 @@
-export type StoreCategory = "pistols" | "automatic" | "accessories";
-export type StoreAccessoryCategory = "all" | "suppressors" | "sights" | "other";
+export type StoreCategory = "pistols" | "automatic";
+
+export type StoreVariant = {
+  id: string;
+  labelKey: string;
+  images: string[];
+};
+
+export type StoreSpecification = {
+  labelKey: string;
+  value: string;
+  valueKey?: string;
+};
 
 export type StoreProduct = {
   id: string;
   name: string;
   brand: string;
   category: StoreCategory;
-  accessoryCategory?: Exclude<StoreAccessoryCategory, "all">;
   image: string;
   width: number;
   height: number;
-  artist: string;
-  source: string;
-  license: string;
-  licenseUrl: string;
+  variants: StoreVariant[];
+  specifications: StoreSpecification[];
 };
+
+const imagePath = (name: string) => `/store/demo/${name}.png`;
 
 export const storeProducts: StoreProduct[] = [
   {
-    id: "g36", name: "G36", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/g36.png", width: 1150, height: 400,
-    artist: "DomoK / Auge=mit", source: "https://commons.wikimedia.org/wiki/File:Gewehr_G36_noBG.png",
-    license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    id: "nyx-guard",
+    name: "NYX Guard",
+    brand: "AI DEF",
+    category: "pistols",
+    image: imagePath("69B03F53-DDB3-4F94-9F63-F2BC7C18ABDD"),
+    width: 1506,
+    height: 1044,
+    variants: [
+      {
+        id: "standard",
+        labelKey: "store.variants.standard",
+        images: [
+          imagePath("69B03F53-DDB3-4F94-9F63-F2BC7C18ABDD"),
+          imagePath("78828894-3DE7-4682-A297-721CA52BFFDE"),
+        ],
+      },
+      {
+        id: "threaded",
+        labelKey: "store.variants.threaded",
+        images: [
+          imagePath("2C8F95D6-B9A9-4C99-B9C2-0E25BF2AA998"),
+          imagePath("DEE9854E-2C79-4A4E-B3CE-12C7F2BE6683"),
+        ],
+      },
+      {
+        id: "with-suppressor",
+        labelKey: "store.variants.withSuppressor",
+        images: [imagePath("BBEB8192-0562-4532-BEC0-C9376DBAF0D2")],
+      },
+    ],
+    specifications: [
+      { labelKey: "store.specifications.caliber", value: "9 mm Luger" },
+      { labelKey: "store.specifications.magazineCapacity", value: "16", valueKey: "store.specificationValues.standardCapacity" },
+      { labelKey: "store.specifications.overallLength", value: "205 mm" },
+      { labelKey: "store.specifications.width", value: "33 mm" },
+      { labelKey: "store.specifications.heightWithMagazine", value: "145 mm" },
+      { labelKey: "store.specifications.heightWithoutMagazine", value: "135 mm" },
+      { labelKey: "store.specifications.barrelLength", value: "112 mm" },
+      { labelKey: "store.specifications.weightWithoutMagazine", value: "725 g" },
+      { labelKey: "store.specifications.magazineWeight", value: "87 g" },
+      { labelKey: "store.specifications.material", value: "", valueKey: "store.specificationValues.material" },
+      { labelKey: "store.specifications.mountingRail", value: "Picatinny" },
+    ],
   },
   {
-    id: "mp7", name: "MP7", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/mp7.png", width: 2040, height: 1169,
-    artist: "KrisfromGermany", source: "https://commons.wikimedia.org/wiki/File:HK_MP7_Bundeswehr_noBG.png",
-    license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-  },
-  {
-    id: "usp", name: "USP", brand: "Heckler & Koch", category: "pistols",
-    image: "/store/research/usp.png", width: 1920, height: 1280,
-    artist: "lifesizepotato", source: "https://commons.wikimedia.org/wiki/File:First-year_H%26K_USP_9mm_(32415150000)_modified.png",
-    license: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
-  },
-  {
-    id: "hk416n", name: "HK416N", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/hk416n.png", width: 2143, height: 834,
-    artist: "Dybdal", source: "https://commons.wikimedia.org/wiki/File:HK416N.png",
-    license: "CC BY-SA 2.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
-  },
-  {
-    id: "g27", name: "G27", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/g27.png", width: 3000, height: 1410,
-    artist: "Wald-Burger8", source: "https://commons.wikimedia.org/wiki/File:Combater_G27_noBG.png",
-    license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-  },
-  {
-    id: "g3", name: "G3", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/g3.png", width: 1220, height: 600,
-    artist: "Armémuseum / Swedish Army Museum", source: "https://commons.wikimedia.org/wiki/File:Heckler_%26_Koch_G3_Holzschaft_Display_noBG.png",
-    license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-  },
-  {
-    id: "mp5-a3", name: "MP5 A3", brand: "Heckler & Koch", category: "automatic",
-    image: "/store/research/mp5-a3.png", width: 1250, height: 550,
-    artist: "Dybdal / Mattes", source: "https://commons.wikimedia.org/wiki/File:HK_MP5_noBG.png",
-    license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-  },
-  {
-    id: "p30l", name: "P30L", brand: "Heckler & Koch", category: "pistols",
-    image: "/store/research/p30l.png", width: 1300, height: 950,
-    artist: "Koalorka", source: "https://commons.wikimedia.org/wiki/File:Koalorka_H%26K_P30L_noBG.png",
-    license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-  },
-  {
-    id: "p99", name: "P99", brand: "Walther", category: "pistols",
-    image: "/store/research/p99.png", width: 1740, height: 1321,
-    artist: "Sirimiri~commonswiki (Commons attribution)", source: "https://commons.wikimedia.org/wiki/File:Walther_P99_9x19mm.png",
-    license: "CC BY 2.5", licenseUrl: "https://creativecommons.org/licenses/by/2.5/",
-  },
-  {
-    id: "ppk-l", name: "PPK-L", brand: "Walther", category: "pistols",
-    image: "/store/research/ppk-l.png", width: 1100, height: 800,
-    artist: "Michael Sullivan", source: "https://commons.wikimedia.org/wiki/File:Walther_PPK-L_noBG.png",
-    license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-  },
-  {
-    id: "arc-reflex", name: "ARC Reflex", brand: "Aster", category: "accessories", accessoryCategory: "sights",
-    image: "/store/accessories/arc-reflex.svg", width: 900, height: 620,
-    artist: "", source: "", license: "", licenseUrl: "",
-  },
-  {
-    id: "orbit-holo", name: "ORBIT Holo", brand: "Aster", category: "accessories", accessoryCategory: "sights",
-    image: "/store/accessories/orbit-holo.svg", width: 900, height: 620,
-    artist: "", source: "", license: "", licenseUrl: "",
-  },
-  {
-    id: "veil-suppressor", name: "VEIL Suppressor", brand: "Aster", category: "accessories", accessoryCategory: "suppressors",
-    image: "/store/accessories/veil-suppressor.svg", width: 900, height: 620,
-    artist: "", source: "", license: "", licenseUrl: "",
-  },
-  {
-    id: "luma-light", name: "LUMA Light", brand: "Aster", category: "accessories", accessoryCategory: "other",
-    image: "/store/accessories/luma-light.svg", width: 900, height: 620,
-    artist: "", source: "", license: "", licenseUrl: "",
+    id: "ar15",
+    name: "AR15",
+    brand: "AI DEF",
+    category: "automatic",
+    image: imagePath("C9383A81-5323-4A00-A4A2-22DFF4826367"),
+    width: 1774,
+    height: 887,
+    variants: [
+      {
+        id: "black-longer",
+        labelKey: "store.variants.blackLonger",
+        images: [
+          imagePath("C9383A81-5323-4A00-A4A2-22DFF4826367"),
+          imagePath("9ACCDBAB-0056-44AD-BB43-D41169E29558"),
+          imagePath("480EF0AA-42C4-4BCA-AA3C-CB70F621BF60"),
+          imagePath("BFA35536-936C-452D-98E9-B65E5780CB93"),
+        ],
+      },
+      {
+        id: "black-shorter",
+        labelKey: "store.variants.blackShorter",
+        images: [
+          imagePath("E49D5E30-351E-4547-BC64-766DAF310447"),
+          imagePath("DEFE400E-CCA5-4498-B0E0-D69F14244B33"),
+        ],
+      },
+      {
+        id: "black-optic",
+        labelKey: "store.variants.blackOptic",
+        images: [
+          imagePath("73165FD0-8B1B-4EF6-B605-2FB9CDCBA7BD"),
+          imagePath("50EE71B6-6D16-453B-AE53-D7F98B1790D9"),
+        ],
+      },
+      {
+        id: "sand-longer",
+        labelKey: "store.variants.sandLonger",
+        images: [
+          imagePath("5E3342A0-E033-47C9-B0B3-2937CE12CB9F"),
+          imagePath("E625025A-6815-473B-9AE3-6674573486C7"),
+          imagePath("A2765BBF-B93C-4388-A3F9-CA4DE09DD5F4"),
+        ],
+      },
+      {
+        id: "sand-shorter",
+        labelKey: "store.variants.sandShorter",
+        images: [
+          imagePath("BD19E33B-CBD7-4A3A-8CFA-0EEF76FE6B31"),
+          imagePath("9A3E7AAD-9E98-4FC9-A921-E16F590551E1"),
+          imagePath("43C8F9CD-E102-4FAC-AA6C-7054EBCA29F4"),
+        ],
+      },
+      {
+        id: "olive-optic",
+        labelKey: "store.variants.oliveOptic",
+        images: [
+          imagePath("C932F602-BB98-4A0E-9D1C-EE440D622393"),
+          imagePath("9A6FE882-40C1-4DD0-AA3B-7822B72DD1B0"),
+        ],
+      },
+    ],
+    specifications: [],
   },
 ];
 
-export const storeCategories: StoreCategory[] = ["pistols", "automatic", "accessories"];
-export const storeAccessoryCategories: StoreAccessoryCategory[] = [
-  "all",
-  "suppressors",
-  "sights",
-  "other",
-];
-export const storeContactProducts = storeProducts.map((product) => ({
-  value: product.id,
-  label: `${product.brand} ${product.name}`,
-  category: product.category,
-}));
+export const storeCategories: StoreCategory[] = ["pistols", "automatic"];

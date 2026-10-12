@@ -82,7 +82,7 @@ services:
       - "traefik.http.services.web.loadbalancer.server.port=80"
       # nginx already routes /api, /admin, /media and /static internally, so a
       # single router for the whole host is enough — no per-path Traefik rules.
-      - "traefik.http.routers.web.rule=Host(`${DOMAIN:?DOMAIN must be set in .env}`) || Host(`${DOMAIN_WWW:-www.${DOMAIN}}`)"
+      - "traefik.http.routers.web.rule=Host(`${DOMAIN:?DOMAIN must be set in .env}`) || Host(`${DOMAIN_WWW:-www.${DOMAIN}}`) || Host(`arms.ai-def.com`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=letsencrypt"
 
