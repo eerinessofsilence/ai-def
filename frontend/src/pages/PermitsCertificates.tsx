@@ -43,7 +43,7 @@ export default function PermitsCertificates() {
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = "ARMS.Aidef";
+    document.title = "Arms AI-DEF — Precision in every mission";
     return () => { document.title = previousTitle; };
   }, []);
 

@@ -16,7 +16,7 @@ export default function Support({ arms = false }: { arms?: boolean }) {
   useEffect(() => {
     if (!arms) return;
     const previousTitle = document.title;
-    document.title = "ARMS.Aidef";
+    document.title = "Arms AI-DEF — Precision in every mission";
     return () => { document.title = previousTitle; };
   }, [arms]);
 

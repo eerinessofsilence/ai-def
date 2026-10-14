@@ -285,8 +285,8 @@ export default function Store() {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = detailProduct
-      ? `${detailProduct.name} | ARMS.Aidef`
-      : "ARMS.Aidef";
+      ? `${detailProduct.name} | Arms AI-DEF — Precision in every mission`
+      : "Arms AI-DEF — Precision in every mission";
     return () => { document.title = previousTitle; };
   }, [detailProduct]);
   useEffect(() => {
