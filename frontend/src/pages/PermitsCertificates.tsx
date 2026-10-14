@@ -1,6 +1,8 @@
 import { Download, ExternalLink, FileText } from "lucide-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import StoreHeader from "../../components/store/StoreHeader";
+import StoreFooter from "../../components/store/StoreFooter";
 import { dispatchOpenContactModal } from "../../lib/contact-modal";
 
 const DOCUMENTS = [
@@ -38,6 +40,12 @@ const DOCUMENTS = [
 
 export default function PermitsCertificates() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = "ARMS.Aidef";
+    return () => { document.title = previousTitle; };
+  }, []);
 
   return (
     <div className="store-page text-white">
@@ -112,6 +120,7 @@ export default function PermitsCertificates() {
         </div>
       </section>
       </main>
+      <StoreFooter />
     </div>
   );
 }

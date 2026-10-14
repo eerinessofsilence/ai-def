@@ -1,12 +1,30 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import { ContactForm } from "../../components/ui/contact-form";
+import StoreHeader from "../../components/store/StoreHeader";
+import StoreFooter from "../../components/store/StoreFooter";
+import "./Store.css";
 
 const backgroundImages = ["/support-1.png", "/support-2.png", "/support-3.png"];
 
-export default function Support() {
+export default function Support({ arms = false }: { arms?: boolean }) {
   const { t } = useTranslation();
+  const { hash } = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (!arms) return;
+    const previousTitle = document.title;
+    document.title = "ARMS.Aidef";
+    return () => { document.title = previousTitle; };
+  }, [arms]);
+
+  useEffect(() => {
+    if (arms && hash === "#contact") {
+      document.getElementById("contact")?.scrollIntoView();
+    }
+  }, [arms, hash]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,7 +35,15 @@ export default function Support() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-16">
+    <>
+    {arms ? (
+      <StoreHeader
+        readOnly
+        detailPage
+        onContactClick={() => document.getElementById("contact")?.scrollIntoView()}
+      />
+    ) : null}
+    <div className={`flex flex-col gap-16 ${arms ? "store-page text-white" : ""}`}>
       <section className="relative h-screen min-h-[380px] overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           {backgroundImages.map((image, index) => (
@@ -60,7 +86,9 @@ export default function Support() {
                 <div className="border/35 flex h-15 w-15 items-center justify-center rounded-2xl border bg-white/5">
                   <img src="/mail.svg" alt="" />
                 </div>
-                <p className="text-lg font-semibold">office@ai-def.com</p>
+                <a href={`mailto:${arms ? "servis@ai-def.com" : "office@ai-def.com"}`} className="text-lg font-semibold">
+                  {arms ? "servis@ai-def.com" : "office@ai-def.com"}
+                </a>
               </div>
             </div>
             <div className="space-y-5">
@@ -98,5 +126,7 @@ export default function Support() {
         </div>
       </section>
     </div>
+    {arms ? <StoreFooter /> : null}
+    </>
   );
 }

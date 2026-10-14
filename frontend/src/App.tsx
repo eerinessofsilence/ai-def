@@ -326,6 +326,7 @@ function PageRoutes() {
       <Route path="solutions" element={<Solutions />} />
       <Route path="products/:slug" element={<ProductDetail />} />
       <Route path="store" element={<Store />} />
+      <Route path="store/support" element={<Support arms />} />
       <Route path="store/category/:categoryId" element={<Store />} />
       <Route path="store/:productId" element={<Store />} />
       <Route path="civil-products/:slug" element={<CivilProductDetail />} />
@@ -338,7 +339,7 @@ function PageRoutes() {
         path="permits-certificates"
         element={<PermitsCertificates />}
       />
-      <Route path="support" element={<Support />} />
+      <Route path="support" element={<Support arms={isArmsStoreHost} />} />
       <Route path="auth" element={<Auth />} />
       <Route path="client-portal" element={<ClientPortal />} />
       <Route path="*" element={<NotFound />} />

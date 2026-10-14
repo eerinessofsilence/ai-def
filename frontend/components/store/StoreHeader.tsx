@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Menu, ShoppingBag, X } from "lucide-react";
+import { ChevronDown, Menu, ShoppingBag, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
@@ -9,27 +9,15 @@ import {
   SUPPORTED_LANGUAGES,
   type SupportedLanguage,
 } from "../../src/i18n";
-import { storeProducts, type StoreProduct } from "../../src/pages/store-products";
+import { storeProducts } from "../../src/pages/store-products";
 
-type CatalogMenuItem = {
-  key: string;
-  category: StoreProduct["category"];
-  labelKey?: string;
-  image?: string;
-};
-
-const catalogMenuItems: CatalogMenuItem[] = [
-  { key: "pistols", category: "pistols" },
-  { key: "automatic", category: "automatic" },
-] as const;
-
-const languages: Record<SupportedLanguage, { label: string; image: string }> = {
-  en: { label: "English", image: "/languages/en.svg" },
-  de: { label: "German", image: "/languages/de.svg" },
-  sk: { label: "Slovak", image: "/languages/sk.svg" },
-  es: { label: "Spanish", image: "/languages/es.svg" },
-  fr: { label: "French", image: "/languages/fr.svg" },
-  it: { label: "Italian", image: "/languages/it.svg" },
+const languages: Record<SupportedLanguage, { image: string }> = {
+  en: { image: "/languages/en.svg" },
+  de: { image: "/languages/de.svg" },
+  sk: { image: "/languages/sk.svg" },
+  es: { image: "/languages/es.svg" },
+  fr: { image: "/languages/fr.svg" },
+  it: { image: "/languages/it.svg" },
 };
 
 type StoreHeaderProps = {
@@ -74,44 +62,43 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
   return (
     <div className="fixed left-1/2 z-50 container -translate-x-1/2 py-5">
       <header className="border border-white/25 rounded-[20px] bg-linear-to-b from-black/50 via-black/40 to-black/30 px-4 py-4 shadow-[inset_0_2px_8px_rgba(255,255,255,0.25)] backdrop-blur-xl md:px-5 md:py-5">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2 md:gap-3">
           <Link to={storePath} aria-label={t("store.navigation.top")} className="flex shrink-0 items-center">
             <img src="/logo-ai-def.svg" className="w-24 md:w-35" alt="AI DEF" width={140} height={38} />
           </Link>
 
           <nav aria-label={t("store.navigation.label")} className="hidden items-center gap-5 xl:flex">
             {navItems.map((item) => item.href === "#catalog" ? (
-              <div key={item.href} className="relative py-2" onMouseEnter={() => setCatalogOpen(true)} onMouseLeave={() => setCatalogOpen(false)}>
-                <a href={detailPage ? `${storePath}${item.href}` : item.href} aria-haspopup="true" aria-expanded={catalogOpen} onFocus={() => setCatalogOpen(true)} className="inline-flex items-center gap-1 font-medium text-foreground transition-colors hover:text-foreground/75">
+              <div
+                key={item.href}
+                className="relative py-2"
+                onMouseEnter={() => setCatalogOpen(true)}
+                onMouseLeave={(event) => { if (!event.currentTarget.contains(document.activeElement)) setCatalogOpen(false); }}
+                onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setCatalogOpen(false); }}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setCatalogOpen(false);
+                    event.currentTarget.querySelector("button")?.focus();
+                  }
+                }}
+              >
+                <button type="button" aria-expanded={catalogOpen} onClick={() => setCatalogOpen(true)} className="inline-flex cursor-pointer items-center gap-1 font-medium text-foreground transition-colors hover:text-foreground/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70">
                   {item.label}<ChevronDown aria-hidden="true" className={`h-4 w-4 transition-transform ${catalogOpen ? "rotate-180" : ""}`} />
-                </a>
-                <div aria-hidden={!catalogOpen} className={`absolute top-full left-1/2 z-40 w-[min(44rem,calc(100vw-2rem))] -translate-x-1/2 pt-3 transition-all duration-200 ${catalogOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}>
-                  <div className="rounded-2xl border border-white/15 bg-[#172b4a]/95 p-4 shadow-2xl backdrop-blur-xl">
-                    <div className="grid max-h-[min(26rem,70vh)] grid-cols-2 gap-2 overflow-y-auto">
-                      {catalogMenuItems.map((item) => {
-                        const categoryProducts = storeProducts.filter((product) =>
-                          product.category === item.category,
-                        );
-                        const count = categoryProducts.length;
-                        const previewProduct = categoryProducts[0];
-                        const previewImage = item.image ?? previewProduct?.image;
-                        const categoryPath = buildLocalizedPath(currentLanguage, `/store/category/${item.category}`);
-                        const href = categoryPath;
-                        return (
-                          <Link key={item.key} to={href} onClick={() => setCatalogOpen(false)} className="flex min-w-0 items-center gap-3 rounded-xl p-2 transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white/70">
-                            <span className="grid h-14 w-20 shrink-0 place-items-center overflow-hidden rounded-lg bg-white/[0.06] p-1">
-                              {previewImage ? <img src={previewImage} alt="" className="h-full w-full object-contain" /> : null}
-                            </span>
-                            <span className="min-w-0"><span className="block truncate text-sm font-semibold text-white">{item.labelKey ? t(item.labelKey) : t(`store.categories.${item.category}`)}</span><span className="mt-1 block truncate text-xs text-white/50">{t("store.catalog.modelCount", { count })}</span></span>
+                </button>
+                {catalogOpen ? (
+                  <div className="absolute top-full left-1/2 z-40 w-[min(25rem,calc(100vw-2rem))] -translate-x-1/2 pt-3">
+                    <div className="rounded-[20px] bg-[#ececec] p-5 shadow-sm shadow-black/25">
+                      <div className="grid grid-cols-2 gap-5">
+                        {storeProducts.map((product) => (
+                          <Link key={product.id} to={buildLocalizedPath(currentLanguage, `/store/${product.id}`)} onClick={() => setCatalogOpen(false)} className="group flex min-w-0 flex-col items-center overflow-hidden rounded-xl bg-white text-center transition-all duration-300 hover:scale-[1.03] hover:shadow-sm hover:shadow-black/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
+                            <img src={product.image} alt="" loading="lazy" decoding="async" className="h-30 w-full p-3 object-contain" />
+                            <span className="flex min-h-14 items-center px-2 text-sm font-semibold text-black">{product.name}</span>
                           </Link>
-                        );
-                      })}
+                        ))}
+                      </div>
                     </div>
-                    <Link to={`${storePath}#catalog`} onClick={() => setCatalogOpen(false)} className="mt-3 flex items-center justify-end gap-1 border-t border-white/10 pt-3 text-sm font-semibold text-white/75 transition-colors hover:text-white">
-                      {t("store.details.viewAll")}<ChevronRight aria-hidden="true" className="h-4 w-4" />
-                    </Link>
                   </div>
-                </div>
+                ) : null}
               </div>
             ) : item.href.startsWith("/") ? (
               <Link
@@ -128,7 +115,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
             ))}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-3 md:gap-4">
+          <div className="flex shrink-0 items-center gap-2 md:gap-4">
             <div className="relative hidden xl:block" onMouseEnter={() => setLanguageOpen(true)} onMouseLeave={() => setLanguageOpen(false)}>
               <button
                 type="button"
@@ -159,7 +146,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
                           <img src={item.image} className="h-7.5 w-7.5" alt="" width={30} height={30} />
                         </span>
                         <span className="flex min-w-0 items-center gap-2 text-sm font-semibold text-black">
-                          <span className="truncate">{item.label}</span>
+                          <span className="truncate">{t(`header.languages.${language}`)}</span>
                           {active ? <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(16,185,129,0.22)]" /> : null}
                         </span>
                       </button>
@@ -179,7 +166,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
               {cartCount > 0 ? <span className="absolute -right-1.5 -bottom-1.5 min-w-5 rounded-full bg-white px-1 py-0.5 text-center text-[10px] leading-none font-bold text-black shadow-sm">{cartCount}</span> : null}
             </button> : null}
 
-            {onContactClick ? <button type="button" onClick={onContactClick} className="rounded-xl bg-white px-2.5 py-2.5 text-xs font-semibold text-[#14243d] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:px-5 md:py-3 md:text-sm">
+            {onContactClick ? <button type="button" onClick={onContactClick} className="max-w-26 rounded-xl bg-white px-2.5 py-2.5 text-xs font-semibold wrap-break-word text-[#14243d] transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:max-w-none md:px-5 md:py-3 md:text-sm">
               {t("store.contact.kicker")}
             </button> : null}
 
@@ -198,23 +185,17 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
                 </button>
                 {mobileCatalogOpen ? (
                   <div className="mt-1 grid grid-cols-2 gap-1 rounded-xl bg-black/15 p-2">
-                    {catalogMenuItems.map((item) => {
-                      const previewProduct = storeProducts.find((product) =>
-                        product.category === item.category,
-                      );
-                      const previewImage = item.image ?? previewProduct?.image;
-                      const categoryPath = buildLocalizedPath(currentLanguage, `/store/category/${item.category}`);
-                      const href = categoryPath;
+                    {storeProducts.map((product) => {
+                      const href = buildLocalizedPath(currentLanguage, `/store/${product.id}`);
                       return (
-                        <Link key={item.key} to={href} onClick={() => { setMobileOpen(false); setMobileCatalogOpen(false); }} className="flex min-w-0 flex-col gap-2 rounded-lg p-2 text-sm text-white/75 transition-colors hover:bg-white/10 hover:text-white">
+                        <Link key={product.id} to={href} onClick={() => { setMobileOpen(false); setMobileCatalogOpen(false); }} className="flex min-w-0 flex-col gap-2 rounded-lg p-2 text-sm text-white/75 transition-colors hover:bg-white/10 hover:text-white">
                           <span className="grid aspect-[16/9] w-full place-items-center overflow-hidden rounded-md bg-white/[0.06] p-1">
-                            {previewImage ? <img src={previewImage} alt="" className="h-full w-full object-contain" /> : null}
+                            <img src={product.image} alt="" className="h-full w-full object-contain" />
                           </span>
-                          <span className="truncate">{item.labelKey ? t(item.labelKey) : t(`store.categories.${item.category}`)}</span>
+                          <span className="truncate">{product.name}</span>
                         </Link>
                       );
                     })}
-                    <a href={detailPage ? `${storePath}#catalog` : "#catalog"} onClick={() => setMobileOpen(false)} className="col-span-2 rounded-lg px-2 py-2 text-sm font-semibold text-white/90 underline underline-offset-4">{t("store.details.viewAll")}</a>
                   </div>
                 ) : null}
               </div>
@@ -235,7 +216,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
               {SUPPORTED_LANGUAGES.map((language) => {
                 const item = languages[language];
                 const active = language === currentLanguage;
-                return <button key={language} type="button" onClick={() => selectLanguage(language)} aria-current={active ? "true" : undefined} className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm transition-colors ${active ? "border-emerald-300/70 bg-white/15" : "border-white/10 bg-white/5"}`}><img src={item.image} className="h-7 w-7" alt="" width={28} height={28} /><span>{item.label}</span></button>;
+                return <button key={language} type="button" onClick={() => selectLanguage(language)} aria-current={active ? "true" : undefined} className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm transition-colors ${active ? "border-emerald-300/70 bg-white/15" : "border-white/10 bg-white/5"}`}><img src={item.image} className="h-7 w-7" alt="" width={28} height={28} /><span>{t(`header.languages.${language}`)}</span></button>;
               })}
             </div>
           </nav>

@@ -162,9 +162,48 @@
   to { width: 100%; }
 }
 
-.store-feature {
-  background: radial-gradient(ellipse at 80% 20%, #658bc01a, transparent 65%),
-    linear-gradient(130deg, #203857, #152940);
+.store-product-card {
+  background:
+    radial-gradient(ellipse at 65% 42%, #7ba7e21a, transparent 52%),
+    linear-gradient(135deg, #203b5e 0%, #172e4c 52%, #122640 100%);
+  transition: border-color 300ms, background 300ms, transform 300ms;
+}
+
+.store-product-card-media {
+  min-height: 12rem;
+}
+
+.store-product-card-wordmark {
+  position: absolute;
+  inset: 50% -20%;
+  display: grid;
+  align-content: center;
+  gap: 0.04em;
+  overflow: hidden;
+  transform: translateY(-50%) rotate(-14deg);
+  color: #ffffff0a;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.82;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.store-product-card-wordmark span:nth-child(2) {
+  transform: translateX(-8%);
+}
+
+.store-product-card-wordmark span:nth-child(3) {
+  transform: translateX(6%);
+}
+
+.store-product-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
 }
 
 .store-card { transition: border-color 300ms, background 300ms; }
@@ -217,6 +256,13 @@
   .store-text-link:hover { color: white; }
   .store-round-button:hover { background: #ffffff14; color: white; }
   .store-card:hover { border-color: #ffffff40; background: #ffffff0a; }
+  .store-product-card:hover {
+    border-color: #ffffff45;
+    background:
+      radial-gradient(ellipse at 65% 42%, #8db7ef24, transparent 54%),
+      linear-gradient(135deg, #25466e 0%, #193656 52%, #132a46 100%);
+    transform: translateY(-3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -230,5 +276,11 @@
 
 @media (hover: none) {
   .store-page img { transform: none !important; }
+}
+
+@media (max-width: 639px) {
+  .store-product-card-wordmark {
+    font-size: clamp(3rem, 16vw, 4.75rem);
+  }
 }
 }

@@ -8,11 +8,17 @@
         name="description"
         content="AI DEF develops advanced autonomous systems, aviation platforms, and integrated technology solutions for defense and civil applications."
     />
-    <title>AI-DEF - We create the future</title>
+    <title>AI-DEF</title>
     <link rel="preload" as="image" href="/hero-bg-1.jpg" />
     <script>
         (() => {
             const path = window.location.pathname.replace(/\/+$/, "") || "/";
+            const routePath = path.replace(/^\/(?:en|de|sk|es|fr|it)(?=\/|$)/, "") || "/";
+            const isArmsPage = window.location.hostname === "arms.ai-def.com"
+                || routePath === "/store"
+                || routePath.startsWith("/store/")
+                || routePath === "/permits-certificates";
+            document.title = isArmsPage ? "ARMS.Aidef" : "AI-DEF - We create the future";
             const isLanguageHome = /^\/(?:en|de|sk|es|fr|it)$/.test(path);
             if (path === "/" || isLanguageHome) {
                 return;

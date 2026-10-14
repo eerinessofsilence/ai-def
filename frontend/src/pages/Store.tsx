@@ -1,15 +1,15 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ArrowDown, ChevronLeft, ChevronRight, ChevronsUpDown, Maximize2, X } from "lucide-react";
+import { ArrowDown, ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SpotlightCard from "../../components/store/SpotlightCard";
 import StoreFooter from "../../components/store/StoreFooter";
 import StoreHeader from "../../components/store/StoreHeader";
 import TechText from "../../components/store/TechText";
 import { buildLocalizedPath, resolveLanguage } from "../i18n";
-import { storeCategories, storeProducts, type StoreCategory, type StoreProduct } from "./store-products";
+import { storeProducts, type StoreProduct, type StoreVariant } from "./store-products";
 import "./Store.css";
 
 const ContactForm = lazy(() =>
@@ -44,14 +44,70 @@ function ProductImage({ product, hero = false, className = "" }: {
   );
 }
 
+function ProductCard({
+  product,
+  index,
+  onSelect,
+  description,
+  categoryLabel,
+  actionLabel,
+}: {
+  product: StoreProduct;
+  index: number;
+  onSelect: () => void;
+  description: string;
+  categoryLabel: string;
+  actionLabel: string;
+}) {
+  return (
+    <SpotlightCard
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSelect();
+        }
+      }}
+      className="store-product-card group h-full cursor-pointer overflow-hidden rounded-[28px] border border-white/10 outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+    >
+      <div className="relative flex h-full min-h-[26rem] flex-col p-6 md:min-h-[29rem] md:p-8">
+        <div className="relative z-10">
+          <p className="store-kicker text-white/45">{String(index + 1).padStart(2, "0")} / {categoryLabel}</p>
+        </div>
+        <div className="store-product-card-media relative flex flex-1 items-center justify-center py-7">
+          <div aria-hidden="true" className="store-product-card-wordmark">
+            <span>{product.name}</span>
+            <span>{product.name}</span>
+            <span>{product.name}</span>
+          </div>
+          <ProductImage product={product} className="relative z-10 max-h-52 w-full max-w-md transition-transform duration-500 group-hover:scale-[1.035] md:max-h-60" />
+        </div>
+        <div className="relative z-10 border-t border-white/10 pt-5">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h3 className="text-3xl font-semibold tracking-[-0.045em] md:text-4xl">{product.name}</h3>
+              <p className="mt-2 max-w-sm text-sm leading-6 text-white/58">{description}</p>
+            </div>
+            <span className="store-product-card-action mb-1 shrink-0 text-xs text-white/60 transition-colors group-hover:text-white">{actionLabel}<ChevronRight aria-hidden="true" className="h-4 w-4" /></span>
+          </div>
+        </div>
+      </div>
+    </SpotlightCard>
+  );
+}
+
 function StoreProductPage({
   product,
   relatedProducts,
   onSelectProduct,
+  onEnquire,
 }: {
   product: StoreProduct;
   relatedProducts: StoreProduct[];
   onSelectProduct: (product: StoreProduct) => void;
+  onEnquire: (product: StoreProduct, variant: StoreVariant) => void;
 }) {
   const { t } = useTranslation();
   const { lng } = useParams();
@@ -81,7 +137,7 @@ function StoreProductPage({
       <Link to={`${storePath}#catalog`} className="mb-8 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white">
         <ChevronLeft aria-hidden="true" className="h-4 w-4" />{t("store.details.backToCatalog")}
       </Link>
-      <div className="grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-14">
+      <div className="grid gap-y-8 lg:grid-cols-[65%_32.5%] lg:gap-x-[2.5%]">
         <section aria-label={t("store.details.galleryLabel")}>
           <div className="store-detail-gallery relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[28px] border border-white/10 bg-[#10213a] p-5 md:aspect-[16/10] md:p-10">
             <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/70 md:p-10">
@@ -105,38 +161,44 @@ function StoreProductPage({
               ))}
             </div>
           ) : null}
+          <section className="mt-12 lg:mt-16">
+            <h2 className="text-lg font-semibold">{t("store.details.characteristics")}</h2>
+            {product.specifications.length ? (
+              <dl className="mt-4 grid overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] md:grid-cols-2">
+                {details.map(({ label, value }) => (
+                  <div key={label} className="flex items-start justify-between gap-5 border-b border-white/10 px-5 py-3 text-sm last:border-b-0 md:odd:border-r md:[&:nth-last-child(-n+2)]:border-b-0">
+                    <dt className="text-white/50">{label}</dt><dd className="max-w-[60%] text-right font-medium text-white/85">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+            <p className="mt-3 text-xs leading-5 text-white/55">{t(product.specifications.length ? "store.details.specificationSource" : "store.details.specificationsPending")}</p>
+          </section>
         </section>
 
-        <section className="self-center">
+        <section className="self-start lg:sticky lg:top-28">
           <div className="flex flex-wrap items-center gap-3">
 
-            <p className="store-kicker">{product.brand} / {t(`store.categories.${product.category}`)}</p>
+            <p className="store-kicker">{t(`store.categories.${product.category}`)}</p>
           </div>
           <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{product.name}</h1>
-          <p className="mt-6 text-base leading-8 text-white/65">{t(`store.descriptions.${product.id}`)}</p>
-          <fieldset className="mt-8">
+          <p className="mt-4 text-base leading-6 text-white/65">{t(`store.descriptions.${product.id}`)}</p>
+          <fieldset className="mt-6">
             <legend className="text-sm font-semibold">{t("store.details.variants")}</legend>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {product.variants.map((variant) => (
                 <label key={variant.id} className="relative cursor-pointer">
                   <input type="radio" name={`variant-${product.id}`} value={variant.id} checked={variantId === variant.id} onChange={() => { setVariantId(variant.id); setActiveIndex(0); }} className="peer sr-only" />
-                  <span className="block rounded-xl border border-white/15 px-3 py-2 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
+                  <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
                 </label>
               ))}
             </div>
-            <p className="mt-3 text-xs leading-5 text-white/45">{t("store.details.variantNote")}</p>
+            <p className="mt-3 text-xs leading-5 text-white/55">{t("store.details.variantNote")}</p>
           </fieldset>
-          <div className="mt-9">
-            <h2 className="text-lg font-semibold">{t("store.details.characteristics")}</h2>
-            <dl className="mt-4 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.025] px-5">
-              {details.map(({ label, value }) => (
-                <div key={label} className="flex items-start justify-between gap-5 py-4 text-sm">
-                  <dt className="text-white/50">{label}</dt><dd className="max-w-[60%] text-right font-medium text-white/85">{value}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-3 text-xs leading-5 text-white/45">{t(product.specifications.length ? "store.details.specificationSource" : "store.details.specificationsPending")}</p>
-          </div>
+          <button type="button" onClick={() => onEnquire(product, activeVariant)} className="store-button mt-8 w-full">
+            {t("store.actions.enquire")}
+          </button>
+          <p className="mt-3 text-xs leading-5 text-white/55">{t("store.footer.inPersonSales")}</p>
         </section>
       </div>
       <section className="mt-20 border-t border-white/10 pt-12 md:mt-28 md:pt-16">
@@ -154,7 +216,7 @@ function StoreProductPage({
             <button key={relatedProduct.id} type="button" onClick={() => onSelectProduct(relatedProduct)} className="store-card rounded-3xl border border-white/10 bg-white/[0.025] p-5 text-left transition-colors hover:border-white/30 hover:bg-white/[0.05]">
 
               <div className="mt-3 flex aspect-[4/3] items-center justify-center rounded-2xl bg-[#10213a] p-5"><ProductImage product={relatedProduct} className="max-h-44 w-full" /></div>
-              <p className="mt-5 text-[10px] tracking-widest text-white/45 uppercase">{relatedProduct.brand}</p>
+              <p className="mt-5 text-[10px] tracking-widest text-white/45 uppercase">{t(`store.categories.${relatedProduct.category}`)}</p>
               <span className="mt-1 flex items-center justify-between gap-4 text-xl font-semibold">{relatedProduct.name}<ChevronRight aria-hidden="true" className="h-5 w-5 text-white/45" /></span>
             </button>
           ))}
@@ -182,133 +244,38 @@ function StoreProductPage({
   );
 }
 
-function StoreCategoryPage({
-  category,
-  products,
-  onSelectProduct,
-}: {
-  category: StoreCategory;
-  products: StoreProduct[];
-  onSelectProduct: (product: StoreProduct) => void;
-}) {
-  const { t } = useTranslation();
-  const { lng } = useParams();
-  const reduceMotion = useReducedMotion();
-  const [sortOrder, setSortOrder] = useState<"relevance" | "name">("relevance");
-  const visibleProducts = products;
-  const sortedProducts = sortOrder === "name"
-    ? [...visibleProducts].sort((first, second) => first.name.localeCompare(second.name))
-    : visibleProducts;
-  const storePath = buildLocalizedPath(resolveLanguage(lng), "/store");
-
-  return (
-    <main id="store-top" className="container pt-36 pb-24 md:pt-44">
-      <Link
-        to={`${storePath}#catalog`}
-        className="mb-8 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
-      >
-        <ChevronLeft aria-hidden="true" className="h-4 w-4" />
-        {t("store.details.backToCatalog")}
-      </Link>
-      <div className="mb-10 flex items-end justify-between gap-6 max-md:flex-col max-md:items-start">
-        <div>
-          <p className="store-kicker">{t("store.catalog.kicker")}</p>
-          <h1 className="store-section-title mt-3">
-            {t(`store.categories.${category}`)}
-          </h1>
-          <p className="mt-3 text-sm text-white/55">
-            {t("store.catalog.modelCount", { count: visibleProducts.length })}
-          </p>
-        </div>
-        <div className="flex w-full flex-wrap items-center gap-3 md:w-auto">
-          <label className="flex min-w-0 flex-1 items-center gap-4 md:flex-none">
-            <span className="shrink-0 text-sm text-white/55">{t("store.catalog.sortBy")}</span>
-            <span className="relative min-w-0 flex-1 md:flex-none">
-              <select
-                value={sortOrder}
-                onChange={(event) => setSortOrder(event.target.value as "relevance" | "name")}
-                className="min-h-11 w-full min-w-0 appearance-none rounded-full border border-white/15 bg-[#172b4a] py-2 pl-4 pr-11 text-base text-white outline-none focus-visible:ring-2 focus-visible:ring-white/60 md:w-40"
-              >
-                <option value="relevance">{t("store.catalog.sortRelevance")}</option>
-                <option value="name">{t("store.catalog.sortName")}</option>
-              </select>
-              <ChevronsUpDown aria-hidden="true" className="pointer-events-none absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 text-white/80" />
-            </span>
-          </label>
-        </div>
-      </div>
-
-      {visibleProducts.length ? (
-        <motion.div
-          initial={{ opacity: reduceMotion ? 1 : 0 }}
-          animate={{ opacity: 1 }}
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {sortedProducts.map((product, index) => (
-            <SpotlightCard
-              key={product.id}
-              className="store-card overflow-hidden rounded-3xl border border-white/10 bg-white/[0.025] p-6"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[10px] tracking-widest text-white/40 uppercase">
-                  {t(`store.categories.${product.category}`)}
-                </span>
-                <span className="text-xs text-white/50">{String(index + 1).padStart(2, "0")}</span>
-              </div>
-              <button type="button" onClick={() => onSelectProduct(product)} aria-label={`${t("store.actions.details")}: ${product.name}`} className="block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70">
-                <div className="relative flex aspect-[4/3] items-center justify-center py-7">
-                  <ProductImage product={product} className="max-h-44 w-full" />
-                </div>
-              </button>
-              <div className="border-t border-white/10 pt-5">
-                <p className="text-[10px] tracking-widest text-white/40 uppercase">{product.brand}</p>
-                <div className="mt-1 flex items-center justify-between gap-3">
-                  <button type="button" onClick={() => onSelectProduct(product)} className="truncate text-left text-2xl font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-white/70">
-                    {product.name}
-                  </button>
-
-                </div>
-                <button type="button" onClick={() => onSelectProduct(product)} className="mt-4 text-xs text-white/45 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-white/70">
-                  {t("store.actions.details")}
-                </button>
-              </div>
-            </SpotlightCard>
-          ))}
-        </motion.div>
-      ) : (
-        <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-8 text-sm leading-7 text-white/60">
-          {t("store.catalog.accessoriesComingSoon")}
-        </div>
-      )}
-    </main>
-  );
-}
-
 export default function Store() {
   const { t } = useTranslation();
   const { lng, productId, categoryId } = useParams();
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
   const [activeHeroStoryIndex, setActiveHeroStoryIndex] = useState(0);
-  const [heroStoryPaused, setHeroStoryPaused] = useState(false);
+  const [heroStoryHovered, setHeroStoryHovered] = useState(false);
+  const [heroStoryFocused, setHeroStoryFocused] = useState(false);
+  const heroStoryPaused = heroStoryHovered || heroStoryFocused;
   const [contactOpen, setContactOpen] = useState(false);
+  const [contactSelection, setContactSelection] = useState<{ product: StoreProduct; variant: StoreVariant } | null>(null);
   const contactOpener = useRef<HTMLElement | null>(null);
   const activeHeroStory = storeHeroStories[activeHeroStoryIndex];
   const heroProduct = storeProducts.find((product) => product.id === activeHeroStory.productId)!;
   const detailProduct = storeProducts.find((product) => product.id === productId);
-  const activeCategory = storeCategories.find((category) => category === categoryId);
+  const categoryProduct = storeProducts.find((product) => product.category === categoryId);
   const visibleRelatedProducts = detailProduct
     ? storeProducts.filter((product) => product.id !== detailProduct.id)
     : [];
   const heroTitle = t("store.hero.title");
-  const featuredProducts = storeProducts;
-  const categoryProducts = activeCategory
-    ? storeProducts.filter((product) => product.category === activeCategory)
-    : [];
   const openProduct = (product: StoreProduct) => {
     navigate(buildLocalizedPath(resolveLanguage(lng), `/store/${product.id}`));
   };
   const openContact = () => {
+    setContactSelection(null);
+    contactOpener.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    setContactOpen(true);
+  };
+  const openProductContact = (product: StoreProduct, variant: StoreVariant) => {
+    setContactSelection({ product, variant });
     contactOpener.current = document.activeElement instanceof HTMLElement
       ? document.activeElement
       : null;
@@ -318,12 +285,10 @@ export default function Store() {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = detailProduct
-      ? `${detailProduct.name} | ${detailProduct.brand}`
-      : activeCategory
-        ? `${t(`store.categories.${activeCategory}`)} | ${t("store.brand")}`
-        : `${t("store.brand")} | ${t("store.catalog.kicker")}`;
+      ? `${detailProduct.name} | ARMS.Aidef`
+      : "ARMS.Aidef";
     return () => { document.title = previousTitle; };
-  }, [activeCategory, detailProduct, t]);
+  }, [detailProduct]);
   useEffect(() => {
     if (reduceMotion || heroStoryPaused || productId || categoryId) return;
     const timeout = window.setTimeout(() => {
@@ -347,17 +312,14 @@ export default function Store() {
         product={detailProduct}
         relatedProducts={visibleRelatedProducts}
         onSelectProduct={openProduct}
+        onEnquire={openProductContact}
       /> : productId ? (
         <main id="store-top" className="container pt-36 pb-24 text-white md:pt-44">
           <p className="text-white/65">{t("store.details.unavailable")}</p>
           <Link to={buildLocalizedPath(resolveLanguage(lng), "/store#catalog")} className="store-button mt-6">{t("store.details.backToCatalog")}</Link>
         </main>
-      ) : categoryId && activeCategory ? (
-        <StoreCategoryPage
-          category={activeCategory}
-          products={categoryProducts}
-          onSelectProduct={openProduct}
-        />
+      ) : categoryId && categoryProduct ? (
+        <Navigate to={buildLocalizedPath(resolveLanguage(lng), `/store/${categoryProduct.id}`)} replace />
       ) : categoryId ? (
         <main id="store-top" className="container pt-36 pb-24 text-white md:pt-44">
           <p className="text-white/65">{t("store.catalog.categoryNotFound")}</p>
@@ -392,19 +354,17 @@ export default function Store() {
               <p className="mt-6 max-w-md text-base leading-7 text-white/60 md:text-lg md:leading-8">{t("store.hero.description")}</p>
               <div className="mt-9 flex flex-wrap items-center gap-6">
                 <a href="#catalog" className="store-button">{t("store.hero.cta")}<ArrowDown aria-hidden="true" className="h-4 w-4" /></a>
-                <a href="#featured" className="store-text-link">{t("store.actions.exploreFeatured")}</a>
               </div>
             </motion.div>
-            <motion.div {...reveal} onMouseEnter={() => setHeroStoryPaused(true)} onMouseLeave={() => setHeroStoryPaused(false)} className="relative flex min-h-80 flex-col justify-center lg:min-h-[440px]">
+            <motion.div {...reveal} onMouseEnter={() => setHeroStoryHovered(true)} onMouseLeave={() => setHeroStoryHovered(false)} onFocusCapture={() => setHeroStoryFocused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHeroStoryFocused(false); }} className="relative flex min-h-80 flex-col justify-center lg:min-h-[440px]">
               <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-3 text-center text-[clamp(5rem,13vw,13rem)] leading-none font-bold tracking-[-0.08em] text-white/[0.035]">{heroProduct.name}</span>
               <div aria-hidden="true" className="store-image-halo absolute inset-6" />
-              <div role="tablist" aria-label={t("store.hero.kicker")} className="relative mb-3 flex gap-1.5 px-1">
+              <div role="group" aria-label={t("store.hero.kicker")} className="relative mb-3 flex gap-1.5 px-1">
                 {storeHeroStories.map((story, index) => (
                   <button
                     key={story.category}
                     type="button"
-                    role="tab"
-                    aria-selected={activeHeroStoryIndex === index}
+                    aria-pressed={activeHeroStoryIndex === index}
                     aria-label={t(`store.categories.${story.category}`)}
                     onClick={() => setActiveHeroStoryIndex(index)}
                     className="h-3 flex-1 cursor-pointer py-1"
@@ -412,7 +372,7 @@ export default function Store() {
                     <span className="block h-1 overflow-hidden rounded-full bg-white/20">
                       {activeHeroStoryIndex === index ? (
                         <span
-                          key={activeHeroStoryIndex}
+                          key={`${activeHeroStoryIndex}-${heroStoryPaused}`}
                           data-paused={heroStoryPaused}
                           className={reduceMotion ? "block h-full w-full rounded-full bg-white" : "store-story-progress block h-full rounded-full bg-white"}
                           style={reduceMotion ? undefined : { animationDuration: `${HERO_STORY_DURATION}ms` }}
@@ -439,74 +399,23 @@ export default function Store() {
           </div>
         </section>
 
-        <section id="featured" className="container scroll-mt-28 py-20 md:py-28">
+        <section id="catalog" className="container scroll-mt-28 py-20 md:py-28">
           <motion.div {...reveal} className="mb-10 flex items-end justify-between gap-6 max-md:flex-col max-md:items-start">
             <div><p className="store-kicker">{t("store.featured.kicker")}</p><h2 className="store-section-title mt-3">{t("store.featured.title")}</h2></div>
           </motion.div>
           <div className="grid gap-5 md:grid-cols-2">
-            {featuredProducts.map((product, index) => (
-              <SpotlightCard {...reveal} key={product.id} role="button" tabIndex={0} onClick={() => openProduct(product)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openProduct(product); } }} className={`store-feature relative isolate cursor-pointer overflow-hidden rounded-[28px] border border-white/10 p-7 outline-none focus-visible:ring-2 focus-visible:ring-white/60 md:p-10 ${index === 0 ? "md:col-span-2 md:grid md:grid-cols-[0.8fr_1.2fr] md:items-center" : "md:col-span-2 flex flex-col"}`}>
-                <div className={`relative z-10 ${index === 0 ? "max-w-sm" : "flex items-start justify-between gap-5"}`}>
-                  <div>
-
-                    <p className="store-kicker text-white/40">0{index + 1} / {t(`store.categories.${product.category}`)}</p>
-                    <h3 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">{product.name}</h3>
-                    <p className="mt-2 text-xs tracking-widest text-white/40 uppercase">{product.brand}</p>
-                    {index === 0 ? <p className="mt-5 text-sm leading-7 text-white/60">{t(`store.descriptions.${product.id}`)}</p> : null}
-                  </div>
-                </div>
-                <div className={`relative flex items-center justify-center rounded-2xl ${index === 0 ? "h-60 max-md:mt-8 md:h-80" : "mt-6 h-60"}`}>
-                  <span aria-hidden="true" className="pointer-events-none absolute text-[clamp(5rem,10vw,10rem)] font-semibold tracking-tighter text-white/[0.035]">{product.name}</span>
-                  <ProductImage product={product} className="relative max-h-56 w-full max-w-xl" />
-                </div>
-                {index > 0 ? <p className="mt-5 border-t border-white/10 pt-5 text-sm leading-6 text-white/55">{t(`store.descriptions.${product.id}`)}</p> : null}
-              </SpotlightCard>
+            {storeProducts.map((product, index) => (
+              <motion.div {...reveal} key={product.id} className="h-full">
+                <ProductCard
+                  product={product}
+                  index={index}
+                  onSelect={() => openProduct(product)}
+                  description={t(`store.descriptions.${product.id}`)}
+                  categoryLabel={t(`store.categories.${product.category}`)}
+                  actionLabel={t("store.actions.details")}
+                />
+              </motion.div>
             ))}
-          </div>
-        </section>
-
-        <section id="catalog" className="scroll-mt-24 border-y border-white/10 bg-[#10213a]/65 py-20 md:py-24">
-          <div className="container">
-            <motion.div {...reveal} className="mb-10">
-              <p className="store-kicker">{t("store.catalog.kicker")}</p>
-              <h2 className="store-section-title mt-3">{t("store.catalog.title")}</h2>
-            </motion.div>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              {storeCategories.map((category, index) => {
-                const categoryProducts = storeProducts.filter((product) => product.category === category);
-                const previewProduct = categoryProducts[0];
-                return previewProduct ? (
-                  <SpotlightCard
-                    {...reveal}
-                    key={category}
-                    transition={{ duration: reduceMotion ? 0 : 0.4, delay: reduceMotion ? 0 : index * 0.06 }}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => navigate(buildLocalizedPath(resolveLanguage(lng), `/store/category/${category}`))}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        navigate(buildLocalizedPath(resolveLanguage(lng), `/store/category/${category}`));
-                      }
-                    }}
-                    className="store-card cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.025] p-6 outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-
-                      <span className="text-xs text-white/50">{t("store.catalog.modelCount", { count: categoryProducts.length })}</span>
-                    </div>
-                    <div className="relative flex aspect-[4/3] items-center justify-center py-7">
-                      <ProductImage product={previewProduct} className="max-h-44 w-full" />
-                    </div>
-                    <div className="border-t border-white/10 pt-5">
-                      <h3 className="text-2xl font-semibold tracking-tight">{t(`store.categories.${category}`)}</h3>
-                      <p className="mt-3 min-h-12 text-sm leading-6 text-white/55">{t(`store.categoryDescriptions.${category}`)}</p>
-                    </div>
-                    <p className="mt-4 text-xs text-white/45">{t("store.catalog.openCategory")}</p>
-                  </SpotlightCard>
-                ) : null;
-              })}
-            </div>
           </div>
         </section>
 
@@ -530,7 +439,14 @@ export default function Store() {
               <X aria-hidden="true" className="h-4 w-4" />
             </Dialog.Close>
             <Suspense fallback={<div aria-label={t("contactForm.general.loading")} className="min-h-96 animate-pulse rounded-2xl bg-neutral-100" />}>
-              <ContactForm generalContact showDetails={false} />
+              <ContactForm
+                generalContact
+                showDetails={false}
+                productSelections={contactSelection ? [{
+                  value: `${contactSelection.product.id}-${contactSelection.variant.id}`,
+                  label: `${contactSelection.product.name} · ${t(contactSelection.variant.labelKey)}`,
+                }] : undefined}
+              />
             </Suspense>
           </Dialog.Content>
         </Dialog.Portal>

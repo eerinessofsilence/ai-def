@@ -1089,7 +1089,8 @@
     "footer": {
       "title": "Produktkatalog",
       "description": "Fotos und Referenzinformationen zu NYX Guard und AR15.",
-      "collection": "Sammlung"
+      "collection": "Sammlung",
+      "inPersonSales": "Der Verkauf erfolgt ausschließlich bei einem persönlichen Besuch."
     },
     "stats": {
       "models": "Modelle entdecken",
@@ -1098,7 +1099,7 @@
     },
     "categories": {
       "pistols": "Pistolen",
-      "automatic": "Gewehre"
+      "automatic": "Automatische AR-Modelle"
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: bereitgestellte Fotos und technische Referenzdaten.",
@@ -1136,7 +1137,7 @@
       "badge": "Modell"
     },
     "contact": {
-      "kicker": "Kontakt",
+      "kicker": "Kontaktformular",
       "title": "Ein Produkt anfragen",
       "ctaTitle": "Ein Modell hat Ihr Interesse geweckt?",
       "description": "Wählen Sie ein Modell und teilen Sie uns mit, was Sie wissen möchten. Senden Sie Ihre Produktanfrage direkt an das Team.",

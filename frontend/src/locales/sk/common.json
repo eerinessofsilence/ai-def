@@ -1088,7 +1088,8 @@
     "footer": {
       "title": "Produktový katalóg",
       "description": "Fotografie a referenčné informácie o NYX Guard a AR15.",
-      "collection": "Kolekcia"
+      "collection": "Kolekcia",
+      "inPersonSales": "Predaj je možný výhradne pri osobnej návšteve."
     },
     "stats": {
       "models": "Modely na preskúmanie",
@@ -1097,7 +1098,7 @@
     },
     "categories": {
       "pistols": "Pištole",
-      "automatic": "Pušky"
+      "automatic": "Automatické modely AR"
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: dodané fotografie a referenčné technické údaje.",
@@ -1135,7 +1136,7 @@
       "badge": "Model"
     },
     "contact": {
-      "kicker": "Kontakt",
+      "kicker": "Kontaktný formulár",
       "title": "Opýtajte sa na produkt",
       "ctaTitle": "Zaujal vás niektorý model?",
       "description": "Vyberte model a napíšte, čo by ste chceli vedieť. Pošlite svoj dopyt priamo nášmu tímu.",

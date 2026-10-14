@@ -450,6 +450,15 @@ export const ContactForm = ({
       >
         {isCompactForm ? (
           <>
+            {productSelections?.length ? (
+              <div className={labelClass}>
+                <span className={labelSpanClass}>{t("store.contact.product")}</span>
+                <input type="hidden" name="product" value={productSelections.map((product) => product.label).join(", ")} />
+                <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-800">
+                  {productSelections.map((product) => <p key={product.value}>{product.label}</p>)}
+                </div>
+              </div>
+            ) : null}
             <div className="grid gap-4 md:grid-cols-2">
               <label className={labelClass}>
                 <span className={labelSpanClass}>
