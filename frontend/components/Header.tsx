@@ -56,43 +56,36 @@ const NAV_LINKS: Array<{
 const LANGUAGES: Array<{
   id: number;
   code: SupportedLanguage;
-  label: string;
   img: string;
 }> = [
   {
     id: 1,
     code: "en",
-    label: "English",
     img: "/languages/en.svg",
   },
   {
     id: 2,
     code: "de",
-    label: "German",
     img: "/languages/de.svg",
   },
   {
     id: 3,
     code: "sk",
-    label: "Slovak",
     img: "/languages/sk.svg",
   },
   {
     id: 4,
     code: "es",
-    label: "Spanish",
     img: "/languages/es.svg",
   },
   {
     id: 5,
     code: "fr",
-    label: "French",
     img: "/languages/fr.svg",
   },
   {
     id: 6,
     code: "it",
-    label: "Italian",
     img: "/languages/it.svg",
   },
 ];
@@ -180,6 +173,7 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
     email: string | null;
     name: string | null;
   }>({ email: null, name: null });
+  const [savedAccounts, setSavedAccounts] = useState<Array<{ token: string; user: { email?: string; first_name?: string; last_name?: string } }>>([]);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
@@ -522,6 +516,13 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
 
     const rawUser =
       localStorage.getItem("authUser") || sessionStorage.getItem("authUser");
+    const rawAccounts = localStorage.getItem("authAccounts") || sessionStorage.getItem("authAccounts");
+    try {
+      const parsedAccounts = rawAccounts ? JSON.parse(rawAccounts) : [];
+      setSavedAccounts(Array.isArray(parsedAccounts) ? parsedAccounts.filter((item) => item?.token && item?.user) : []);
+    } catch {
+      setSavedAccounts([]);
+    }
     if (!rawUser) {
       setUserProfile({ email: null, name: null });
       return;
@@ -549,6 +550,41 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
       setUserProfile({ email: null, name: null });
     }
   }, []);
+
+  const switchAccount = useCallback((account: { token: string; user: { email?: string; first_name?: string; last_name?: string } }) => {
+    const storage = localStorage.getItem("authAccounts") ? localStorage : sessionStorage;
+    storage.setItem("authToken", account.token);
+    storage.setItem("authUser", JSON.stringify(account.user));
+    setAccountMenuOpen(false);
+    setMobileAccountMenuOpen(false);
+    window.dispatchEvent(new Event("auth-updated"));
+  }, []);
+
+  const openAddAccount = useCallback(() => {
+    setAccountMenuOpen(false);
+    setMobileAccountMenuOpen(false);
+    setMobileMenuIsOpen(false);
+    navigate(withLanguage("/auth"));
+  }, [navigate, currentLanguage]);
+
+  const renderAccountSwitcher = () => (
+    <div className="mb-1.5 border-b border-white/15 pb-1.5">
+      <button type="button" onClick={openAddAccount} className={accountActionClass}>
+        <span className="text-lg leading-none">+</span>
+        Добавить аккаунт
+      </button>
+      {savedAccounts.map((account) => {
+        const name = [account.user.first_name, account.user.last_name].filter(Boolean).join(" ") || account.user.email || "Аккаунт";
+        const active = account.user.email === userProfile.email;
+        return (
+          <button key={account.user.email || account.token} type="button" onClick={() => switchAccount(account)} className={`${accountActionClass} ${active ? "bg-white/10" : ""}`}>
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-500/80 text-xs font-bold">{name.slice(0, 1).toUpperCase()}</span>
+            <span className="truncate">{name}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
 
   const handleSignOut = useCallback(async () => {
     const token =
@@ -805,6 +841,7 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
 
                   {accountMenuOpen ? (
                     <div className="border-border/20 absolute top-[calc(100%+0.5rem)] right-0 z-20 w-48 overflow-hidden rounded-xl border bg-linear-to-b from-black/92 via-black/88 to-black/84 p-1.5 shadow-[0_18px_36px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+                      {renderAccountSwitcher()}
                       <div className="border-border/20 mb-1.5 rounded-lg border bg-white/5 px-2.5 py-2">
                         <p className="truncate text-[13px] font-semibold text-white">
                           {displayName}
@@ -1026,7 +1063,7 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
                   </div>
                   <div className="flex items-center gap-3">
                     <h3 className="text-sm font-semibold text-black">
-                      {item.label}
+                      {t(`header.languages.${item.code}`)}
                     </h3>
                     {isActiveLanguage ? (
                       <span
@@ -1272,7 +1309,7 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
                           />
                         </div>
                         <span className="flex items-center gap-2 font-medium">
-                          {language.label}
+                          {t(`header.languages.${language.code}`)}
                           {isActiveLanguage ? (
                             <span
                               aria-hidden="true"
@@ -1321,6 +1358,7 @@ export default function Header({ hideChrome = false }: { hideChrome?: boolean } 
 
                 {mobileAccountMenuOpen ? (
                   <div className="border-border/20 absolute top-[calc(100%+0.5rem)] right-0 z-20 w-full overflow-hidden rounded-xl border bg-linear-to-b from-black/92 via-black/88 to-black/84 p-1.5 shadow-[0_18px_36px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+                    {renderAccountSwitcher()}
                     <div className="border-border/20 mb-1.5 rounded-lg border bg-white/5 px-2.5 py-2">
                       <p className="truncate text-[13px] font-semibold text-white">
                         {displayName}

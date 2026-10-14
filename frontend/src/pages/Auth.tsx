@@ -350,6 +350,19 @@ export default function Auth() {
       const parsed = data as Partial<AuthResponse>;
       const storage = remember ? localStorage : sessionStorage;
       if (typeof parsed.token === "string") {
+        if (parsed.user && typeof parsed.user === "object") {
+          const account = { token: parsed.token, user: parsed.user };
+          const saved = localStorage.getItem("authAccounts");
+          let accounts: Array<{ token: string; user: AuthResponse["user"] }> = [];
+          try {
+            accounts = saved ? JSON.parse(saved) : [];
+          } catch {
+            accounts = [];
+          }
+          accounts = accounts.filter((item) => item.user?.email !== parsed.user?.email);
+          accounts.push(account);
+          storage.setItem("authAccounts", JSON.stringify(accounts));
+        }
         storage.setItem("authToken", parsed.token);
       }
       if (parsed.user && typeof parsed.user === "object") {
