@@ -134,7 +134,20 @@ export const storeProducts: StoreProduct[] = [
         ],
       },
     ],
-    specifications: [],
+    specifications: [
+      { labelKey: "store.specifications.barrelLengthWithNut", value: "250 mm (9.85 in)" },
+      { labelKey: "store.specifications.barrelLengthWithoutNut", value: "237.5 mm (9.33 in)" },
+      { labelKey: "store.specifications.barrelTwistRate", value: "1:7" },
+      { labelKey: "store.specifications.barrelWeightWithNut", value: "600 g" },
+      { labelKey: "store.specifications.barrelWeightWithoutNut", value: "550 g" },
+      { labelKey: "store.specifications.firearmWeightWithPlasticSights", value: "2,700 g" },
+      { labelKey: "store.specifications.firearmWeightWithoutPlasticSights", value: "2,600 g" },
+      { labelKey: "store.specifications.weightWithEmptyMagazineAndSights", value: "2,800 g" },
+      { labelKey: "store.specifications.lengthWithoutRearStock", value: "650 mm" },
+      { labelKey: "store.specifications.lengthWithStockExtended", value: "750 mm" },
+      { labelKey: "store.specifications.heightAtGrip", value: "285 mm" },
+      { labelKey: "store.specifications.widthAtThickestPoint", value: "50 mm" },
+    ],
   },
 ];
 

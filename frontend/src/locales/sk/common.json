@@ -1053,7 +1053,7 @@
       },
       "variants": "Vizuálne varianty",
       "variantNote": "Označenia opisujú dodané fotografie; presné konfigurácie nie sú overené.",
-      "specificationSource": "Zdroj: dodaný technický list NYX Guard. Hodnoty opisujú model, nejde o samostatné merania každého fotografovaného variantu.",
+      "specificationSource": "Zdroj: dodaný technický list. Hodnoty opisujú model, nejde o samostatné merania každého fotografovaného variantu.",
       "specificationsPending": "Overené technické údaje pre tento model AI DEF zatiaľ nie sú k dispozícii."
     },
     "photo": "Fotografia",
@@ -1183,7 +1183,19 @@
       "weightWithoutMagazine": "Hmotnosť bez zásobníka",
       "magazineWeight": "Hmotnosť zásobníka",
       "material": "Materiál",
-      "mountingRail": "Montážna lišta"
+      "mountingRail": "Montážna lišta",
+      "barrelLengthWithNut": "Dĺžka hlavne s maticou",
+      "barrelLengthWithoutNut": "Dĺžka hlavne bez matice",
+      "barrelTwistRate": "Stúpanie vývrtu hlavne",
+      "barrelWeightWithNut": "Hmotnosť hlavne s maticou",
+      "barrelWeightWithoutNut": "Hmotnosť hlavne bez matice",
+      "firearmWeightWithPlasticSights": "Hmotnosť zbrane s plastovými mieridlami",
+      "firearmWeightWithoutPlasticSights": "Hmotnosť zbrane bez plastových mieridiel",
+      "weightWithEmptyMagazineAndSights": "Hmotnosť s prázdnym zásobníkom a mieridlami",
+      "lengthWithoutRearStock": "Dĺžka bez pažby",
+      "lengthWithStockExtended": "Dĺžka s úplne vysunutou pažbou",
+      "heightAtGrip": "Výška v mieste rukoväti",
+      "widthAtThickestPoint": "Šírka v najhrubšom mieste"
     },
     "specificationValues": {
       "standardCapacity": "16 nábojov (štandard)",

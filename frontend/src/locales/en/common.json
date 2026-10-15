@@ -1054,7 +1054,7 @@
       },
       "variants": "Visual variants",
       "variantNote": "Labels describe the supplied photographs; exact configurations have not been verified.",
-      "specificationSource": "Source: supplied NYX Guard specification sheet. These values describe the model, not separate measurements of each photographed variant.",
+      "specificationSource": "Source: supplied technical specification sheet. These values describe the model, not separate measurements of each photographed variant.",
       "specificationsPending": "Verified technical specifications for this AI DEF model are not available yet."
     },
     "photo": "Photo",
@@ -1184,7 +1184,19 @@
       "weightWithoutMagazine": "Weight without magazine",
       "magazineWeight": "Magazine weight",
       "material": "Material",
-      "mountingRail": "Mounting rail"
+      "mountingRail": "Mounting rail",
+      "barrelLengthWithNut": "Barrel length with nut",
+      "barrelLengthWithoutNut": "Barrel length without nut",
+      "barrelTwistRate": "Barrel twist rate",
+      "barrelWeightWithNut": "Barrel weight with nut",
+      "barrelWeightWithoutNut": "Barrel weight without nut",
+      "firearmWeightWithPlasticSights": "Firearm weight with plastic sights",
+      "firearmWeightWithoutPlasticSights": "Firearm weight without plastic sights",
+      "weightWithEmptyMagazineAndSights": "Weight with empty magazine and sights",
+      "lengthWithoutRearStock": "Length without rear stock",
+      "lengthWithStockExtended": "Length with stock fully extended",
+      "heightAtGrip": "Height at grip",
+      "widthAtThickestPoint": "Width at thickest point"
     },
     "specificationValues": {
       "standardCapacity": "16 rounds (standard)",

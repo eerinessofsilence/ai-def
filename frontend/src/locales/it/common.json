@@ -1054,7 +1054,7 @@
       },
       "variants": "Varianti visive",
       "variantNote": "Le etichette descrivono le fotografie fornite; le configurazioni esatte non sono verificate.",
-      "specificationSource": "Fonte: scheda tecnica NYX Guard fornita. I valori descrivono il modello e non sono misurazioni separate di ogni variante fotografata.",
+      "specificationSource": "Fonte: scheda tecnica fornita. I valori descrivono il modello e non sono misurazioni separate di ogni variante fotografata.",
       "specificationsPending": "Le specifiche tecniche verificate per questo modello AI DEF non sono ancora disponibili."
     },
     "photo": "Foto",
@@ -1184,7 +1184,19 @@
       "weightWithoutMagazine": "Peso senza caricatore",
       "magazineWeight": "Peso del caricatore",
       "material": "Materiale",
-      "mountingRail": "Slitta di montaggio"
+      "mountingRail": "Slitta di montaggio",
+      "barrelLengthWithNut": "Lunghezza della canna con dado",
+      "barrelLengthWithoutNut": "Lunghezza della canna senza dado",
+      "barrelTwistRate": "Passo di rigatura della canna",
+      "barrelWeightWithNut": "Peso della canna con dado",
+      "barrelWeightWithoutNut": "Peso della canna senza dado",
+      "firearmWeightWithPlasticSights": "Peso dell’arma con mire in plastica",
+      "firearmWeightWithoutPlasticSights": "Peso dell’arma senza mire in plastica",
+      "weightWithEmptyMagazineAndSights": "Peso con caricatore vuoto e mire",
+      "lengthWithoutRearStock": "Lunghezza senza calcio posteriore",
+      "lengthWithStockExtended": "Lunghezza con calcio completamente esteso",
+      "heightAtGrip": "Altezza all’impugnatura",
+      "widthAtThickestPoint": "Larghezza nel punto più spesso"
     },
     "specificationValues": {
       "standardCapacity": "16 cartucce (standard)",

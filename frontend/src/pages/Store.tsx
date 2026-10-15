@@ -139,8 +139,8 @@ function StoreProductPage({
       </Link>
       <div className="grid gap-y-8 lg:grid-cols-[65%_32.5%] lg:gap-x-[2.5%]">
         <section aria-label={t("store.details.galleryLabel")}>
-          <div className="store-detail-gallery relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[28px] border border-white/10 bg-[#10213a] p-5 md:aspect-[16/10] md:p-10">
-            <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/70 md:p-10">
+          <div className="store-detail-gallery store-product-surface relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[28px] border border-[#14243d]/15 p-5 md:aspect-[16/10] md:p-10">
+            <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#14243d]/70 md:p-10">
               <img src={imageSrc} alt={imageAlt} decoding="async" className="h-full w-full object-contain" />
             </button>
             {gallery.length > 1 ? (
@@ -155,7 +155,7 @@ function StoreProductPage({
           {gallery.length > 1 ? (
             <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
               {gallery.map((image, index) => (
-                <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={t("store.details.selectPhoto", { current: index + 1 })} aria-pressed={activeIndex === index} className={`overflow-hidden rounded-xl border bg-[#10213a] p-2 transition-colors ${activeIndex === index ? "border-white/60" : "border-white/10 hover:border-white/30"}`}>
+                <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={t("store.details.selectPhoto", { current: index + 1 })} aria-pressed={activeIndex === index} className={`store-product-surface overflow-hidden rounded-xl border p-2 transition-colors ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
                   <img src={image} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
                 </button>
               ))}
@@ -215,7 +215,7 @@ function StoreProductPage({
           {relatedProducts.map((relatedProduct) => (
             <button key={relatedProduct.id} type="button" onClick={() => onSelectProduct(relatedProduct)} className="store-card rounded-3xl border border-white/10 bg-white/[0.025] p-5 text-left transition-colors hover:border-white/30 hover:bg-white/[0.05]">
 
-              <div className="mt-3 flex aspect-[4/3] items-center justify-center rounded-2xl bg-[#10213a] p-5"><ProductImage product={relatedProduct} className="max-h-44 w-full" /></div>
+              <div className="store-product-surface mt-3 flex aspect-[4/3] items-center justify-center rounded-2xl p-5"><ProductImage product={relatedProduct} className="max-h-44 w-full" /></div>
               <p className="mt-5 text-[10px] tracking-widest text-white/45 uppercase">{t(`store.categories.${relatedProduct.category}`)}</p>
               <span className="mt-1 flex items-center justify-between gap-4 text-xl font-semibold">{relatedProduct.name}<ChevronRight aria-hidden="true" className="h-5 w-5 text-white/45" /></span>
             </button>
@@ -229,7 +229,9 @@ function StoreProductPage({
             <Dialog.Title className="sr-only">{`${product.brand} ${product.name} ${t("store.details.galleryLabel")}`}</Dialog.Title>
             <Dialog.Description className="sr-only">{t(activeVariant.labelKey)}</Dialog.Description>
             <Dialog.Close aria-label={t("store.details.closeFullscreen")} className="store-round-button absolute top-4 right-4 z-10 bg-white/10 text-white hover:bg-white/20"><X aria-hidden="true" className="h-5 w-5" /></Dialog.Close>
-            <img src={imageSrc} alt={imageAlt} className="max-h-[90dvh] max-w-[92vw] object-contain" />
+            <div className="store-product-surface max-h-[90dvh] max-w-[92vw] rounded-3xl p-4 md:p-8">
+              <img src={imageSrc} alt={imageAlt} className="max-h-[82dvh] max-w-[86vw] object-contain" />
+            </div>
             {gallery.length > 1 ? (
               <>
                 <button type="button" onClick={() => changeSlide(-1)} aria-label={t("store.details.previousPhoto")} className="store-round-button absolute top-1/2 left-4 z-10 -translate-y-1/2 bg-white/10 text-white hover:bg-white/20 md:left-8"><ChevronLeft aria-hidden="true" className="h-6 w-6" /></button>
@@ -385,7 +387,7 @@ export default function Store() {
               <button
                 onClick={() => openProduct(heroProduct)}
                 aria-label={t("store.actions.viewNamed", { name: heroProduct.name })}
-                className="store-hero-product relative flex h-64 cursor-pointer items-center justify-center rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-white/60 lg:h-80"
+                className="store-hero-product store-product-surface relative flex h-64 cursor-pointer items-center justify-center rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 lg:h-80"
               >
                 <motion.div key={activeHeroStoryIndex} initial={reduceMotion ? false : { opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.35 }} className="flex h-full w-full items-center justify-center">
                   <ProductImage product={heroProduct} hero className="max-h-64 w-full" />

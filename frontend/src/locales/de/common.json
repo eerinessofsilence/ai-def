@@ -1054,7 +1054,7 @@
       },
       "variants": "Visuelle Varianten",
       "variantNote": "Die Bezeichnungen beschreiben die bereitgestellten Fotos; die genauen Ausführungen sind nicht bestätigt.",
-      "specificationSource": "Quelle: bereitgestelltes NYX-Guard-Datenblatt. Die Werte beschreiben das Modell und sind keine separaten Messungen jeder fotografierten Variante.",
+      "specificationSource": "Quelle: bereitgestelltes technisches Datenblatt. Die Werte beschreiben das Modell und sind keine separaten Messungen jeder fotografierten Variante.",
       "specificationsPending": "Bestätigte technische Daten für dieses AI-DEF-Modell liegen noch nicht vor."
     },
     "photo": "Foto",
@@ -1184,7 +1184,19 @@
       "weightWithoutMagazine": "Gewicht ohne Magazin",
       "magazineWeight": "Magazingewicht",
       "material": "Material",
-      "mountingRail": "Montageschiene"
+      "mountingRail": "Montageschiene",
+      "barrelLengthWithNut": "Lauflänge mit Mutter",
+      "barrelLengthWithoutNut": "Lauflänge ohne Mutter",
+      "barrelTwistRate": "Dralllänge des Laufs",
+      "barrelWeightWithNut": "Laufgewicht mit Mutter",
+      "barrelWeightWithoutNut": "Laufgewicht ohne Mutter",
+      "firearmWeightWithPlasticSights": "Waffengewicht mit Kunststoffvisierung",
+      "firearmWeightWithoutPlasticSights": "Waffengewicht ohne Kunststoffvisierung",
+      "weightWithEmptyMagazineAndSights": "Gewicht mit leerem Magazin und Visierung",
+      "lengthWithoutRearStock": "Länge ohne Hinterschaft",
+      "lengthWithStockExtended": "Länge mit vollständig ausgezogenem Schaft",
+      "heightAtGrip": "Höhe am Griff",
+      "widthAtThickestPoint": "Breite an der stärksten Stelle"
     },
     "specificationValues": {
       "standardCapacity": "16 Patronen (Standard)",
