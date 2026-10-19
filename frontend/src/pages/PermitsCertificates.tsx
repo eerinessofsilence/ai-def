@@ -7,26 +7,31 @@ import { dispatchOpenContactModal } from "../../lib/contact-modal";
 
 const DOCUMENTS = [
   {
+    id: "industrialSecurity",
     title: "Potvrdenie o priemyselnej bezpečnosti NBU – AI DEF a.s.",
     href: "/documents/permits/industrial-security-confirmation.pdf",
     type: "PDF",
   },
   {
+    id: "ministryPermit",
     title: "Povolenie MH SR s VOP č. PO40-2024-1050",
     href: "/documents/permits/mh-sr-permit-po40-2024-1050.pdf",
     type: "PDF",
   },
   {
+    id: "categoryAExemption",
     title: "Rozhodnutie o udelení výnimky na zbrane kat. A",
     href: "/documents/permits/category-a-exemption.pdf",
     type: "PDF",
   },
   {
+    id: "categoryAExemptionAmended",
     title: "Rozhodnutie o udelení výnimky na zbrane kat. A – doplnené",
     href: "/documents/permits/category-a-exemption-amended.pdf",
     type: "PDF",
   },
   {
+    id: "weaponsLicense",
     title: "P. PZ zbrojná licencia č. LA001308",
     href: "/documents/permits/police-weapons-license-la001308.pdf",
     type: "PDF",
@@ -38,9 +43,9 @@ export default function PermitsCertificates() {
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = "Arms AI-DEF — Precision in every mission";
+    document.title = t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" });
     return () => { document.title = previousTitle; };
-  }, []);
+  }, [t]);
 
   return (
     <div className="store-page text-white">
@@ -80,7 +85,7 @@ export default function PermitsCertificates() {
                       {document.type}
                     </span>
                     <h2 className="mt-2 text-lg leading-7 font-semibold text-white">
-                      {document.title}
+                      {t(`permitsCertificates.documents.${document.id}`, { defaultValue: document.title })}
                     </h2>
                   </div>
                 </div>
@@ -91,7 +96,7 @@ export default function PermitsCertificates() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={t("permitsCertificates.viewDocument", {
-                      document: document.title,
+                      document: t(`permitsCertificates.documents.${document.id}`, { defaultValue: document.title }),
                     })}
                   >
                     {t("permitsCertificates.view")}
@@ -102,7 +107,7 @@ export default function PermitsCertificates() {
                     download
                     className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#14213b] transition-colors hover:bg-white/85 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={t("permitsCertificates.downloadDocument", {
-                      document: document.title,
+                      document: t(`permitsCertificates.documents.${document.id}`, { defaultValue: document.title }),
                     })}
                   >
                     {t("permitsCertificates.download")}

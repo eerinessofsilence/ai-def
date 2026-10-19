@@ -16,9 +16,9 @@ export default function Support({ arms = false }: { arms?: boolean }) {
   useEffect(() => {
     if (!arms) return;
     const previousTitle = document.title;
-    document.title = "Arms AI-DEF — Precision in every mission";
+    document.title = t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" });
     return () => { document.title = previousTitle; };
-  }, [arms]);
+  }, [arms, t]);
 
   useEffect(() => {
     if (arms && hash === "#contact") {

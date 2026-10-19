@@ -218,6 +218,10 @@ Portal API переименовывает `serial_number` в `serial`, descripti
 ### Языки и URL
 
 Поддерживаются `en`, `de`, `sk`, `es`, `fr`, `it`, fallback — английский.
+Только на hostname `arms.ai-def.com` frontend дополнительно поддерживает `ru`
+и `/ru/...`: каталог, поддержка, документы, формы и cookie notice используют
+`src/locales/ru/common.json`. На `ai-def.com` русский недоступен; backend
+LANGUAGES/modeltranslation остаются прежними, каталог arms хранится во frontend.
 Английские страницы имеют URL без `/en`; остальные — `/<lng>/...`.
 `LanguageLayout` перенаправляет `/en/...` на путь без префикса, сохраняет
 query/hash, синхронизирует i18n и `document.documentElement.lang`.

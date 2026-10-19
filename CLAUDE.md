@@ -46,7 +46,8 @@ Traefik → Nginx → Gunicorn/Django; Nginx также раздаёт SPA и st
 ## Контракты, которые легко перепутать
 
 - Языки: `en/de/sk/es/fr/it`, fallback `en`. Английский URL без префикса,
-  остальные с `/<lng>`. Используй helpers из `i18n.ts`.
+  остальные с `/<lng>`. Только frontend на `arms.ai-def.com` также поддерживает
+  `ru`; основной сайт и backend LANGUAGES не меняются. Используй helpers из `i18n.ts`.
 - `main.Product`, `main.CivilProduct`, `portal.PortalProduct` — разные модели.
   Portal использует `main.Category`, но не наследует публичный продукт.
 - Public/portal endpoints — ручные Django `JsonResponse` views; DRF используется

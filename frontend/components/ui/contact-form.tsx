@@ -89,6 +89,13 @@ const buildCountryOptions = (language = "en"): CountryOption[] => {
     }
   }
 
+  if (language === "ru" && typeof Intl.DisplayNames === "function") {
+    const displayNames = new Intl.DisplayNames([language], { type: "region" });
+    return fallbackCountries.map((country) => ({
+      ...country,
+      name: displayNames.of(country.code) ?? country.name,
+    })).sort((a, b) => a.name.localeCompare(b.name, language));
+  }
   return fallbackCountries;
 };
 
@@ -188,6 +195,9 @@ export const ContactForm = ({
           throw new Error(`Failed with status ${response.status}`);
         }
         const payload = (await response.json()) as RestCountry[];
+        const displayNames = currentLanguage === "ru" && typeof Intl.DisplayNames === "function"
+          ? new Intl.DisplayNames([currentLanguage], { type: "region" })
+          : null;
         const dynamicCountries = Array.isArray(payload)
           ? payload
               .filter(
@@ -200,7 +210,7 @@ export const ContactForm = ({
               )
               .map((item) => ({
                 code: item.cca2.toUpperCase(),
-                name: item.name.common,
+                name: displayNames?.of(item.cca2.toUpperCase()) ?? item.name.common,
               }))
               .sort((a, b) => a.name.localeCompare(b.name))
           : [];
@@ -225,7 +235,7 @@ export const ContactForm = ({
 
     fetchCountries();
     return () => controller.abort();
-  }, [i18n.language, isCompactForm, t]);
+  }, [currentLanguage, i18n.language, isCompactForm, t]);
 
   const inputClass = isSupportForm
     ? "text-foreground placeholder:text-foreground/50 focus:border-foreground/50 focus:ring-foreground/40 w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-base transition focus:ring-2 focus:outline-none"
@@ -378,7 +388,9 @@ export const ContactForm = ({
         }
       }
       if (!response.ok) {
-        setSubmitError(responseDetail ?? t("contactForm.errors.submitFailed"));
+        setSubmitError(currentLanguage === "ru"
+          ? t(response.status === 400 ? "contactForm.errors.validation" : "contactForm.errors.submitFailed")
+          : responseDetail ?? t("contactForm.errors.submitFailed"));
         setSubmitStatus("error");
         return;
       }
@@ -414,7 +426,7 @@ export const ContactForm = ({
     { value: "ax2ng-krakatit", label: "AX2NG KRAKATIT" },
     { value: "av-1-vtol", label: "AV-1 VTOL" },
     { value: "axq-quadrocopter", label: "AXQ QUADROCOPTER" },
-    { value: "ground-control-station", label: "Ground Control Station" },
+    { value: "ground-control-station", label: currentLanguage === "ru" ? t("header.menus.products.gcs") : "Ground Control Station" },
     { value: "ugv-150-dup", label: "UGV 150-DUP" },
     {
       value: "strategic-partnership",

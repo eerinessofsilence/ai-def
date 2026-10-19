@@ -18,6 +18,7 @@ const languages: Record<SupportedLanguage, { image: string }> = {
   es: { image: "/languages/es.svg" },
   fr: { image: "/languages/fr.svg" },
   it: { image: "/languages/it.svg" },
+  ru: { image: "/languages/ru.svg" },
 };
 
 type StoreHeaderProps = {
@@ -146,7 +147,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
                           <img src={item.image} className="h-7.5 w-7.5" alt="" width={30} height={30} />
                         </span>
                         <span className="flex min-w-0 items-center gap-2 text-sm font-semibold text-black">
-                          <span className="truncate">{t(`header.languages.${language}`)}</span>
+                          <span className="truncate">{language === "ru" ? "Русский" : t(`header.languages.${language}`)}</span>
                           {active ? <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(16,185,129,0.22)]" /> : null}
                         </span>
                       </button>
@@ -216,7 +217,7 @@ export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick
               {SUPPORTED_LANGUAGES.map((language) => {
                 const item = languages[language];
                 const active = language === currentLanguage;
-                return <button key={language} type="button" onClick={() => selectLanguage(language)} aria-current={active ? "true" : undefined} className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm transition-colors ${active ? "border-emerald-300/70 bg-white/15" : "border-white/10 bg-white/5"}`}><img src={item.image} className="h-7 w-7" alt="" width={28} height={28} /><span>{t(`header.languages.${language}`)}</span></button>;
+                return <button key={language} type="button" onClick={() => selectLanguage(language)} aria-current={active ? "true" : undefined} className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm transition-colors ${active ? "border-emerald-300/70 bg-white/15" : "border-white/10 bg-white/5"}`}><img src={item.image} className="h-7 w-7" alt="" width={28} height={28} /><span>{language === "ru" ? "Русский" : t(`header.languages.${language}`)}</span></button>;
               })}
             </div>
           </nav>

@@ -119,6 +119,15 @@ function StoreProductPage({
   const imageSrc = gallery[activeIndex] ?? gallery[0] ?? product.image;
   const imageAlt = `${product.brand} ${product.name} · ${t(activeVariant.labelKey)}`;
   const storePath = buildLocalizedPath(resolveLanguage(lng), "/store");
+  const localizeSpecificationValue = (value: string) => {
+    if (resolveLanguage(lng) !== "ru") return value;
+    return value
+      .replace(/\bmm\b/g, "мм")
+      .replace(/\bg\b/g, "г")
+      .replace(/\bin\b/g, "дюйма")
+      .replace(/(\d),(\d{3})\b/g, "$1 $2")
+      .replace(/(\d)\.(\d)/g, "$1,$2");
+  };
   const changeSlide = (direction: -1 | 1) => {
     setActiveIndex((index) => (index + direction + gallery.length) % gallery.length);
   };
@@ -128,7 +137,7 @@ function StoreProductPage({
     { label: t("store.details.category"), value: t(`store.categories.${product.category}`) },
     ...product.specifications.map((specification) => ({
       label: t(specification.labelKey),
-      value: specification.valueKey ? t(specification.valueKey, { count: Number(specification.value) }) : specification.value,
+      value: specification.valueKey ? t(specification.valueKey, { count: Number(specification.value) }) : localizeSpecificationValue(specification.value),
     })),
   ];
   const renderVariantSelector = (placement: "mobile" | "desktop") => (
@@ -291,10 +300,10 @@ export default function Store() {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = detailProduct
-      ? `${detailProduct.name} | Arms AI-DEF — Precision in every mission`
-      : "Arms AI-DEF — Precision in every mission";
+      ? `${detailProduct.name} | ${t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" })}`
+      : t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" });
     return () => { document.title = previousTitle; };
-  }, [detailProduct]);
+  }, [detailProduct, t]);
   useEffect(() => {
     if (reduceMotion || heroStoryPaused || productId || categoryId) return;
     const timeout = window.setTimeout(() => {

@@ -1,7 +1,7 @@
 import i18n, { type ResourceLanguage } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-export const SUPPORTED_LANGUAGES = [
+const MAIN_LANGUAGES = [
   "en",
   "de",
   "sk",
@@ -9,7 +9,12 @@ export const SUPPORTED_LANGUAGES = [
   "fr",
   "it",
 ] as const;
-export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+export const isArmsStoreHost =
+  typeof window !== "undefined" && window.location.hostname === "arms.ai-def.com";
+export type SupportedLanguage = (typeof MAIN_LANGUAGES)[number] | "ru";
+export const SUPPORTED_LANGUAGES: readonly SupportedLanguage[] = isArmsStoreHost
+  ? [...MAIN_LANGUAGES, "ru"]
+  : MAIN_LANGUAGES;
 export const DEFAULT_LANGUAGE: SupportedLanguage = "en";
 
 export const isSupportedLanguage = (
@@ -30,6 +35,7 @@ const localeLoaders: Record<
   es: () => import("./locales/es/common.json"),
   fr: () => import("./locales/fr/common.json"),
   it: () => import("./locales/it/common.json"),
+  ru: () => import("./locales/ru/common.json"),
 };
 
 const loadedLanguages = new Set<SupportedLanguage>();
