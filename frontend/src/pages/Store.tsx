@@ -131,6 +131,20 @@ function StoreProductPage({
       value: specification.valueKey ? t(specification.valueKey, { count: Number(specification.value) }) : specification.value,
     })),
   ];
+  const renderVariantSelector = (placement: "mobile" | "desktop") => (
+    <fieldset className={placement === "mobile" ? "mt-4 lg:hidden" : "mt-6 hidden lg:block"}>
+      <legend className="text-sm font-semibold">{t("store.details.variants")}</legend>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {product.variants.map((variant) => (
+          <label key={variant.id} className="relative cursor-pointer">
+            <input type="radio" name={`variant-${product.id}-${placement}`} value={variant.id} checked={variantId === variant.id} onChange={() => { setVariantId(variant.id); setActiveIndex(0); }} className="peer sr-only" />
+            <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
+          </label>
+        ))}
+      </div>
+      <p className="mt-3 text-xs leading-5 text-white/55">{t("store.details.variantNote")}</p>
+    </fieldset>
+  );
 
   return (
     <main id="store-top" className="container scroll-mt-28 pt-36 pb-24 md:pt-44">
@@ -138,7 +152,7 @@ function StoreProductPage({
         <ChevronLeft aria-hidden="true" className="h-4 w-4" />{t("store.details.backToCatalog")}
       </Link>
       <div className="grid gap-y-8 lg:grid-cols-[65%_32.5%] lg:gap-x-[2.5%]">
-        <section aria-label={t("store.details.galleryLabel")}>
+        <section aria-label={t("store.details.galleryLabel")} className="max-lg:min-w-0">
           <div className="store-detail-gallery store-product-surface relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[28px] border border-[#14243d]/15 p-5 md:aspect-[16/10] md:p-10">
             <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#14243d]/70 md:p-10">
               <img src={imageSrc} alt={imageAlt} decoding="async" className="h-full w-full object-contain" />
@@ -152,10 +166,11 @@ function StoreProductPage({
             ) : null}
             <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="store-round-button absolute top-4 right-4 bg-[#10213a]/80 backdrop-blur"><Maximize2 aria-hidden="true" className="h-4 w-4" /></button>
           </div>
+          {renderVariantSelector("mobile")}
           {gallery.length > 1 ? (
-            <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
+            <div className="mt-4 flex gap-3 overflow-x-auto pb-1 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
               {gallery.map((image, index) => (
-                <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={t("store.details.selectPhoto", { current: index + 1 })} aria-pressed={activeIndex === index} className={`store-product-surface overflow-hidden rounded-xl border p-2 transition-colors ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
+                <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={t("store.details.selectPhoto", { current: index + 1 })} aria-pressed={activeIndex === index} className={`store-product-surface w-24 shrink-0 overflow-hidden rounded-xl border p-2 transition-colors lg:w-auto ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
                   <img src={image} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
                 </button>
               ))}
@@ -183,18 +198,7 @@ function StoreProductPage({
           </div>
           <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{product.name}</h1>
           <p className="mt-4 text-base leading-6 text-white/65">{t(`store.descriptions.${product.id}`)}</p>
-          <fieldset className="mt-6">
-            <legend className="text-sm font-semibold">{t("store.details.variants")}</legend>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {product.variants.map((variant) => (
-                <label key={variant.id} className="relative cursor-pointer">
-                  <input type="radio" name={`variant-${product.id}`} value={variant.id} checked={variantId === variant.id} onChange={() => { setVariantId(variant.id); setActiveIndex(0); }} className="peer sr-only" />
-                  <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
-                </label>
-              ))}
-            </div>
-            <p className="mt-3 text-xs leading-5 text-white/55">{t("store.details.variantNote")}</p>
-          </fieldset>
+          {renderVariantSelector("desktop")}
           <button type="button" onClick={() => onEnquire(product, activeVariant)} className="store-button mt-8 w-full">
             {t("store.actions.enquire")}
           </button>
