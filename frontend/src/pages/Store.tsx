@@ -363,7 +363,6 @@ export default function Store() {
               </div>
             </motion.div>
             <motion.div {...reveal} onMouseEnter={() => setHeroStoryHovered(true)} onMouseLeave={() => setHeroStoryHovered(false)} onFocusCapture={() => setHeroStoryFocused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHeroStoryFocused(false); }} className="relative flex min-h-80 flex-col justify-center lg:min-h-[440px]">
-              <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-3 text-center text-[clamp(5rem,13vw,13rem)] leading-none font-bold tracking-[-0.08em] text-white/[0.035]">{heroProduct.name}</span>
               <div aria-hidden="true" className="store-image-halo absolute inset-6" />
               <div role="group" aria-label={t("store.hero.kicker")} className="relative mb-3 flex gap-1.5 px-1">
                 {storeHeroStories.map((story, index) => (
