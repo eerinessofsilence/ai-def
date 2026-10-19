@@ -382,10 +382,8 @@
     "contact": {
       "kicker": "Mantente seguro con nosotros",
       "addressesLabel": "Direcciones:",
-      "managementTitle": "Dirección y administración",
-      "managementAddress": "Vedecky park - Ilkovicova 8 841 02 Bratislava Slovakia",
-      "hqTitle": "Sede y centro de desarrollo",
-      "hqAddress": "Staniná 267/21 906 13 Brezová pod Bradlom Slovakia"
+      "hqTitle": "Sede, producción y centro de desarrollo",
+      "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom, Eslovaquia"
     },
     "form": {
       "success": "Gracias. Te responderemos en un día hábil."
@@ -664,8 +662,7 @@
       "title": "Datos de contacto",
       "quickLinks": "Enlaces rápidos",
       "addresses": "Direcciones",
-      "managementTitle": "Dirección y administración",
-      "hqTitle": "Sede y centro de desarrollo",
+      "hqTitle": "Sede, producción y centro de desarrollo",
       "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom",
       "links": {
         "product": "Producto",
@@ -744,8 +741,7 @@
     },
     "addresses": {
       "title": "Direcciones",
-      "managementTitle": "Dirección y administración",
-      "hqTitle": "Sede y centro de desarrollo"
+      "hqTitle": "Sede, producción y centro de desarrollo"
     },
     "legal": {
       "notice": "© AI DEF A.S. 2026. Todos los derechos reservados."

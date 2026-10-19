@@ -49,10 +49,6 @@ export default function StoreFooter() {
           <h2 className="font-bold text-foreground uppercase">{t("footer.addresses.title")}</h2>
           <div className="mt-4 grid gap-6 md:grid-cols-2">
             <div>
-              <h3 className="text-sm font-medium text-foreground/75">{t("footer.addresses.managementTitle")}</h3>
-              <address className="mt-2 text-sm leading-6 text-foreground/50 not-italic">Vedecký park - Ilkovičova 6335/8, 841 04 Bratislava</address>
-            </div>
-            <div>
               <h3 className="text-sm font-medium text-foreground/75">{t("footer.addresses.hqTitle")}</h3>
               <address className="mt-2 text-sm leading-6 text-foreground/50 not-italic">Staničná 267/21, 906 13 Brezová pod Bradlom</address>
             </div>

@@ -31,11 +31,6 @@ const DOCUMENTS = [
     href: "/documents/permits/police-weapons-license-la001308.pdf",
     type: "PDF",
   },
-  {
-    title: "Parametre zbrane NYX Guard",
-    href: "/documents/permits/nyx-guard-weapon-parameters.docx",
-    type: "DOCX",
-  },
 ];
 
 export default function PermitsCertificates() {

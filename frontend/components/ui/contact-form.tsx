@@ -884,14 +884,6 @@ export const ContactForm = ({
             <div className="mt-4 grid grid-cols-1 gap-5">
               <div className="space-y-1">
                 <p className="text-[13px] font-semibold text-neutral-600 uppercase dark:text-neutral-300">
-                  {t("contactForm.details.managementTitle")}
-                </p>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Vedecký park - Ilkovičova 6335/8, 841 04 Bratislava{" "}
-                </p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-[13px] font-semibold text-neutral-600 uppercase dark:text-neutral-300">
                   {t("contactForm.details.hqTitle")}
                 </p>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">

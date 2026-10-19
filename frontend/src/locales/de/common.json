@@ -163,9 +163,7 @@
     "contact": {
       "kicker": "Mit uns sicher",
       "addressesLabel": "Adressen:",
-      "managementTitle": "Management und Verwaltung",
-      "managementAddress": "Vedecký park - Ilkovičova 8, 841 02 Bratislava, Slowakei",
-      "hqTitle": "Hauptsitz & Entwicklungszentrum",
+      "hqTitle": "Hauptsitz, Produktion & Entwicklungszentrum",
       "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom, Slowakei"
     },
     "form": {
@@ -664,8 +662,7 @@
       "title": "Kontaktdaten",
       "quickLinks": "Schnelllinks",
       "addresses": "Adressen",
-      "managementTitle": "Management und Verwaltung",
-      "hqTitle": "Hauptsitz & Entwicklungszentrum",
+      "hqTitle": "Hauptsitz, Produktion & Entwicklungszentrum",
       "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom",
       "links": {
         "product": "Produkt",
@@ -744,8 +741,7 @@
     },
     "addresses": {
       "title": "Adressen",
-      "managementTitle": "Management und Verwaltung",
-      "hqTitle": "Hauptsitz & Entwicklungszentrum"
+      "hqTitle": "Hauptsitz, Produktion & Entwicklungszentrum"
     },
     "legal": {
       "notice": "© AI DEF A.S. 2026. Alle Rechte vorbehalten."

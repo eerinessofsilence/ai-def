@@ -98,14 +98,6 @@ export default function Support({ arms = false }: { arms?: boolean }) {
               <div className="space-y-5">
                 <div className="space-y-2.5">
                   <p className="text-foreground/50 font-semibold uppercase md:text-lg">
-                    {t("support.contact.managementTitle")}
-                  </p>
-                  <p className="max-w-[233px] text-pretty md:text-lg">
-                    {t("support.contact.managementAddress")}
-                  </p>
-                </div>
-                <div className="space-y-2.5">
-                  <p className="text-foreground/50 font-semibold uppercase md:text-lg">
                     {t("support.contact.hqTitle")}
                   </p>
                   <p className="max-w-[233px] text-pretty md:text-lg">

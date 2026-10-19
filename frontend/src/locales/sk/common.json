@@ -163,9 +163,7 @@
     "contact": {
       "kicker": "S nami bezpečne",
       "addressesLabel": "Adresy:",
-      "managementTitle": "Manažment a administratíva",
-      "managementAddress": "Vedecký park - Ilkovičova 8, 841 02 Bratislava, Slovensko",
-      "hqTitle": "Ústredie & vývojové centrum",
+      "hqTitle": "Ústredie, výroba a vývojové centrum",
       "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom, Slovensko"
     },
     "form": {
@@ -663,8 +661,7 @@
       "title": "Kontaktné údaje",
       "quickLinks": "Rýchle odkazy",
       "addresses": "Adresy",
-      "managementTitle": "Manažment a administratíva",
-      "hqTitle": "Ústredie & vývojové centrum",
+      "hqTitle": "Ústredie, výroba a vývojové centrum",
       "hqAddress": "Staničná 267/21, 906 13 Brezová pod Bradlom",
       "links": {
         "product": "Produkt",
@@ -743,8 +740,7 @@
     },
     "addresses": {
       "title": "Adresy",
-      "managementTitle": "Manažment a administratíva",
-      "hqTitle": "Ústredie & vývojové centrum"
+      "hqTitle": "Ústredie, výroba a vývojové centrum"
     },
     "legal": {
       "notice": "© AI DEF A.S. 2026. Všetky práva vyhradené."

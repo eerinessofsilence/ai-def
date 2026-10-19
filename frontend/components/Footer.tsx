@@ -71,14 +71,6 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-5">
               <div className="max-w-90">
                 <h1 className="text-foreground/75 font-medium uppercase">
-                  {t("footer.addresses.managementTitle")}
-                </h1>
-                <p className="text-foreground/50 text-[15px]">
-                  Vedecký park - Ilkovičova 6335/8, 841 04 Bratislava
-                </p>
-              </div>
-              <div className="max-w-90">
-                <h1 className="text-foreground/75 font-medium uppercase">
                   {t("footer.addresses.hqTitle")}
                 </h1>
                 <p className="text-foreground/50 text-[15px]">
