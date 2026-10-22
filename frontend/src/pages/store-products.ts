@@ -78,8 +78,12 @@ export const storeProducts: StoreProduct[] = [
       {
         id: "barrel-124",
         labelKey: "store.variants.nyx124",
-        // No supplied photograph shows the 124 mm barrel without a thread.
-        images: [],
+        images: [
+          "/store/nyx-guard/nyx-124-case.jpg",
+          "/store/nyx-guard/nyx-124-case-reverse.jpg",
+          "/store/nyx-guard/nyx-124-side.jpg",
+          "/store/nyx-guard/nyx-124-slide-side.jpg",
+        ],
         specifications: [
           { labelKey: "store.specifications.overallLength", value: "217 mm" },
           { labelKey: "store.specifications.barrelLength", value: "124 mm" },
