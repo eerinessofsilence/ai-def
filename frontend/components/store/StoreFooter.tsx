@@ -28,7 +28,7 @@ export default function StoreFooter() {
           <div className="flex flex-col space-y-3 text-foreground/70 lg:space-y-5">
             <h2 className="font-bold text-foreground uppercase">{t("store.catalog.kicker")}</h2>
             <Link to={productPath("nyx-guard")}>NYX Guard</Link>
-            <Link to={productPath("ar15")}>AR15</Link>
+            <Link to={productPath("ar15")}>AR / AR Compact</Link>
           </div>
 
           <div className="flex flex-col space-y-3 text-foreground/70 lg:space-y-5">

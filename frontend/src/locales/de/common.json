@@ -1048,9 +1048,10 @@
         "light": "Taktisches Licht",
         "laser": "Lasermodul"
       },
-      "variants": "Visuelle Varianten",
-      "variantNote": "Die Bezeichnungen beschreiben die bereitgestellten Fotos; die genauen Ausführungen sind nicht bestätigt.",
-      "specificationSource": "Quelle: bereitgestelltes technisches Datenblatt. Die Werte beschreiben das Modell und sind keine separaten Messungen jeder fotografierten Variante.",
+      "variants": "Ausführungen",
+      "variantNote": "Die Auswahl eines Fotos aktualisiert die Ausführung und ihre technischen Daten.",
+      "photoPending": "Foto noch nicht verfügbar",
+      "specificationSource": "Quelle: bereitgestellte technische Datenblätter. Die Werte gelten für die gewählte Basisausführung; zusätzlich abgebildetes Zubehör ist nicht berücksichtigt.",
       "specificationsPending": "Bestätigte technische Daten für dieses AI-DEF-Modell liegen noch nicht vor."
     },
     "photo": "Foto",
@@ -1084,7 +1085,7 @@
     },
     "footer": {
       "title": "Produktkatalog",
-      "description": "Fotos und Referenzinformationen zu NYX Guard und AR15.",
+      "description": "Fotos und Referenzinformationen zu NYX Guard, AR und AR Compact.",
       "collection": "Sammlung",
       "inPersonSales": "Der Verkauf erfolgt ausschließlich bei einem persönlichen Besuch."
     },
@@ -1099,7 +1100,7 @@
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: bereitgestellte Fotos und technische Referenzdaten.",
-      "automatic": "AR15: bereitgestellte Fotos nach visueller Variante gruppiert."
+      "automatic": "AR und AR Compact: Fotos und technische Daten nach Ausführung."
     },
     "accessories": {
       "all": "Alle Add-ons",
@@ -1128,7 +1129,7 @@
     },
     "featured": {
       "kicker": "Modelle",
-      "title": "Zwei Modelle im Katalog",
+      "title": "Modelle im Katalog",
       "description": "Referenzfotos und verfügbare technische Daten.",
       "badge": "Modell"
     },
@@ -1146,13 +1147,13 @@
       "loading": "Anfrageformular wird geladen"
     },
     "descriptions": {
-      "nyx-guard": "NYX Guard auf den bereitgestellten Fotos. Die technischen Daten stammen aus dem bereitgestellten Datenblatt.",
-      "ar15": "AI DEF AR15 in Schwarz, Sand und Oliv. Die Galerie gruppiert die bereitgestellten Fotos nach dem Erscheinungsbild."
+      "nyx-guard": "NYX Guard mit 112-mm-Lauf, 124-mm-Lauf oder 130-mm-Lauf mit Gewinde. Die technischen Daten entsprechen der gewählten Ausführung.",
+      "ar15": "AR und AR Compact. Die Fotos sind nach Ausführung und Farbe gruppiert; die technischen Daten folgen der Auswahl."
     },
     "hero": {
       "kicker": "Referenzkatalog",
-      "title": "NYX Guard & AR15",
-      "description": "Fotos, visuelle Varianten und verfügbare technische Daten zu zwei AI-DEF-Modellen.",
+      "title": "NYX Guard, AR & AR Compact",
+      "description": "NYX Guard mit drei Laufvarianten sowie AR und AR Compact: Fotos und technische Daten.",
       "cta": "Katalog ansehen"
     },
     "catalog": {
@@ -1189,25 +1190,26 @@
       "firearmWeightWithPlasticSights": "Waffengewicht mit Kunststoffvisierung",
       "firearmWeightWithoutPlasticSights": "Waffengewicht ohne Kunststoffvisierung",
       "weightWithEmptyMagazineAndSights": "Gewicht mit leerem Magazin und Visierung",
-      "lengthWithoutRearStock": "Länge ohne Hinterschaft",
+      "lengthWithStockRetracted": "Gesamtlänge mit eingeschobenem Schaft",
       "lengthWithStockExtended": "Länge mit vollständig ausgezogenem Schaft",
       "heightAtGrip": "Höhe am Griff",
       "widthAtThickestPoint": "Breite an der stärksten Stelle"
     },
     "specificationValues": {
       "standardCapacity": "16 Patronen (Standard)",
-      "material": "Polymerrahmen; Verschluss und Lauf aus Stahl"
+      "material": "Polymerrahmen; Verschluss und Lauf aus Stahl",
+      "multicaliber": "Multikaliber .223 Rem / 5,56 × 45 N"
     },
     "variants": {
-      "standard": "Standardprofil",
-      "threaded": "Abgebildetes Laufgewinde",
-      "withSuppressor": "Abgebildeter Schalldämpfer",
-      "blackLonger": "Schwarz · längeres Profil",
-      "blackShorter": "Schwarz · kürzeres Profil",
-      "blackOptic": "Schwarz · abgebildete Optik",
-      "sandLonger": "Sand · längeres Profil",
-      "sandShorter": "Sand · kürzeres Profil",
-      "oliveOptic": "Oliv · abgebildete Optik"
+      "nyx112": "NYX Guard · Lauf 112 mm",
+      "nyx124": "NYX Guard · Lauf 124 mm",
+      "nyx130Threaded": "NYX Guard · Lauf 130 mm mit Gewinde",
+      "arBlack": "AR · Schwarz",
+      "arCompactBlack": "AR Compact · Schwarz",
+      "arCompactBlackOptic": "AR Compact · Schwarz, mit Optik",
+      "arSand": "AR · Sand",
+      "arCompactSand": "AR Compact · Sand",
+      "arOliveOptic": "AR · Oliv, mit Optik"
     }
   },
   "notFound": {

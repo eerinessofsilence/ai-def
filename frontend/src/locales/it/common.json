@@ -1048,9 +1048,10 @@
         "light": "Luce tattica",
         "laser": "Modulo laser"
       },
-      "variants": "Varianti visive",
-      "variantNote": "Le etichette descrivono le fotografie fornite; le configurazioni esatte non sono verificate.",
-      "specificationSource": "Fonte: scheda tecnica fornita. I valori descrivono il modello e non sono misurazioni separate di ogni variante fotografata.",
+      "variants": "Versioni",
+      "variantNote": "La selezione di una fotografia aggiorna la versione e i relativi dati tecnici.",
+      "photoPending": "Fotografia non ancora disponibile",
+      "specificationSource": "Fonte: schede tecniche fornite. I valori si riferiscono alla versione base selezionata; gli accessori aggiuntivi mostrati nelle fotografie non sono inclusi.",
       "specificationsPending": "Le specifiche tecniche verificate per questo modello AI DEF non sono ancora disponibili."
     },
     "photo": "Foto",
@@ -1084,7 +1085,7 @@
     },
     "footer": {
       "title": "Catalogo prodotti",
-      "description": "Fotografie e informazioni di riferimento su NYX Guard e AR15.",
+      "description": "Fotografie e informazioni di riferimento su NYX Guard, AR e AR Compact.",
       "collection": "Collezione",
       "inPersonSales": "La vendita avviene esclusivamente di persona."
     },
@@ -1099,7 +1100,7 @@
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: fotografie fornite e dati tecnici di riferimento.",
-      "automatic": "AR15: fotografie fornite raggruppate per variante visiva."
+      "automatic": "AR e AR Compact: fotografie e dati tecnici per versione."
     },
     "accessories": {
       "all": "Tutti gli accessori",
@@ -1128,7 +1129,7 @@
     },
     "featured": {
       "kicker": "Modelli",
-      "title": "Due modelli nel catalogo",
+      "title": "Modelli nel catalogo",
       "description": "Fotografie di riferimento e dati tecnici disponibili.",
       "badge": "Modello"
     },
@@ -1146,13 +1147,13 @@
       "loading": "Caricamento del modulo"
     },
     "descriptions": {
-      "nyx-guard": "NYX Guard nelle fotografie fornite. I dati tecnici provengono dalla scheda tecnica fornita.",
-      "ar15": "AI DEF AR15 nelle finiture nero, sabbia e oliva. La galleria raggruppa le fotografie fornite in base all’aspetto."
+      "nyx-guard": "NYX Guard con canna da 112 mm, da 124 mm o da 130 mm filettata. I dati tecnici corrispondono alla versione selezionata.",
+      "ar15": "AR e AR Compact. Le fotografie sono raggruppate per versione e finitura; i dati tecnici seguono la selezione."
     },
     "hero": {
       "kicker": "Catalogo di riferimento",
-      "title": "NYX Guard & AR15",
-      "description": "Fotografie, varianti visive e dati tecnici disponibili per due modelli AI DEF.",
+      "title": "NYX Guard, AR e AR Compact",
+      "description": "NYX Guard con tre varianti di canna, AR e AR Compact: fotografie e dati tecnici.",
       "cta": "Visualizza catalogo"
     },
     "catalog": {
@@ -1189,25 +1190,26 @@
       "firearmWeightWithPlasticSights": "Peso dell’arma con mire in plastica",
       "firearmWeightWithoutPlasticSights": "Peso dell’arma senza mire in plastica",
       "weightWithEmptyMagazineAndSights": "Peso con caricatore vuoto e mire",
-      "lengthWithoutRearStock": "Lunghezza senza calcio posteriore",
+      "lengthWithStockRetracted": "Lunghezza totale con calcio retratto",
       "lengthWithStockExtended": "Lunghezza con calcio completamente esteso",
       "heightAtGrip": "Altezza all’impugnatura",
       "widthAtThickestPoint": "Larghezza nel punto più spesso"
     },
     "specificationValues": {
       "standardCapacity": "16 cartucce (standard)",
-      "material": "Fusto in polimero; carrello e canna in acciaio"
+      "material": "Fusto in polimero; carrello e canna in acciaio",
+      "multicaliber": "Multicalibro .223 Rem / 5,56 × 45 N"
     },
     "variants": {
-      "standard": "Profilo standard",
-      "threaded": "Filettatura della canna mostrata",
-      "withSuppressor": "Silenziatore mostrato",
-      "blackLonger": "Nero · profilo più lungo",
-      "blackShorter": "Nero · profilo più corto",
-      "blackOptic": "Nero · ottica mostrata",
-      "sandLonger": "Sabbia · profilo più lungo",
-      "sandShorter": "Sabbia · profilo più corto",
-      "oliveOptic": "Oliva · ottica mostrata"
+      "nyx112": "NYX Guard · canna da 112 mm",
+      "nyx124": "NYX Guard · canna da 124 mm",
+      "nyx130Threaded": "NYX Guard · canna filettata da 130 mm",
+      "arBlack": "AR · nero",
+      "arCompactBlack": "AR Compact · nero",
+      "arCompactBlackOptic": "AR Compact · nero, con ottica",
+      "arSand": "AR · sabbia",
+      "arCompactSand": "AR Compact · sabbia",
+      "arOliveOptic": "AR · oliva, con ottica"
     }
   },
   "notFound": {

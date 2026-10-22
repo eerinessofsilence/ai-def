@@ -1048,9 +1048,10 @@
         "light": "Luz táctica",
         "laser": "Módulo láser"
       },
-      "variants": "Variantes visuales",
-      "variantNote": "Las etiquetas describen las fotografías proporcionadas; las configuraciones exactas no están verificadas.",
-      "specificationSource": "Fuente: ficha técnica proporcionada. Los valores describen el modelo y no son mediciones individuales de cada variante fotografiada.",
+      "variants": "Versiones",
+      "variantNote": "Al seleccionar una fotografía se actualizan la versión y sus datos técnicos.",
+      "photoPending": "Fotografía aún no disponible",
+      "specificationSource": "Fuente: fichas técnicas proporcionadas. Los valores corresponden a la versión básica seleccionada; no incluyen los accesorios adicionales mostrados en las fotografías.",
       "specificationsPending": "Todavía no hay especificaciones técnicas verificadas para este modelo de AI DEF."
     },
     "photo": "Fotografía",
@@ -1084,7 +1085,7 @@
     },
     "footer": {
       "title": "Catálogo de productos",
-      "description": "Fotografías e información de referencia sobre NYX Guard y AR15.",
+      "description": "Fotografías e información de referencia sobre NYX Guard, AR y AR Compact.",
       "collection": "Colección",
       "inPersonSales": "La venta se realiza exclusivamente de forma presencial."
     },
@@ -1099,7 +1100,7 @@
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: fotografías proporcionadas y datos técnicos de referencia.",
-      "automatic": "AR15: fotografías proporcionadas agrupadas por variante visual."
+      "automatic": "AR y AR Compact: fotografías y datos técnicos por versión."
     },
     "accessories": {
       "all": "Todos los complementos",
@@ -1128,7 +1129,7 @@
     },
     "featured": {
       "kicker": "Modelos",
-      "title": "Dos modelos en el catálogo",
+      "title": "Modelos en el catálogo",
       "description": "Fotografías de referencia y datos técnicos disponibles.",
       "badge": "Modelo"
     },
@@ -1146,13 +1147,13 @@
       "loading": "Cargando formulario de consulta"
     },
     "descriptions": {
-      "nyx-guard": "NYX Guard en las fotografías proporcionadas. Los datos técnicos proceden de la ficha técnica proporcionada.",
-      "ar15": "AI DEF AR15 en acabados negro, arena y oliva. La galería agrupa las fotografías proporcionadas según su aspecto."
+      "nyx-guard": "NYX Guard con cañón de 112 mm, 124 mm o 130 mm con rosca. Los datos técnicos corresponden a la versión seleccionada.",
+      "ar15": "AR y AR Compact. Las fotografías se agrupan por versión y acabado; los datos técnicos se actualizan según la selección."
     },
     "hero": {
       "kicker": "Catálogo de referencia",
-      "title": "NYX Guard & AR15",
-      "description": "Fotografías, variantes visuales y datos técnicos disponibles de dos modelos de AI DEF.",
+      "title": "NYX Guard, AR y AR Compact",
+      "description": "NYX Guard con tres variantes de cañón, AR y AR Compact: fotografías y datos técnicos.",
       "cta": "Ver catálogo"
     },
     "catalog": {
@@ -1189,25 +1190,26 @@
       "firearmWeightWithPlasticSights": "Peso del arma con miras de plástico",
       "firearmWeightWithoutPlasticSights": "Peso del arma sin miras de plástico",
       "weightWithEmptyMagazineAndSights": "Peso con cargador vacío y miras",
-      "lengthWithoutRearStock": "Longitud sin culata",
+      "lengthWithStockRetracted": "Longitud total con la culata retraída",
       "lengthWithStockExtended": "Longitud con la culata totalmente extendida",
       "heightAtGrip": "Altura en la empuñadura",
       "widthAtThickestPoint": "Anchura en el punto más grueso"
     },
     "specificationValues": {
       "standardCapacity": "16 cartuchos (estándar)",
-      "material": "Armazón de polímero; corredera y cañón de acero"
+      "material": "Armazón de polímero; corredera y cañón de acero",
+      "multicaliber": "Multicalibre .223 Rem / 5,56 × 45 N"
     },
     "variants": {
-      "standard": "Perfil estándar",
-      "threaded": "Rosca del cañón mostrada",
-      "withSuppressor": "Silenciador mostrado",
-      "blackLonger": "Negro · perfil más largo",
-      "blackShorter": "Negro · perfil más corto",
-      "blackOptic": "Negro · óptica mostrada",
-      "sandLonger": "Arena · perfil más largo",
-      "sandShorter": "Arena · perfil más corto",
-      "oliveOptic": "Oliva · óptica mostrada"
+      "nyx112": "NYX Guard · cañón de 112 mm",
+      "nyx124": "NYX Guard · cañón de 124 mm",
+      "nyx130Threaded": "NYX Guard · cañón de 130 mm con rosca",
+      "arBlack": "AR · negro",
+      "arCompactBlack": "AR Compact · negro",
+      "arCompactBlackOptic": "AR Compact · negro, con óptica",
+      "arSand": "AR · arena",
+      "arCompactSand": "AR Compact · arena",
+      "arOliveOptic": "AR · oliva, con óptica"
     }
   },
   "notFound": {

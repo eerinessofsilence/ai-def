@@ -1047,9 +1047,10 @@
         "light": "Taktické svetlo",
         "laser": "Laserový modul"
       },
-      "variants": "Vizuálne varianty",
-      "variantNote": "Označenia opisujú dodané fotografie; presné konfigurácie nie sú overené.",
-      "specificationSource": "Zdroj: dodaný technický list. Hodnoty opisujú model, nejde o samostatné merania každého fotografovaného variantu.",
+      "variants": "Vyhotovenia",
+      "variantNote": "Výber fotografie aktualizuje vyhotovenie a jeho technické údaje.",
+      "photoPending": "Fotografia zatiaľ nie je dostupná",
+      "specificationSource": "Zdroj: dodané technické listy. Hodnoty sa vzťahujú na vybrané základné vyhotovenie; dodatočné príslušenstvo na fotografiách nie je zahrnuté.",
       "specificationsPending": "Overené technické údaje pre tento model AI DEF zatiaľ nie sú k dispozícii."
     },
     "photo": "Fotografia",
@@ -1083,7 +1084,7 @@
     },
     "footer": {
       "title": "Produktový katalóg",
-      "description": "Fotografie a referenčné informácie o NYX Guard a AR15.",
+      "description": "Fotografie a referenčné informácie o NYX Guard, AR a AR Compact.",
       "collection": "Kolekcia",
       "inPersonSales": "Predaj je možný výhradne pri osobnej návšteve."
     },
@@ -1098,7 +1099,7 @@
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: dodané fotografie a referenčné technické údaje.",
-      "automatic": "AR15: dodané fotografie zoskupené podľa vizuálneho variantu."
+      "automatic": "AR a AR Compact: fotografie a technické údaje podľa vyhotovenia."
     },
     "accessories": {
       "all": "Všetky doplnky",
@@ -1127,7 +1128,7 @@
     },
     "featured": {
       "kicker": "Modely",
-      "title": "Dva modely v katalógu",
+      "title": "Modely v katalógu",
       "description": "Referenčné fotografie a dostupné technické údaje.",
       "badge": "Model"
     },
@@ -1145,13 +1146,13 @@
       "loading": "Načítava sa formulár dopytu"
     },
     "descriptions": {
-      "nyx-guard": "NYX Guard na dodaných fotografiách. Technické údaje pochádzajú z dodaného technického listu.",
-      "ar15": "AI DEF AR15 v čiernom, pieskovom a olivovom vyhotovení. Galéria zoskupuje dodané fotografie podľa vzhľadu."
+      "nyx-guard": "NYX Guard s hlavňou 112 mm, 124 mm alebo 130 mm so závitom. Technické údaje zodpovedajú vybranému vyhotoveniu.",
+      "ar15": "AR a AR Compact. Fotografie sú zoskupené podľa vyhotovenia a farby; technické údaje sa menia podľa výberu."
     },
     "hero": {
       "kicker": "Referenčný katalóg",
-      "title": "NYX Guard & AR15",
-      "description": "Fotografie, vizuálne varianty a dostupné technické údaje dvoch modelov AI DEF.",
+      "title": "NYX Guard, AR a AR Compact",
+      "description": "NYX Guard s tromi variantmi hlavne, AR a AR Compact: fotografie a technické údaje.",
       "cta": "Zobraziť katalóg"
     },
     "catalog": {
@@ -1188,25 +1189,26 @@
       "firearmWeightWithPlasticSights": "Hmotnosť zbrane s plastovými mieridlami",
       "firearmWeightWithoutPlasticSights": "Hmotnosť zbrane bez plastových mieridiel",
       "weightWithEmptyMagazineAndSights": "Hmotnosť s prázdnym zásobníkom a mieridlami",
-      "lengthWithoutRearStock": "Dĺžka bez pažby",
+      "lengthWithStockRetracted": "Celková dĺžka so zasunutou pažbou",
       "lengthWithStockExtended": "Dĺžka s úplne vysunutou pažbou",
       "heightAtGrip": "Výška v mieste rukoväti",
       "widthAtThickestPoint": "Šírka v najhrubšom mieste"
     },
     "specificationValues": {
       "standardCapacity": "16 nábojov (štandard)",
-      "material": "Polymérový rám; oceľový záver a hlaveň"
+      "material": "Polymérový rám; oceľový záver a hlaveň",
+      "multicaliber": "Multikaliber .223 Rem / 5,56 × 45 N"
     },
     "variants": {
-      "standard": "Štandardný profil",
-      "threaded": "Zobrazený závit hlavne",
-      "withSuppressor": "Zobrazený tlmič",
-      "blackLonger": "Čierna · dlhší profil",
-      "blackShorter": "Čierna · kratší profil",
-      "blackOptic": "Čierna · zobrazená optika",
-      "sandLonger": "Piesková · dlhší profil",
-      "sandShorter": "Piesková · kratší profil",
-      "oliveOptic": "Olivová · zobrazená optika"
+      "nyx112": "NYX Guard · hlaveň 112 mm",
+      "nyx124": "NYX Guard · hlaveň 124 mm",
+      "nyx130Threaded": "NYX Guard · hlaveň 130 mm so závitom",
+      "arBlack": "AR · čierna",
+      "arCompactBlack": "AR Compact · čierna",
+      "arCompactBlackOptic": "AR Compact · čierna, s optikou",
+      "arSand": "AR · piesková",
+      "arCompactSand": "AR Compact · piesková",
+      "arOliveOptic": "AR · olivová, s optikou"
     }
   },
   "notFound": {

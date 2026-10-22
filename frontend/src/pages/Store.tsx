@@ -111,14 +111,25 @@ function StoreProductPage({
 }) {
   const { t } = useTranslation();
   const { lng } = useParams();
-  const [variantId, setVariantId] = useState(product.variants[0].id);
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
-  const activeVariant = product.variants.find((variant) => variant.id === variantId) ?? product.variants[0];
-  const gallery = activeVariant.images;
-  const imageSrc = gallery[activeIndex] ?? gallery[0] ?? product.image;
-  const imageAlt = `${product.brand} ${product.name} · ${t(activeVariant.labelKey)}`;
+  const gallery = product.variants.flatMap((variant) =>
+    (variant.images.length ? variant.images : [null]).map((image) => ({ image, variant })),
+  );
+  const activeSlide = gallery[activeIndex] ?? gallery[0];
+  const activeVariant = activeSlide.variant;
+  const modelName = activeVariant.modelName ?? product.name;
+  const specifications = [...product.specifications, ...activeVariant.specifications];
+  const imageSrc = activeSlide.image;
+  const imageAlt = `${product.brand} ${t(activeVariant.labelKey)}`;
   const storePath = buildLocalizedPath(resolveLanguage(lng), "/store");
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = `${modelName} | ${t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" })}`;
+    return () => { document.title = previousTitle; };
+  }, [modelName, t]);
+
   const localizeSpecificationValue = (value: string) => {
     if (resolveLanguage(lng) !== "ru") return value;
     return value
@@ -132,10 +143,10 @@ function StoreProductPage({
     setActiveIndex((index) => (index + direction + gallery.length) % gallery.length);
   };
   const details = [
-    { label: t("store.details.model"), value: product.name },
+    { label: t("store.details.model"), value: modelName },
     { label: t("store.details.manufacturer"), value: product.brand },
     { label: t("store.details.category"), value: t(`store.categories.${product.category}`) },
-    ...product.specifications.map((specification) => ({
+    ...specifications.map((specification) => ({
       label: t(specification.labelKey),
       value: specification.valueKey ? t(specification.valueKey, { count: Number(specification.value) }) : localizeSpecificationValue(specification.value),
     })),
@@ -146,7 +157,7 @@ function StoreProductPage({
       <div className="mt-2 flex flex-wrap gap-2">
         {product.variants.map((variant) => (
           <label key={variant.id} className="relative cursor-pointer">
-            <input type="radio" name={`variant-${product.id}-${placement}`} value={variant.id} checked={variantId === variant.id} onChange={() => { setVariantId(variant.id); setActiveIndex(0); }} className="peer sr-only" />
+            <input type="radio" name={`variant-${product.id}-${placement}`} value={variant.id} checked={activeVariant.id === variant.id} onChange={() => setActiveIndex(gallery.findIndex((slide) => slide.variant.id === variant.id))} className="peer sr-only" />
             <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
           </label>
         ))}
@@ -163,9 +174,11 @@ function StoreProductPage({
       <div className="grid gap-y-8 lg:grid-cols-[65%_32.5%] lg:gap-x-[2.5%]">
         <section aria-label={t("store.details.galleryLabel")} className="max-lg:min-w-0">
           <div className="store-detail-gallery store-product-surface relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[28px] border border-[#14243d]/15 p-5 md:aspect-[16/10] md:p-10">
-            <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#14243d]/70 md:p-10">
-              <img src={imageSrc} alt={imageAlt} decoding="async" className="h-full w-full object-contain" />
-            </button>
+            {imageSrc ? (
+              <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="absolute inset-0 grid cursor-zoom-in place-items-center p-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#14243d]/70 md:p-10">
+                <img src={imageSrc} alt={imageAlt} decoding="async" className="h-full w-full object-contain" />
+              </button>
+            ) : <p className="text-center text-sm text-[#14243d]/70">{t("store.details.photoPending")}</p>}
             {gallery.length > 1 ? (
               <>
                 <button type="button" onClick={() => changeSlide(-1)} aria-label={t("store.details.previousPhoto")} className="store-round-button absolute top-1/2 left-4 -translate-y-1/2 bg-[#10213a]/80 backdrop-blur"><ChevronLeft aria-hidden="true" className="h-5 w-5" /></button>
@@ -173,21 +186,22 @@ function StoreProductPage({
                 <span className="absolute right-4 bottom-4 rounded-full bg-[#10213a]/85 px-3 py-1.5 text-xs text-white/75">{activeIndex + 1} / {gallery.length}</span>
               </>
             ) : null}
-            <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="store-round-button absolute top-4 right-4 bg-[#10213a]/80 backdrop-blur"><Maximize2 aria-hidden="true" className="h-4 w-4" /></button>
+            {imageSrc ? <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="store-round-button absolute top-4 right-4 bg-[#10213a]/80 backdrop-blur"><Maximize2 aria-hidden="true" className="h-4 w-4" /></button> : null}
           </div>
+          <p aria-live="polite" className="mt-3 text-sm text-white/65">{t(activeVariant.labelKey)}</p>
           {renderVariantSelector("mobile")}
           {gallery.length > 1 ? (
             <div className="mt-4 flex gap-3 overflow-x-auto pb-1 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
-              {gallery.map((image, index) => (
-                <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={t("store.details.selectPhoto", { current: index + 1 })} aria-pressed={activeIndex === index} className={`store-product-surface w-24 shrink-0 overflow-hidden rounded-xl border p-2 transition-colors lg:w-auto ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
-                  <img src={image} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
+              {gallery.map(({ image, variant }, index) => (
+                <button key={image ?? variant.id} type="button" onClick={() => setActiveIndex(index)} aria-label={`${t("store.details.selectPhoto", { current: index + 1 })} · ${t(variant.labelKey)}`} aria-pressed={activeIndex === index} className={`store-product-surface w-24 shrink-0 overflow-hidden rounded-xl border p-2 transition-colors lg:w-auto ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
+                  {image ? <img src={image} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" /> : <span className="grid aspect-[4/3] place-items-center text-xs text-[#14243d]/70">{t("store.details.photoPending")}</span>}
                 </button>
               ))}
             </div>
           ) : null}
           <section className="mt-12 lg:mt-16">
             <h2 className="text-lg font-semibold">{t("store.details.characteristics")}</h2>
-            {product.specifications.length ? (
+            {specifications.length ? (
               <dl className="mt-4 grid overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] md:grid-cols-2">
                 {details.map(({ label, value }) => (
                   <div key={label} className="flex items-start justify-between gap-5 border-b border-white/10 px-5 py-3 text-sm last:border-b-0 md:odd:border-r md:[&:nth-last-child(-n+2)]:border-b-0">
@@ -196,7 +210,7 @@ function StoreProductPage({
                 ))}
               </dl>
             ) : null}
-            <p className="mt-3 text-xs leading-5 text-white/55">{t(product.specifications.length ? "store.details.specificationSource" : "store.details.specificationsPending")}</p>
+            <p className="mt-3 text-xs leading-5 text-white/55">{t(specifications.length ? "store.details.specificationSource" : "store.details.specificationsPending")}</p>
           </section>
         </section>
 
@@ -205,7 +219,7 @@ function StoreProductPage({
 
             <p className="store-kicker">{t(`store.categories.${product.category}`)}</p>
           </div>
-          <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{product.name}</h1>
+          <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{modelName}</h1>
           <p className="mt-4 text-base leading-6 text-white/65">{t(`store.descriptions.${product.id}`)}</p>
           {renderVariantSelector("desktop")}
           <button type="button" onClick={() => onEnquire(product, activeVariant)} className="store-button mt-8 w-full">
@@ -239,11 +253,11 @@ function StoreProductPage({
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-sm" />
           <Dialog.Content className="fixed inset-0 z-[160] flex items-center justify-center p-4 outline-none md:p-8">
-            <Dialog.Title className="sr-only">{`${product.brand} ${product.name} ${t("store.details.galleryLabel")}`}</Dialog.Title>
+            <Dialog.Title className="sr-only">{`${product.brand} ${modelName} ${t("store.details.galleryLabel")}`}</Dialog.Title>
             <Dialog.Description className="sr-only">{t(activeVariant.labelKey)}</Dialog.Description>
             <Dialog.Close aria-label={t("store.details.closeFullscreen")} className="store-round-button absolute top-4 right-4 z-10 bg-white/10 text-white hover:bg-white/20"><X aria-hidden="true" className="h-5 w-5" /></Dialog.Close>
             <div className="store-product-surface max-h-[90dvh] max-w-[92vw] rounded-3xl p-4 md:p-8">
-              <img src={imageSrc} alt={imageAlt} className="max-h-[82dvh] max-w-[86vw] object-contain" />
+              {imageSrc ? <img src={imageSrc} alt={imageAlt} className="max-h-[82dvh] max-w-[86vw] object-contain" /> : <p className="p-12 text-center text-sm text-[#14243d]/70">{t("store.details.photoPending")}</p>}
             </div>
             {gallery.length > 1 ? (
               <>
@@ -298,10 +312,9 @@ export default function Store() {
   };
 
   useEffect(() => {
+    if (detailProduct) return;
     const previousTitle = document.title;
-    document.title = detailProduct
-      ? `${detailProduct.name} | ${t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" })}`
-      : t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" });
+    document.title = t("store.pageTitle", { defaultValue: "Arms AI-DEF — Precision in every mission" });
     return () => { document.title = previousTitle; };
   }, [detailProduct, t]);
   useEffect(() => {
@@ -458,7 +471,7 @@ export default function Store() {
                 showDetails={false}
                 productSelections={contactSelection ? [{
                   value: `${contactSelection.product.id}-${contactSelection.variant.id}`,
-                  label: `${contactSelection.product.name} · ${t(contactSelection.variant.labelKey)}`,
+                  label: t(contactSelection.variant.labelKey),
                 }] : undefined}
               />
             </Suspense>

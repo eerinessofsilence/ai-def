@@ -1048,9 +1048,10 @@
         "light": "Tactical light",
         "laser": "Laser module"
       },
-      "variants": "Visual variants",
-      "variantNote": "Labels describe the supplied photographs; exact configurations have not been verified.",
-      "specificationSource": "Source: supplied technical specification sheet. These values describe the model, not separate measurements of each photographed variant.",
+      "variants": "Variants",
+      "variantNote": "Selecting a photograph updates the variant and its technical specifications.",
+      "photoPending": "Photo not yet available",
+      "specificationSource": "Source: supplied technical specifications. Values apply to the selected base variant; additional accessories shown in photographs are excluded.",
       "specificationsPending": "Verified technical specifications for this AI DEF model are not available yet."
     },
     "photo": "Photo",
@@ -1084,7 +1085,7 @@
     },
     "footer": {
       "title": "Product catalog",
-      "description": "Photographs and reference information for NYX Guard and AR15.",
+      "description": "Photographs and reference information for NYX Guard, AR and AR Compact.",
       "collection": "Collection",
       "inPersonSales": "Sales take place exclusively in person."
     },
@@ -1099,7 +1100,7 @@
     },
     "categoryDescriptions": {
       "pistols": "NYX Guard: supplied photographs and reference specifications.",
-      "automatic": "AR15: supplied photographs grouped by visual variant."
+      "automatic": "AR and AR Compact: photographs and technical specifications by variant."
     },
     "accessories": {
       "all": "All accessories",
@@ -1128,7 +1129,7 @@
     },
     "featured": {
       "kicker": "Models",
-      "title": "Two models in the catalog",
+      "title": "Models in the catalog",
       "description": "Reference photographs and available technical data.",
       "badge": "Model"
     },
@@ -1146,13 +1147,13 @@
       "loading": "Loading enquiry form"
     },
     "descriptions": {
-      "nyx-guard": "NYX Guard in the supplied photographs. Technical data is taken from the supplied specification sheet.",
-      "ar15": "AI DEF AR15 in black, sand and olive finishes. The gallery groups the supplied photographs by appearance."
+      "nyx-guard": "NYX Guard with a 112 mm barrel, a 124 mm barrel or a 130 mm threaded barrel. Technical specifications correspond to the selected variant.",
+      "ar15": "AR and AR Compact. Photographs are grouped by variant and finish; technical specifications follow the selection."
     },
     "hero": {
       "kicker": "Reference catalog",
-      "title": "NYX Guard & AR15",
-      "description": "Photographs, visual variants and available technical data for two AI DEF models.",
+      "title": "NYX Guard, AR & AR Compact",
+      "description": "NYX Guard in three barrel variants, plus AR and AR Compact: photographs and technical specifications.",
       "cta": "View catalog"
     },
     "catalog": {
@@ -1189,25 +1190,26 @@
       "firearmWeightWithPlasticSights": "Firearm weight with plastic sights",
       "firearmWeightWithoutPlasticSights": "Firearm weight without plastic sights",
       "weightWithEmptyMagazineAndSights": "Weight with empty magazine and sights",
-      "lengthWithoutRearStock": "Length without rear stock",
+      "lengthWithStockRetracted": "Overall length with stock retracted",
       "lengthWithStockExtended": "Length with stock fully extended",
       "heightAtGrip": "Height at grip",
       "widthAtThickestPoint": "Width at thickest point"
     },
     "specificationValues": {
       "standardCapacity": "16 rounds (standard)",
-      "material": "Polymer frame; steel slide and barrel"
+      "material": "Polymer frame; steel slide and barrel",
+      "multicaliber": "Multicaliber .223 Rem / 5.56 × 45 N"
     },
     "variants": {
-      "standard": "Standard profile",
-      "threaded": "Threaded barrel shown",
-      "withSuppressor": "Suppressor shown",
-      "blackLonger": "Black · longer profile",
-      "blackShorter": "Black · shorter profile",
-      "blackOptic": "Black · optic shown",
-      "sandLonger": "Sand · longer profile",
-      "sandShorter": "Sand · shorter profile",
-      "oliveOptic": "Olive · optic shown"
+      "nyx112": "NYX Guard · 112 mm barrel",
+      "nyx124": "NYX Guard · 124 mm barrel",
+      "nyx130Threaded": "NYX Guard · 130 mm threaded barrel",
+      "arBlack": "AR · black",
+      "arCompactBlack": "AR Compact · black",
+      "arCompactBlackOptic": "AR Compact · black, with optic",
+      "arSand": "AR · sand",
+      "arCompactSand": "AR Compact · sand",
+      "arOliveOptic": "AR · olive, with optic"
     }
   },
   "notFound": {
