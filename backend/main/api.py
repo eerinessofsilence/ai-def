@@ -870,7 +870,14 @@ def _validated_contact_notification_recipients(raw_recipients) -> List[str]:
 
 def _contact_notification_recipients(
     contact_request: ContactRequest | None = None,
+    request=None,
 ) -> List[str]:
+    if (
+        request is not None
+        and request.get_host().split(":", 1)[0].lower().rstrip(".") == "arms.ai-def.com"
+    ):
+        return ["arms@ai-def.com"]
+
     if (
         contact_request is not None
         and _normalized_contact_product(contact_request.product)
@@ -1134,7 +1141,9 @@ def contact_request_api(request):
                 ),
             )
 
-            recipients = _contact_notification_recipients(contact_request)
+            recipients = _contact_notification_recipients(
+                contact_request, request=request
+            )
             if recipients:
                 subject = _build_contact_notification_subject(contact_request)
                 notification_message = _build_contact_notification_message(

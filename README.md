@@ -105,6 +105,13 @@ docker compose -f docker-compose.prod.yml exec backend python manage.py createsu
 
 Migrations and `collectstatic` run automatically on every backend start.
 
+Contact requests received on `arms.ai-def.com` are emailed only to
+`arms@ai-def.com`, including product enquiries. Other hosts use
+`CONTACT_REQUEST_NOTIFICATION_EMAILS` and the existing
+`STRATEGIC_PARTNERSHIP_EMAIL` routing. Changes to backend Python code require
+rebuilding the backend image; recreating a container from the old image does
+not apply them.
+
 ### Deploying prebuilt images
 
 To skip building on the server, set `BACKEND_IMAGE` and `FRONTEND_IMAGE` in
