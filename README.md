@@ -85,6 +85,13 @@ and `arms.ai-def.com` at the server and leave port 80 open — Traefik needs it
 for the Let's Encrypt HTTP-01 challenge, even though all traffic is redirected
 to HTTPS. The `arms.ai-def.com` host serves the store at `/`.
 
+Production Compose adds all three routed hosts to `DJANGO_ALLOWED_HOSTS`,
+preserving any hosts configured in `.env` (including the legacy `ALLOWED_HOST`).
+Without `arms.ai-def.com` in Django's allowed hosts, store API requests,
+including contact submissions, are rejected with HTTP 400. Existing servers
+need the updated Compose file and a recreated backend container for this
+environment change to take effect; pulling a new image alone is insufficient.
+
 ```bash
 cp .env.example .env   # then fill in secrets, DOMAIN, ACME_EMAIL, DATA_DIR
 docker compose -f docker-compose.prod.yml up -d

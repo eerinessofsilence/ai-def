@@ -45,6 +45,8 @@ services:
       - .env
     environment:
       POSTGRES_HOST: ${DOCKER_POSTGRES_HOST:-db}
+      # Keep Django's host validation aligned with the domains routed by Traefik.
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-${ALLOWED_HOST:-}},${DOMAIN},${DOMAIN_WWW:-www.${DOMAIN}},arms.ai-def.com
     depends_on:
       db:
         condition: service_healthy
