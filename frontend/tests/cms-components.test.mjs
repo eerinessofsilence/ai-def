@@ -216,10 +216,28 @@ async function renderEditor(write) {
     editor = useDocument('arms', 'document');
     return h('p', null, editor.state);
   }
-  const router = createMemoryRouter([{ path: '/', element: h(SessionProvider, null, h(Probe)) }]);
+  const router = createMemoryRouter([{ path: '/', element: h(SessionProvider, null, h(Probe)) }, { path: '/next', element: h('p', null, 'Next page') }]);
   await render(h(RouterProvider, { router }));
   assert.equal(editor.state, 'saved');
+  return router;
 }
+
+test('navigation waits for a successful save and preserves the editor after a save failure', async () => {
+  let writes = 0;
+  const router = await renderEditor(async payload => ++writes === 1
+    ? Response.json({ error: 'Temporarily unavailable.' }, { status: 503 })
+    : Response.json({ ...snapshot, version: 2, data: payload.data }));
+  await act(async () => { editor.change(() => ({ name: 'Keep before leaving' })); });
+  await act(async () => { await router.navigate('/next'); });
+  assert.equal(router.state.location.pathname, '/');
+  assert.equal(editor.blocker.state, 'blocked');
+  assert.equal(editor.data.name, 'Keep before leaving');
+  assert.equal(editor.unsaved, true);
+  await act(async () => { await editor.flush(); editor.blocker.proceed(); });
+  assert.equal(router.state.location.pathname, '/next');
+  assert.match(document.body.textContent, /Next page/);
+  assert.equal(writes, 2);
+});
 
 test('saving serializes in-flight edits with the latest version instead of dropping later typing', async () => {
   const writes = [];
