@@ -2,6 +2,19 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import type { OutputAsset } from "rollup";
+import { fileURLToPath } from "node:url";
+
+function cmsEntry(): Plugin {
+  return {
+    name: "cms-entry",
+    configureServer(server) {
+      server.middlewares.use((request, _response, next) => {
+        if (request.url && /^\/cms(?:\/|\?|$)/.test(request.url)) request.url = "/cms/index.html";
+        next();
+      });
+    },
+  };
+}
 
 function inlineEntryCss(): Plugin {
   return {
@@ -56,6 +69,21 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
+    cmsEntry(),
     inlineEntryCss(),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        site: fileURLToPath(new URL("./index.html", import.meta.url)),
+        cms: fileURLToPath(new URL("./cms/index.html", import.meta.url)),
+      },
+    },
+  },
+  server: {
+    proxy: {
+      "/api/cms/": { target: "http://127.0.0.1:8000" },
+      "/media/": { target: "http://127.0.0.1:8000" },
+    },
+  },
 });

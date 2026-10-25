@@ -370,7 +370,8 @@ function ProductDropdown({
   );
 }
 
-export default function ClientPortal() {
+export type PortalPreviewData = PortalProductDetailApi;
+export default function ClientPortal({ previewData }: { previewData?: PortalProductDetailApi } = {}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { lng } = useParams();
@@ -442,6 +443,7 @@ export default function ClientPortal() {
   }, []);
 
   useEffect(() => {
+    if (previewData) return;
     const token =
       (typeof window !== "undefined" &&
         (localStorage.getItem("authToken") ||
@@ -450,7 +452,7 @@ export default function ClientPortal() {
     if (!token) {
       navigate(authPath, { replace: true });
     }
-  }, [authPath, navigate]);
+  }, [authPath, navigate, previewData]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -468,6 +470,10 @@ export default function ClientPortal() {
     useState<PortalProductDetailApi | null>(null);
 
   useEffect(() => {
+    if (previewData) {
+      setProducts([{ slug: previewData.slug, name: previewData.name, category: previewData.category || "", serial: previewData.serial || "", preview_image: previewData.preview_image || "", images: previewData.images || [], summary: previewData.summary || "", highlight: previewData.highlight || "" }]);
+      return;
+    }
     const controller = new AbortController();
 
     const loadProducts = async () => {
@@ -517,7 +523,7 @@ export default function ClientPortal() {
 
     loadProducts();
     return () => controller.abort();
-  }, [apiBase, fallbackUntitledProduct, withLanguageParam]);
+  }, [apiBase, fallbackUntitledProduct, withLanguageParam, previewData]);
 
   const [selectedProductKey, setSelectedProductKey] = useState<string | null>(
     null,
@@ -594,6 +600,10 @@ export default function ClientPortal() {
   const selectedProductSlug = selectedProduct?.slug ?? null;
 
   useEffect(() => {
+    if (previewData) {
+      setSelectedProductDetail(previewData);
+      return;
+    }
     if (!selectedProductSlug) {
       setSelectedProductDetail(null);
       return;
@@ -630,7 +640,7 @@ export default function ClientPortal() {
 
     loadProductDetail();
     return () => controller.abort();
-  }, [apiBase, selectedProductSlug, withLanguageParam]);
+  }, [apiBase, selectedProductSlug, withLanguageParam, previewData]);
 
   const specGroups = useMemo(() => {
     const characteristics = selectedProductDetail?.characteristics;
@@ -1341,10 +1351,9 @@ export default function ClientPortal() {
                       </div>
                     </ScrollReveal>
                     <div className="mt-5 grid grid-cols-1 gap-4">
-                      {specGroups.map((group) => (
-                        <ScrollReveal>
+                      {specGroups.map((group, index) => (
+                        <ScrollReveal key={`${group.title}-${index}`}>
                           <div
-                            key={group.title}
                             className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm max-md:text-xs"
                           >
                             <div className="flex items-center gap-3 text-sm">

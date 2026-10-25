@@ -1156,6 +1156,10 @@
       "cta": "Zobraziť katalóg"
     },
     "catalog": {
+      "loading": "Načítava sa katalóg…",
+      "loadError": "Katalóg sa nepodarilo načítať. Skúste to znova.",
+      "empty": "Momentálne nie sú dostupné žiadne produkty.",
+      "retry": "Skúsiť znova",
       "kicker": "Katalóg",
       "title": "Prehliadať podľa kategórie",
       "count": "{{count}} / {{total}} modelov",

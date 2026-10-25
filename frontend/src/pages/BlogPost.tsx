@@ -689,7 +689,8 @@ function TocLink({
   );
 }
 
-export default function BlogPost() {
+export type ArticlePreviewData = BlogPostApiResponse;
+export default function BlogPost({ previewData }: { previewData?: BlogPostApiResponse } = {}) {
   const { t } = useTranslation();
   const { lng, post } = useParams();
   const currentLanguage = resolveLanguage(lng);
@@ -713,6 +714,11 @@ export default function BlogPost() {
 
   useEffect(() => {
     const fallbackArticle = createFallbackArticle(post, fallbackCopy);
+    if (previewData) {
+      setArticle(mapBlogPostFromApi(previewData, fallbackArticle, (minutes) => t("blog.common.minRead", { count: minutes })));
+      setStatus("ready");
+      return;
+    }
     setArticle(fallbackArticle);
     setStatus(post ? "loading" : "error");
 
@@ -753,7 +759,7 @@ export default function BlogPost() {
     void loadArticle();
 
     return () => controller.abort();
-  }, [currentLanguage, fallbackCopy, post, t]);
+  }, [currentLanguage, fallbackCopy, post, t, previewData]);
 
   const articlePath = buildLocalizedPath(
     currentLanguage,

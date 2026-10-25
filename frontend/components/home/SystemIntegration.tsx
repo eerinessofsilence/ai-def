@@ -1,10 +1,10 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { usePageTranslation } from "../PageContent";
 import { ScrollReveal } from "../ui/scroll-reveal";
 
 export default function SystemIntegration() {
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
   const cards = [
     {
       icon: "system-integration-1.svg",

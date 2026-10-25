@@ -1,10 +1,11 @@
 "use client";
 
+import Select from "./select";
 import React from "react";
-import { Check, ChevronDown, LoaderCircle, Mail } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { Check, LoaderCircle, Mail } from "lucide-react";
+import { usePageTranslation } from "../PageContent";
 import { useParams } from "react-router-dom";
-import { buildLocalizedPath, resolveLanguage } from "../../src/i18n";
+import { buildLocalizedPath, resolveLanguage, stripSupportedLanguageFromPath } from "../../src/i18n";
 
 type ContactFormProps = {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -119,7 +120,7 @@ export const ContactForm = ({
   initialProduct = "",
   productSelections,
 }: ContactFormProps) => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = usePageTranslation();
   const { lng } = useParams();
   const currentLanguage = resolveLanguage(lng);
   const isSupportForm = variant === "support" && !generalContact;
@@ -319,16 +320,16 @@ export const ContactForm = ({
     }
   };
 
-  const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProduct(event.target.value);
+  const handleProductChange = (value: string) => {
+    setSelectedProduct(value);
     setProductQuery("");
   };
 
-  const handleStoreProductCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProductCategory(event.target.value);
+  const handleStoreProductCategoryChange = (value: string) => {
+    setSelectedProductCategory(value);
     setSelectedProduct("");
     setProductQuery("");
-    setIsProductSuggestionsOpen(Boolean(event.target.value));
+    setIsProductSuggestionsOpen(Boolean(value));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -363,10 +364,12 @@ export const ContactForm = ({
     // The existing support API accepts messages without product, phone or country.
     payload.variant = generalContact ? "support" : variant;
     payload.language = i18n.language;
-    if (generalContact) {
-      payload.source = "general-contact";
-    } else if (typeof window !== "undefined") {
-      payload.source = window.location.pathname;
+    if (typeof window !== "undefined") {
+      const path = stripSupportedLanguageFromPath(window.location.pathname);
+      const isArmsSite = window.location.hostname === "arms.ai-def.com"
+        || path === "/store" || path.startsWith("/store/");
+      const source = generalContact ? "general-contact" : window.location.pathname;
+      payload.source = `${isArmsSite ? "arms" : "ai-def"}:${source}`.slice(0, 255);
     }
 
     try {
@@ -603,19 +606,16 @@ export const ContactForm = ({
                     {isStoreForm ? (
                       <div className="grid gap-2 sm:grid-cols-2">
                         <div className="relative">
-                          <select
-                            className={selectClass}
+                          <Select className={selectClass}
                             aria-label={t("store.contact.productCategory")}
                             value={selectedProductCategory}
-                            onChange={handleStoreProductCategoryChange}
-                            required
-                          >
+                            onValueChange={handleStoreProductCategoryChange}
+                            required tone={isStoreForm ? "dark" : "light"}>
                             <option value="" disabled>{t("store.contact.productCategory")}</option>
                             {storeProductCategories.map((category) => (
                               <option key={category} value={category}>{t(`store.categories.${category}`)}</option>
                             ))}
-                          </select>
-                          <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500" />
+                          </Select>
                         </div>
                         <input type="hidden" name="product" value={selectedProduct} />
                         <div className="relative">
@@ -668,13 +668,11 @@ export const ContactForm = ({
                       </div>
                     ) : null}
                     {!isStoreForm ? <div className="relative">
-                      <select
-                        className={selectClass}
+                      <Select className={selectClass}
                         name="product"
                         value={selectedProduct}
-                        onChange={handleProductChange}
-                        required
-                      >
+                        onValueChange={handleProductChange}
+                        required tone={isStoreForm ? "dark" : "light"}>
                         <option value="" disabled>
                           {t("contactForm.placeholders.selectProduct")}
                         </option>
@@ -683,8 +681,7 @@ export const ContactForm = ({
                             {product.label}
                           </option>
                         ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500" />
+                      </Select>
                     </div> : null}
                   </div>
                 )}
@@ -836,7 +833,7 @@ export const ContactForm = ({
           <p className={successMessageClass} role="status" aria-live="polite">
             {t(generalContact
               ? "contactForm.general.success"
-              : isStoreForm ? "store.contact.success" : "contactForm.success")}
+              : isStoreForm ? "store.contact.success" : isSupportForm ? "support.form.success" : "contactForm.success")}
           </p>
         ) : submitStatus === "error" ? (
           <p className={errorMessageClass} role="alert">

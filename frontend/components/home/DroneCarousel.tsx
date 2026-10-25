@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import { usePageTranslation } from "../PageContent";
 import { useParams } from "react-router-dom";
 import { Carousel, Card } from "../ui/apple-cards-carousel";
 import { ScrollReveal } from "../ui/scroll-reveal";
@@ -11,7 +11,7 @@ import { resolveLanguage } from "../../src/i18n";
 export default function DroneCarouselSection() {
   const { lng } = useParams<{ lng?: string }>();
   const activeLanguage = resolveLanguage(lng);
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
   const [items, setItems] = useState<CarouselProductItem[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">(
     "idle",

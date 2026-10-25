@@ -21,6 +21,8 @@ class QueryLanguageMiddleware:
         return self.get_response(request)
 
     def _get_query_language(self, request) -> str | None:
+        if request.path_info == "/internal-admin" or request.path_info.startswith("/internal-admin/"):
+            return None
         if request.path_info == self.admin_path_prefix.rstrip("/") or request.path_info.startswith(
             self.admin_path_prefix
         ):

@@ -3,5 +3,7 @@ Allow: /
 
 Disallow: /api/
 Disallow: /admin/
+Disallow: /cms/
+Disallow: /internal-admin/
 
 Sitemap: https://ai-def.com/sitemap.xml

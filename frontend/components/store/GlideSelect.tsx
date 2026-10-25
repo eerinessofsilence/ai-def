@@ -7,7 +7,8 @@ import "./GlideSelect.css";
 type GlideSelectOption<Value extends string> = {
   value: Value;
   label: string;
-  tag: string;
+  disabled?: boolean;
+  tag?: string;
 };
 
 type GlideSelectProps<Value extends string> = {
@@ -15,6 +16,12 @@ type GlideSelectProps<Value extends string> = {
   value: Value;
   onChange: (value: Value) => void;
   ariaLabel: string;
+  ariaDescribedBy?: string;
+  id?: string;
+  disabled?: boolean;
+  className?: string;
+  triggerClassName?: string;
+  invalid?: boolean;
 };
 
 type Phase = "closed" | "open" | "closing";
@@ -23,7 +30,7 @@ const ROW_GAP = 1;
 const MENU_GAP = 6;
 const POP_OUT = 120;
 
-export default function GlideSelect<Value extends string>({ options, value, onChange, ariaLabel }: GlideSelectProps<Value>) {
+export default function GlideSelect<Value extends string>({ options, value, onChange, ariaLabel, ariaDescribedBy, id: controlId, disabled = false, className = "", triggerClassName = "", invalid }: GlideSelectProps<Value>) {
   const selected = options.findIndex((option) => option.value === value);
   const [phase, setPhase] = useState<Phase>("closed");
   const [active, setActive] = useState<number | null>(null);
@@ -69,14 +76,22 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
       return;
     }
     const jump = instant.current || pill.style.opacity !== "1";
-    pill.style.transitionDuration = jump ? "0ms, 150ms" : "";
+    pill.style.transitionDuration = jump ? "0ms, var(--cms-fast, 150ms)" : "";
     pill.style.transform = `translateY(${active * step}px)`;
     pill.style.opacity = "1";
     instant.current = false;
   }, [active, phase, step]);
 
+  useLayoutEffect(() => {
+    const menu = menuRef.current;
+    if (phase !== "open" || active === null || !menu || scrub.current) return;
+    const top = active * step + 4;
+    if (top < menu.scrollTop) menu.scrollTop = top;
+    else if (top + ROW_HEIGHT > menu.scrollTop + menu.clientHeight) menu.scrollTop = top + ROW_HEIGHT - menu.clientHeight;
+  }, [active, phase, step]);
+
   const open = () => {
-    if (options.length === 0) return;
+    if (disabled || triggerRef.current?.matches(":disabled") || options.length === 0) return;
     clearTimeout(closeTimer.current);
     instant.current = true;
     setActive(Math.max(0, selected));
@@ -88,7 +103,7 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
     scrub.current = null;
     clearTimeout(closeTimer.current);
     const menu = menuRef.current;
-    if (mode === "instant" || !menu) {
+    if (mode === "instant" || !menu || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setPhase("closed");
       return;
     }
@@ -99,7 +114,8 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
 
   const pick = (index: number, viaKey: boolean) => {
     const option = options[index];
-    if (option && option.value !== value) {
+    if (disabled || triggerRef.current?.matches(":disabled") || !option || option.disabled) return;
+    if (option.value !== value) {
       onChange(option.value);
       if (!viaKey && rootRef.current) rootRef.current.dataset.swap = "";
     }
@@ -151,6 +167,7 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
   useEffect(() => () => clearTimeout(closeTimer.current), []);
+  useEffect(() => { if (disabled) close("instant"); }, [disabled]);
 
   const rowAt = (y: number) => {
     if (!scrub.current) return null;
@@ -158,7 +175,7 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
     return index >= 0 && index < options.length ? index : null;
   };
   const onListDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0 || scrub.current || phase !== "open") return;
+    if (event.pointerType === "touch" || event.button !== 0 || scrub.current || phase !== "open") return;
     triggerRef.current?.focus({ preventScroll: true });
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -187,7 +204,7 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
   return (
     <div
       ref={rootRef}
-      className="store-glide-select"
+      className={`store-glide-select ${className}`}
       style={{ "--gs-row": `${ROW_HEIGHT}px`, "--gs-origin": `${side === "bottom" ? "top" : "bottom"} right` } as CSSProperties}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) close("instant");
@@ -198,15 +215,18 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
     >
       <button
         ref={triggerRef}
+        id={controlId}
+        aria-invalid={invalid || undefined}
+        aria-describedby={ariaDescribedBy}
         type="button"
         role="combobox"
         aria-haspopup="listbox"
         aria-expanded={phase === "open"}
         aria-controls={phase !== "closed" ? `${id}-list` : undefined}
         aria-activedescendant={phase === "open" && active !== null ? `${id}-${active}` : undefined}
-        aria-label={`${ariaLabel}: ${currentOption?.label ?? ""} · ${currentOption?.tag ?? ""}`}
-        disabled={options.length === 0}
-        className="store-glide-select__trigger"
+        aria-label={`${ariaLabel}: ${currentOption?.label ?? ""}${currentOption?.tag ? ` · ${currentOption.tag}` : ""}`}
+        disabled={disabled || options.length === 0}
+        className={`store-glide-select__trigger ${triggerClassName}`}
         onClick={() => {
           if (phase === "open") close("pop");
           else open();
@@ -215,7 +235,7 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
       >
         <span className="store-glide-select__label" key={value}>
           <span className="store-glide-select__name">{currentOption?.label}</span>
-          <span className="store-glide-select__tag">· {currentOption?.tag}</span>
+          {currentOption?.tag && <span className="store-glide-select__tag">· {currentOption.tag}</span>}
         </span>
         <ChevronDown size={16} strokeWidth={2} className="store-glide-select__chevron" aria-hidden="true" />
       </button>
@@ -227,6 +247,8 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
             aria-label={ariaLabel}
             className="store-glide-select__list"
             data-live={active !== null ? "" : undefined}
+            onClick={(event) => event.preventDefault()}
+            onMouseDown={(event) => event.preventDefault()}
             onPointerOver={onListOver}
             onPointerDown={onListDown}
             onPointerMove={onListMove}
@@ -241,9 +263,11 @@ export default function GlideSelect<Value extends string>({ options, value, onCh
                 id={`${id}-${index}`}
                 role="option"
                 aria-selected={index === selected}
+                aria-disabled={option.disabled || undefined}
                 data-index={index}
                 className="store-glide-select__option"
-                onClick={() => {
+                onClick={(event) => {
+                  event.preventDefault();
                   if (phase === "open") pick(index, false);
                 }}
               >

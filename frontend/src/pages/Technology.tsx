@@ -1,4 +1,5 @@
-import { useTranslation } from "react-i18next";
+import { PageContentProvider, usePageContent } from "../../components/PageContent";
+import { usePageTranslation } from "../../components/PageContent";
 import { Link, useParams } from "react-router-dom";
 import { buildLocalizedPath, resolveLanguage } from "../i18n";
 
@@ -25,10 +26,13 @@ const CARDS = [
   },
 ];
 
-export default function Technology() {
+export default function Technology() { return <PageContentProvider site="ai-def" slug="technology"><TechnologyContent /></PageContentProvider>; }
+
+function TechnologyContent() {
+  const { asset } = usePageContent();
   const { lng } = useParams();
   const currentLanguage = resolveLanguage(lng);
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
   return (
     <main>
       <section>
@@ -43,7 +47,7 @@ export default function Technology() {
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}
             preload="none"
-            src="/technology-video.mp4"
+            src={asset("video", "/technology-video.mp4")}
             className="absolute inset-0 -z-1 h-screen w-full object-cover"
           ></video>
 
@@ -65,7 +69,7 @@ export default function Technology() {
             </Link>
           </div>
         </div>
-        <div className="flex h-screen w-full items-end justify-end bg-[url(/technology-bg-1.jpg)] bg-cover bg-center bg-no-repeat">
+        <div className="flex h-screen w-full items-end justify-end bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${asset("overview", "/technology-bg-1.jpg")})` }}>
           <div className="container">
             <div className="mb-15 space-y-5">
               <h1 className="text-5xl font-bold max-lg:text-4xl max-md:text-center max-md:text-3xl">
@@ -77,14 +81,14 @@ export default function Technology() {
             </div>
           </div>
         </div>
-        <div className="flex min-h-screen w-full items-end justify-end bg-[url(/technology-bg-2.png)] bg-cover bg-center bg-no-repeat py-30 max-md:py-20">
+        <div className="flex min-h-screen w-full items-end justify-end bg-cover bg-center bg-no-repeat py-30 max-md:py-20" style={{ backgroundImage: `url(${asset("modules", "/technology-bg-2.png")})` }}>
           <div className="container">
             <h1 className="mb-25 text-center text-5xl font-bold max-lg:text-4xl max-md:mb-10 max-md:text-center max-md:text-3xl">
               {t("technology.modules.title")}
             </h1>
             <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
               {CARDS.map((item) => (
-                <div className="w-full transition-all duration-300 hover:-translate-y-0.5 hover:scale-105">
+                <div key={item.titleKey} className="w-full transition-all duration-300 hover:-translate-y-0.5 hover:scale-105">
                   <div className="border-border/15 h-full w-full rounded-[20px] border-2 bg-white/5 p-5 shadow-lg backdrop-blur-xl transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-xl">
                     <img src={item.icon} className="mb-3 h-15 w-15" alt="" />
                     <h3 className="text-foreground mb-2.5 text-lg font-bold">

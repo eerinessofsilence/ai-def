@@ -1,5 +1,7 @@
 import re
 
+from .arms_models import ArmsImage, ArmsProduct, ArmsVariant
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator

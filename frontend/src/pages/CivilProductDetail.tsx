@@ -133,7 +133,8 @@ const hasAnyText = (...values: Array<string | null | undefined>): boolean =>
 const normalizeTextArray = (value?: Array<string> | null): string[] =>
   (value ?? []).map((item) => item.trim()).filter((item) => item.length > 0);
 
-export default function CivilProductDetail() {
+export type CivilProductPreviewData = ProductDetail;
+export default function CivilProductDetail({ previewData }: { previewData?: ProductDetail } = {}) {
   const { slug, lng } = useParams<{ slug?: string; lng?: string }>();
   const activeLanguage = resolveLanguage(lng);
   const { t } = useTranslation();
@@ -148,6 +149,12 @@ export default function CivilProductDetail() {
   const openContactModal = () => dispatchOpenContactModal();
 
   useEffect(() => {
+    if (previewData) {
+      setProductDetail(previewData);
+      setDetailStatus("ready");
+      setDetailError(null);
+      return;
+    }
     if (!slug) {
       return;
     }
@@ -179,7 +186,7 @@ export default function CivilProductDetail() {
       });
 
     return () => controller.abort();
-  }, [activeLanguage, slug, t]);
+  }, [activeLanguage, slug, t, previewData]);
 
   const heroProduct = useMemo(() => productDetail ?? null, [productDetail]);
 

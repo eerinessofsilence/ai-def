@@ -1,12 +1,12 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { usePageTranslation } from "../PageContent";
 import { ScrollReveal } from "../ui/scroll-reveal";
 import { dispatchOpenContactModal } from "../../lib/contact-modal";
 
 export default function CustomerBenefits() {
   const openContactModal = () => dispatchOpenContactModal();
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
 
   return (
     <section className="container mx-auto flex flex-col items-center justify-center space-y-25 px-5 py-25 max-lg:space-y-15 max-lg:py-12.5">

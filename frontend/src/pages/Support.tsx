@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { PageContentProvider, usePageTranslation, usePageContent } from "../../components/PageContent";
 import { useLocation } from "react-router-dom";
 import { ContactForm } from "../../components/ui/contact-form";
 import StoreHeader from "../../components/store/StoreHeader";
@@ -8,8 +8,11 @@ import "./Store.css";
 
 const backgroundImages = ["/support-1.png", "/support-2.png", "/support-3.png"];
 
-export default function Support({ arms = false }: { arms?: boolean }) {
-  const { t } = useTranslation();
+export default function Support({ arms = false }: { arms?: boolean }) { return <PageContentProvider site={arms ? "arms" : "ai-def"} slug="support"><SupportContent arms={arms} /></PageContentProvider>; }
+
+function SupportContent({ arms }: { arms: boolean }) {
+  const { asset } = usePageContent();
+  const { t } = usePageTranslation();
   const { hash } = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -54,7 +57,7 @@ export default function Support({ arms = false }: { arms?: boolean }) {
               }`}
             >
               <img
-                src={image || "/placeholder.svg"}
+                src={asset(`slide${index + 1}`, image || "/placeholder.svg")}
                 alt={t("support.hero.slideAlt", { index: index + 1 })}
                 className="h-full w-full object-cover"
               />

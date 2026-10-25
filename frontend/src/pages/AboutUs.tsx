@@ -1,8 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { PageContentProvider } from "../../components/PageContent";
+import { usePageTranslation } from "../../components/PageContent";
 import { dispatchOpenContactModal } from "../../lib/contact-modal";
 
-export default function AboutUs() {
-  const { t } = useTranslation();
+export default function AboutUs() { return <PageContentProvider site="ai-def" slug="about-us"><AboutUsContent /></PageContentProvider>; }
+
+function AboutUsContent() {
+  const { t } = usePageTranslation();
   const getArray = <T,>(value: unknown) =>
     Array.isArray(value) ? (value as T[]) : [];
   const lifecyclePhases = getArray<string>(

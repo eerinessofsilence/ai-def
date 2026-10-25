@@ -93,14 +93,16 @@ class MainAdminSmokeTests(TestCase):
     def setUp(self):
         self.client.force_login(self.admin_user)
 
-    def test_admin_index_has_quick_entries_and_instructions(self):
+    def test_customer_admin_entry_opens_independent_cms(self):
+        from django.conf import settings
+        response = self.client.get("/admin/")
+        self.assertRedirects(response, settings.CMS_FRONTEND_URL, fetch_redirect_response=False)
         response = self.client.get(reverse("admin:index"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Быстрые входы")
+        self.assertTrue(response.wsgi_request.path.startswith("/internal-admin/"))
         self.assertContains(response, "Products")
         self.assertContains(response, "PortalProducts")
         self.assertContains(response, "ContactRequests")
-        self.assertContains(response, "Как работать")
 
     def test_product_image_change_form_updates_translation_for_selected_language(self):
         change_url = reverse(
@@ -298,9 +300,8 @@ class MainAdminSmokeTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Drone slider media")
-        self.assertContains(response, "drone_slider_media-0-image")
-        self.assertContains(response, "drone_slider_media-0-video")
+        self.assertContains(response, 'name="drone_slider_media-__prefix__-image"')
+        self.assertContains(response, 'name="drone_slider_media-__prefix__-video"')
 
     def test_blog_post_admin_change_form_renders_blocks_inline(self):
         blog_category = BlogCategory.objects.create(name="Resume Tips")
@@ -335,7 +336,7 @@ class MainAdminSmokeTests(TestCase):
 
         english_response = self.client.get(f"{change_url}?lang=en")
         self.assertEqual(english_response.status_code, 200)
-        self.assertNotContains(english_response, "title_de")
+        self.assertNotContains(english_response, 'name="blocks-0-title_de"')
         self.assertContains(english_response, "WYSIWYG")
         self.assertNotContains(english_response, "Kind")
         self.assertNotContains(english_response, "Paragraphs")
@@ -349,7 +350,7 @@ class MainAdminSmokeTests(TestCase):
 
         german_response = self.client.get(f"{change_url}?lang=de")
         self.assertEqual(german_response.status_code, 200)
-        self.assertNotContains(german_response, "title_en")
+        self.assertNotContains(german_response, 'name="blocks-0-title_en"')
         self.assertContains(
             german_response,
             "&quot;name&quot;: &quot;anchor_id&quot;, &quot;dependency_ids&quot;: [&quot;#id_blocks-__prefix__-title_de&quot;]",
@@ -740,6 +741,7 @@ class MainApiTests(TestCase):
         DEFAULT_FROM_EMAIL="noreply@ai-def.test",
         CONTACT_REQUEST_NOTIFICATION_EMAILS=["sales@ai-def.test"],
     )
+    @override_settings(CMS_FRONTEND_URL="/cms/")
     def test_contact_request_api_sends_email_notification(self):
         payload = {
             "firstName": "Alex",
@@ -781,7 +783,7 @@ class MainApiTests(TestCase):
         self.assertIn("Need a quote.", message.body)
         self.assertNotIn("Address line 3:", message.body)
         self.assertIn(
-            "View in admin: http://testserver/admin/main/contactrequest/1/change/",
+            f"Open in CMS: http://testserver/cms/ai-def/inquiries/{ContactRequest.objects.get().pk}",
             message.body,
         )
         self.assertEqual(len(message.alternatives), 1)

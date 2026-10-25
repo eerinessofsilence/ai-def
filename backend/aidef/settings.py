@@ -28,11 +28,12 @@ def getenv_list(*names, default=""):
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv("DJANGO_SECRET")
 DEBUG = getenv_bool("DJANGO_DEBUG", "DEBUG", default=True)
+CMS_FRONTEND_URL = getenv("CMS_FRONTEND_URL", "http://127.0.0.1:5174/cms/" if DEBUG else "/cms/")
 ALLOWED_HOSTS = getenv_list("DJANGO_ALLOWED_HOSTS", "ALLOWED_HOST")
 
 INSTALLED_APPS = [
     'modeltranslation',
-    'django.contrib.admin',
+    'aidef.apps.AIDefAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'main.apps.MainConfig',
     'portal.apps.PortalConfig',
+    'cms.apps.CMSConfig',
 ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

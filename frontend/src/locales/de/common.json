@@ -1157,6 +1157,10 @@
       "cta": "Katalog ansehen"
     },
     "catalog": {
+      "loading": "Katalog wird geladen…",
+      "loadError": "Der Katalog konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "empty": "Zurzeit sind keine Produkte verfügbar.",
+      "retry": "Erneut versuchen",
       "kicker": "Katalog",
       "title": "Nach Kategorie ansehen",
       "count": "{{count}} / {{total}} Modelle",

@@ -25,7 +25,7 @@ export const isSupportedLanguage = (
 export const resolveLanguage = (value?: string): SupportedLanguage =>
   isSupportedLanguage(value) ? value : DEFAULT_LANGUAGE;
 
-const localeLoaders: Record<
+export const localeLoaders: Record<
   SupportedLanguage,
   () => Promise<{ default: ResourceLanguage }>
 > = {

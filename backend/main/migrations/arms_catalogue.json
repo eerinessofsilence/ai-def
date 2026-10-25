@@ -1,0 +1,781 @@
+{
+  "products": [
+    {
+      "id": "nyx-guard",
+      "name": "NYX Guard",
+      "brand": "AI DEF",
+      "category": "pistols",
+      "image": "/store/demo/69B03F53-DDB3-4F94-9F63-F2BC7C18ABDD.png",
+      "width": 1506,
+      "height": 1044,
+      "variants": [
+        {
+          "id": "standard",
+          "labelKey": "store.variants.nyx112",
+          "images": [
+            "/store/demo/69B03F53-DDB3-4F94-9F63-F2BC7C18ABDD.png",
+            "/store/demo/78828894-3DE7-4682-A297-721CA52BFFDE.png"
+          ],
+          "specifications": [
+            {
+              "labelKey": "store.specifications.overallLength",
+              "value": "205 mm"
+            },
+            {
+              "labelKey": "store.specifications.barrelLength",
+              "value": "112 mm"
+            },
+            {
+              "labelKey": "store.specifications.weightWithoutMagazine",
+              "value": "725 g"
+            }
+          ]
+        },
+        {
+          "id": "barrel-124",
+          "labelKey": "store.variants.nyx124",
+          "images": [
+            "/store/nyx-guard/nyx-124-case.jpg",
+            "/store/nyx-guard/nyx-124-case-reverse.jpg",
+            "/store/nyx-guard/nyx-124-side.jpg",
+            "/store/nyx-guard/nyx-124-slide-side.jpg"
+          ],
+          "specifications": [
+            {
+              "labelKey": "store.specifications.overallLength",
+              "value": "217 mm"
+            },
+            {
+              "labelKey": "store.specifications.barrelLength",
+              "value": "124 mm"
+            },
+            {
+              "labelKey": "store.specifications.weightWithoutMagazine",
+              "value": "735 g"
+            }
+          ]
+        },
+        {
+          "id": "threaded",
+          "labelKey": "store.variants.nyx130Threaded",
+          "images": [
+            "/store/demo/2C8F95D6-B9A9-4C99-B9C2-0E25BF2AA998.png",
+            "/store/demo/DEE9854E-2C79-4A4E-B3CE-12C7F2BE6683.png",
+            "/store/demo/BBEB8192-0562-4532-BEC0-C9376DBAF0D2.png"
+          ],
+          "specifications": [
+            {
+              "labelKey": "store.specifications.overallLength",
+              "value": "223 mm"
+            },
+            {
+              "labelKey": "store.specifications.barrelLength",
+              "value": "130 mm"
+            },
+            {
+              "labelKey": "store.specifications.weightWithoutMagazine",
+              "value": "742 g"
+            }
+          ]
+        }
+      ],
+      "specifications": [
+        {
+          "labelKey": "store.specifications.caliber",
+          "value": "9 mm Luger"
+        },
+        {
+          "labelKey": "store.specifications.magazineCapacity",
+          "value": "16",
+          "valueKey": "store.specificationValues.standardCapacity"
+        },
+        {
+          "labelKey": "store.specifications.width",
+          "value": "33 mm"
+        },
+        {
+          "labelKey": "store.specifications.heightWithMagazine",
+          "value": "145 mm"
+        },
+        {
+          "labelKey": "store.specifications.heightWithoutMagazine",
+          "value": "135 mm"
+        },
+        {
+          "labelKey": "store.specifications.magazineWeight",
+          "value": "87 g"
+        },
+        {
+          "labelKey": "store.specifications.material",
+          "value": "",
+          "valueKey": "store.specificationValues.material"
+        },
+        {
+          "labelKey": "store.specifications.mountingRail",
+          "value": "Picatinny"
+        }
+      ]
+    },
+    {
+      "id": "ar15",
+      "name": "AR / AR Compact",
+      "brand": "AI DEF",
+      "category": "automatic",
+      "image": "/store/demo/C9383A81-5323-4A00-A4A2-22DFF4826367.png",
+      "width": 1774,
+      "height": 887,
+      "variants": [
+        {
+          "id": "ar-black",
+          "labelKey": "store.variants.arBlack",
+          "modelName": "AR",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "380 mm (14.96 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "368 mm (14.48 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "890 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "840 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "3,200 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "3,100 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "3,300 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "815 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "900 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/C9383A81-5323-4A00-A4A2-22DFF4826367.png",
+            "/store/demo/9ACCDBAB-0056-44AD-BB43-D41169E29558.png",
+            "/store/demo/480EF0AA-42C4-4BCA-AA3C-CB70F621BF60.png",
+            "/store/demo/BFA35536-936C-452D-98E9-B65E5780CB93.png"
+          ]
+        },
+        {
+          "id": "ar-compact-black",
+          "labelKey": "store.variants.arCompactBlack",
+          "modelName": "AR Compact",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "250 mm (9.85 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "237.5 mm (9.33 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "600 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "550 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "2,700 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "2,600 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "2,800 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "685 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "765 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/E49D5E30-351E-4547-BC64-766DAF310447.png",
+            "/store/demo/DEFE400E-CCA5-4498-B0E0-D69F14244B33.png"
+          ]
+        },
+        {
+          "id": "ar-compact-black-optic",
+          "labelKey": "store.variants.arCompactBlackOptic",
+          "modelName": "AR Compact",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "250 mm (9.85 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "237.5 mm (9.33 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "600 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "550 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "2,700 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "2,600 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "2,800 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "685 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "765 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/73165FD0-8B1B-4EF6-B605-2FB9CDCBA7BD.png",
+            "/store/demo/50EE71B6-6D16-453B-AE53-D7F98B1790D9.png"
+          ]
+        },
+        {
+          "id": "ar-sand",
+          "labelKey": "store.variants.arSand",
+          "modelName": "AR",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "380 mm (14.96 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "368 mm (14.48 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "890 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "840 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "3,200 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "3,100 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "3,300 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "815 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "900 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/5E3342A0-E033-47C9-B0B3-2937CE12CB9F.png",
+            "/store/demo/E625025A-6815-473B-9AE3-6674573486C7.png",
+            "/store/demo/A2765BBF-B93C-4388-A3F9-CA4DE09DD5F4.png"
+          ]
+        },
+        {
+          "id": "ar-compact-sand",
+          "labelKey": "store.variants.arCompactSand",
+          "modelName": "AR Compact",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "250 mm (9.85 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "237.5 mm (9.33 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "600 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "550 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "2,700 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "2,600 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "2,800 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "685 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "765 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/BD19E33B-CBD7-4A3A-8CFA-0EEF76FE6B31.png",
+            "/store/demo/9A3E7AAD-9E98-4FC9-A921-E16F590551E1.png",
+            "/store/demo/43C8F9CD-E102-4FAC-AA6C-7054EBCA29F4.png"
+          ]
+        },
+        {
+          "id": "ar-olive-optic",
+          "labelKey": "store.variants.arOliveOptic",
+          "modelName": "AR",
+          "specifications": [
+            {
+              "labelKey": "store.specifications.barrelLengthWithNut",
+              "value": "380 mm (14.96 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelLengthWithoutNut",
+              "value": "368 mm (14.48 in)"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithNut",
+              "value": "890 g"
+            },
+            {
+              "labelKey": "store.specifications.barrelWeightWithoutNut",
+              "value": "840 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithPlasticSights",
+              "value": "3,200 g"
+            },
+            {
+              "labelKey": "store.specifications.firearmWeightWithoutPlasticSights",
+              "value": "3,100 g"
+            },
+            {
+              "labelKey": "store.specifications.weightWithEmptyMagazineAndSights",
+              "value": "3,300 g"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockRetracted",
+              "value": "815 mm"
+            },
+            {
+              "labelKey": "store.specifications.lengthWithStockExtended",
+              "value": "900 mm"
+            }
+          ],
+          "images": [
+            "/store/demo/C932F602-BB98-4A0E-9D1C-EE440D622393.png",
+            "/store/demo/9A6FE882-40C1-4DD0-AA3B-7822B72DD1B0.png"
+          ]
+        }
+      ],
+      "specifications": [
+        {
+          "labelKey": "store.specifications.caliber",
+          "value": "",
+          "valueKey": "store.specificationValues.multicaliber"
+        },
+        {
+          "labelKey": "store.specifications.barrelTwistRate",
+          "value": "1:7"
+        },
+        {
+          "labelKey": "store.specifications.heightAtGrip",
+          "value": "185 mm"
+        },
+        {
+          "labelKey": "store.specifications.widthAtThickestPoint",
+          "value": "55 mm"
+        }
+      ]
+    }
+  ],
+  "translations": {
+    "en": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard with a 112 mm barrel, a 124 mm barrel or a 130 mm threaded barrel. Technical specifications correspond to the selected variant.",
+          "ar15": "AR and AR Compact. Photographs are grouped by variant and finish; technical specifications follow the selection."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · 112 mm barrel",
+          "nyx124": "NYX Guard · 124 mm barrel",
+          "nyx130Threaded": "NYX Guard · 130 mm threaded barrel",
+          "arBlack": "AR · black",
+          "arCompactBlack": "AR Compact · black",
+          "arCompactBlackOptic": "AR Compact · black, with optic",
+          "arSand": "AR · sand",
+          "arCompactSand": "AR Compact · sand",
+          "arOliveOptic": "AR · olive, with optic"
+        },
+        "specifications": {
+          "caliber": "Caliber",
+          "magazineCapacity": "Magazine capacity",
+          "overallLength": "Overall length",
+          "width": "Width",
+          "heightWithMagazine": "Height with magazine",
+          "heightWithoutMagazine": "Height without magazine",
+          "barrelLength": "Barrel length",
+          "weightWithoutMagazine": "Weight without magazine",
+          "magazineWeight": "Magazine weight",
+          "material": "Material",
+          "mountingRail": "Mounting rail",
+          "barrelLengthWithNut": "Barrel length with nut",
+          "barrelLengthWithoutNut": "Barrel length without nut",
+          "barrelTwistRate": "Barrel twist rate",
+          "barrelWeightWithNut": "Barrel weight with nut",
+          "barrelWeightWithoutNut": "Barrel weight without nut",
+          "firearmWeightWithPlasticSights": "Firearm weight with plastic sights",
+          "firearmWeightWithoutPlasticSights": "Firearm weight without plastic sights",
+          "weightWithEmptyMagazineAndSights": "Weight with empty magazine and sights",
+          "lengthWithStockRetracted": "Overall length with stock retracted",
+          "lengthWithStockExtended": "Length with stock fully extended",
+          "heightAtGrip": "Height at grip",
+          "widthAtThickestPoint": "Width at thickest point"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 rounds (standard)",
+          "material": "Polymer frame; steel slide and barrel",
+          "multicaliber": "Multicaliber .223 Rem / 5.56 × 45 N"
+        }
+      }
+    },
+    "de": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard mit 112-mm-Lauf, 124-mm-Lauf oder 130-mm-Lauf mit Gewinde. Die technischen Daten entsprechen der gewählten Ausführung.",
+          "ar15": "AR und AR Compact. Die Fotos sind nach Ausführung und Farbe gruppiert; die technischen Daten folgen der Auswahl."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · Lauf 112 mm",
+          "nyx124": "NYX Guard · Lauf 124 mm",
+          "nyx130Threaded": "NYX Guard · Lauf 130 mm mit Gewinde",
+          "arBlack": "AR · Schwarz",
+          "arCompactBlack": "AR Compact · Schwarz",
+          "arCompactBlackOptic": "AR Compact · Schwarz, mit Optik",
+          "arSand": "AR · Sand",
+          "arCompactSand": "AR Compact · Sand",
+          "arOliveOptic": "AR · Oliv, mit Optik"
+        },
+        "specifications": {
+          "caliber": "Kaliber",
+          "magazineCapacity": "Magazinkapazität",
+          "overallLength": "Gesamtlänge",
+          "width": "Breite",
+          "heightWithMagazine": "Höhe mit Magazin",
+          "heightWithoutMagazine": "Höhe ohne Magazin",
+          "barrelLength": "Lauflänge",
+          "weightWithoutMagazine": "Gewicht ohne Magazin",
+          "magazineWeight": "Magazingewicht",
+          "material": "Material",
+          "mountingRail": "Montageschiene",
+          "barrelLengthWithNut": "Lauflänge mit Mutter",
+          "barrelLengthWithoutNut": "Lauflänge ohne Mutter",
+          "barrelTwistRate": "Dralllänge des Laufs",
+          "barrelWeightWithNut": "Laufgewicht mit Mutter",
+          "barrelWeightWithoutNut": "Laufgewicht ohne Mutter",
+          "firearmWeightWithPlasticSights": "Waffengewicht mit Kunststoffvisierung",
+          "firearmWeightWithoutPlasticSights": "Waffengewicht ohne Kunststoffvisierung",
+          "weightWithEmptyMagazineAndSights": "Gewicht mit leerem Magazin und Visierung",
+          "lengthWithStockRetracted": "Gesamtlänge mit eingeschobenem Schaft",
+          "lengthWithStockExtended": "Länge mit vollständig ausgezogenem Schaft",
+          "heightAtGrip": "Höhe am Griff",
+          "widthAtThickestPoint": "Breite an der stärksten Stelle"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 Patronen (Standard)",
+          "material": "Polymerrahmen; Verschluss und Lauf aus Stahl",
+          "multicaliber": "Multikaliber .223 Rem / 5,56 × 45 N"
+        }
+      }
+    },
+    "sk": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard s hlavňou 112 mm, 124 mm alebo 130 mm so závitom. Technické údaje zodpovedajú vybranému vyhotoveniu.",
+          "ar15": "AR a AR Compact. Fotografie sú zoskupené podľa vyhotovenia a farby; technické údaje sa menia podľa výberu."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · hlaveň 112 mm",
+          "nyx124": "NYX Guard · hlaveň 124 mm",
+          "nyx130Threaded": "NYX Guard · hlaveň 130 mm so závitom",
+          "arBlack": "AR · čierna",
+          "arCompactBlack": "AR Compact · čierna",
+          "arCompactBlackOptic": "AR Compact · čierna, s optikou",
+          "arSand": "AR · piesková",
+          "arCompactSand": "AR Compact · piesková",
+          "arOliveOptic": "AR · olivová, s optikou"
+        },
+        "specifications": {
+          "caliber": "Kaliber",
+          "magazineCapacity": "Kapacita zásobníka",
+          "overallLength": "Celková dĺžka",
+          "width": "Šírka",
+          "heightWithMagazine": "Výška so zásobníkom",
+          "heightWithoutMagazine": "Výška bez zásobníka",
+          "barrelLength": "Dĺžka hlavne",
+          "weightWithoutMagazine": "Hmotnosť bez zásobníka",
+          "magazineWeight": "Hmotnosť zásobníka",
+          "material": "Materiál",
+          "mountingRail": "Montážna lišta",
+          "barrelLengthWithNut": "Dĺžka hlavne s maticou",
+          "barrelLengthWithoutNut": "Dĺžka hlavne bez matice",
+          "barrelTwistRate": "Stúpanie vývrtu hlavne",
+          "barrelWeightWithNut": "Hmotnosť hlavne s maticou",
+          "barrelWeightWithoutNut": "Hmotnosť hlavne bez matice",
+          "firearmWeightWithPlasticSights": "Hmotnosť zbrane s plastovými mieridlami",
+          "firearmWeightWithoutPlasticSights": "Hmotnosť zbrane bez plastových mieridiel",
+          "weightWithEmptyMagazineAndSights": "Hmotnosť s prázdnym zásobníkom a mieridlami",
+          "lengthWithStockRetracted": "Celková dĺžka so zasunutou pažbou",
+          "lengthWithStockExtended": "Dĺžka s úplne vysunutou pažbou",
+          "heightAtGrip": "Výška v mieste rukoväti",
+          "widthAtThickestPoint": "Šírka v najhrubšom mieste"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 nábojov (štandard)",
+          "material": "Polymérový rám; oceľový záver a hlaveň",
+          "multicaliber": "Multikaliber .223 Rem / 5,56 × 45 N"
+        }
+      }
+    },
+    "es": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard con cañón de 112 mm, 124 mm o 130 mm con rosca. Los datos técnicos corresponden a la versión seleccionada.",
+          "ar15": "AR y AR Compact. Las fotografías se agrupan por versión y acabado; los datos técnicos se actualizan según la selección."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · cañón de 112 mm",
+          "nyx124": "NYX Guard · cañón de 124 mm",
+          "nyx130Threaded": "NYX Guard · cañón de 130 mm con rosca",
+          "arBlack": "AR · negro",
+          "arCompactBlack": "AR Compact · negro",
+          "arCompactBlackOptic": "AR Compact · negro, con óptica",
+          "arSand": "AR · arena",
+          "arCompactSand": "AR Compact · arena",
+          "arOliveOptic": "AR · oliva, con óptica"
+        },
+        "specifications": {
+          "caliber": "Calibre",
+          "magazineCapacity": "Capacidad del cargador",
+          "overallLength": "Longitud total",
+          "width": "Anchura",
+          "heightWithMagazine": "Altura con cargador",
+          "heightWithoutMagazine": "Altura sin cargador",
+          "barrelLength": "Longitud del cañón",
+          "weightWithoutMagazine": "Peso sin cargador",
+          "magazineWeight": "Peso del cargador",
+          "material": "Material",
+          "mountingRail": "Riel de montaje",
+          "barrelLengthWithNut": "Longitud del cañón con tuerca",
+          "barrelLengthWithoutNut": "Longitud del cañón sin tuerca",
+          "barrelTwistRate": "Paso de estría del cañón",
+          "barrelWeightWithNut": "Peso del cañón con tuerca",
+          "barrelWeightWithoutNut": "Peso del cañón sin tuerca",
+          "firearmWeightWithPlasticSights": "Peso del arma con miras de plástico",
+          "firearmWeightWithoutPlasticSights": "Peso del arma sin miras de plástico",
+          "weightWithEmptyMagazineAndSights": "Peso con cargador vacío y miras",
+          "lengthWithStockRetracted": "Longitud total con la culata retraída",
+          "lengthWithStockExtended": "Longitud con la culata totalmente extendida",
+          "heightAtGrip": "Altura en la empuñadura",
+          "widthAtThickestPoint": "Anchura en el punto más grueso"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 cartuchos (estándar)",
+          "material": "Armazón de polímero; corredera y cañón de acero",
+          "multicaliber": "Multicalibre .223 Rem / 5,56 × 45 N"
+        }
+      }
+    },
+    "fr": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard avec canon de 112 mm, de 124 mm ou de 130 mm fileté. Les caractéristiques techniques correspondent à la version sélectionnée.",
+          "ar15": "AR et AR Compact. Les photos sont regroupées par version et finition ; les caractéristiques techniques suivent la sélection."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · canon de 112 mm",
+          "nyx124": "NYX Guard · canon de 124 mm",
+          "nyx130Threaded": "NYX Guard · canon fileté de 130 mm",
+          "arBlack": "AR · noir",
+          "arCompactBlack": "AR Compact · noir",
+          "arCompactBlackOptic": "AR Compact · noir, avec optique",
+          "arSand": "AR · sable",
+          "arCompactSand": "AR Compact · sable",
+          "arOliveOptic": "AR · olive, avec optique"
+        },
+        "specifications": {
+          "caliber": "Calibre",
+          "magazineCapacity": "Capacité du chargeur",
+          "overallLength": "Longueur totale",
+          "width": "Largeur",
+          "heightWithMagazine": "Hauteur avec chargeur",
+          "heightWithoutMagazine": "Hauteur sans chargeur",
+          "barrelLength": "Longueur du canon",
+          "weightWithoutMagazine": "Poids sans chargeur",
+          "magazineWeight": "Poids du chargeur",
+          "material": "Matériaux",
+          "mountingRail": "Rail de montage",
+          "barrelLengthWithNut": "Longueur du canon avec écrou",
+          "barrelLengthWithoutNut": "Longueur du canon sans écrou",
+          "barrelTwistRate": "Pas de rayure du canon",
+          "barrelWeightWithNut": "Poids du canon avec écrou",
+          "barrelWeightWithoutNut": "Poids du canon sans écrou",
+          "firearmWeightWithPlasticSights": "Poids de l’arme avec organes de visée en plastique",
+          "firearmWeightWithoutPlasticSights": "Poids de l’arme sans organes de visée en plastique",
+          "weightWithEmptyMagazineAndSights": "Poids avec chargeur vide et organes de visée",
+          "lengthWithStockRetracted": "Longueur totale avec crosse rétractée",
+          "lengthWithStockExtended": "Longueur avec crosse entièrement déployée",
+          "heightAtGrip": "Hauteur au niveau de la poignée",
+          "widthAtThickestPoint": "Largeur au point le plus épais"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 cartouches (standard)",
+          "material": "Carcasse en polymère ; culasse et canon en acier",
+          "multicaliber": "Multicalibre .223 Rem / 5,56 × 45 N"
+        }
+      }
+    },
+    "it": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard con canna da 112 mm, da 124 mm o da 130 mm filettata. I dati tecnici corrispondono alla versione selezionata.",
+          "ar15": "AR e AR Compact. Le fotografie sono raggruppate per versione e finitura; i dati tecnici seguono la selezione."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · canna da 112 mm",
+          "nyx124": "NYX Guard · canna da 124 mm",
+          "nyx130Threaded": "NYX Guard · canna filettata da 130 mm",
+          "arBlack": "AR · nero",
+          "arCompactBlack": "AR Compact · nero",
+          "arCompactBlackOptic": "AR Compact · nero, con ottica",
+          "arSand": "AR · sabbia",
+          "arCompactSand": "AR Compact · sabbia",
+          "arOliveOptic": "AR · oliva, con ottica"
+        },
+        "specifications": {
+          "caliber": "Calibro",
+          "magazineCapacity": "Capacità del caricatore",
+          "overallLength": "Lunghezza totale",
+          "width": "Larghezza",
+          "heightWithMagazine": "Altezza con caricatore",
+          "heightWithoutMagazine": "Altezza senza caricatore",
+          "barrelLength": "Lunghezza della canna",
+          "weightWithoutMagazine": "Peso senza caricatore",
+          "magazineWeight": "Peso del caricatore",
+          "material": "Materiale",
+          "mountingRail": "Slitta di montaggio",
+          "barrelLengthWithNut": "Lunghezza della canna con dado",
+          "barrelLengthWithoutNut": "Lunghezza della canna senza dado",
+          "barrelTwistRate": "Passo di rigatura della canna",
+          "barrelWeightWithNut": "Peso della canna con dado",
+          "barrelWeightWithoutNut": "Peso della canna senza dado",
+          "firearmWeightWithPlasticSights": "Peso dell’arma con mire in plastica",
+          "firearmWeightWithoutPlasticSights": "Peso dell’arma senza mire in plastica",
+          "weightWithEmptyMagazineAndSights": "Peso con caricatore vuoto e mire",
+          "lengthWithStockRetracted": "Lunghezza totale con calcio retratto",
+          "lengthWithStockExtended": "Lunghezza con calcio completamente esteso",
+          "heightAtGrip": "Altezza all’impugnatura",
+          "widthAtThickestPoint": "Larghezza nel punto più spesso"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 cartucce (standard)",
+          "material": "Fusto in polimero; carrello e canna in acciaio",
+          "multicaliber": "Multicalibro .223 Rem / 5,56 × 45 N"
+        }
+      }
+    },
+    "ru": {
+      "store": {
+        "descriptions": {
+          "nyx-guard": "NYX Guard со стволами 112 мм, 124 мм или 130 мм с резьбой. Технические характеристики соответствуют выбранному исполнению.",
+          "ar15": "AR и AR Compact. Фотографии сгруппированы по исполнению и цвету; характеристики меняются вместе с выбором."
+        },
+        "variants": {
+          "nyx112": "NYX Guard · ствол 112 мм",
+          "nyx124": "NYX Guard · ствол 124 мм",
+          "nyx130Threaded": "NYX Guard · ствол 130 мм с резьбой",
+          "arBlack": "AR · чёрный",
+          "arCompactBlack": "AR Compact · чёрный",
+          "arCompactBlackOptic": "AR Compact · чёрный, с оптикой",
+          "arSand": "AR · песочный",
+          "arCompactSand": "AR Compact · песочный",
+          "arOliveOptic": "AR · оливковый, с оптикой"
+        },
+        "specifications": {
+          "caliber": "Калибр",
+          "magazineCapacity": "Вместимость магазина",
+          "overallLength": "Общая длина",
+          "width": "Ширина",
+          "heightWithMagazine": "Высота с магазином",
+          "heightWithoutMagazine": "Высота без магазина",
+          "barrelLength": "Длина ствола",
+          "weightWithoutMagazine": "Масса без магазина",
+          "magazineWeight": "Масса магазина",
+          "material": "Материал",
+          "mountingRail": "Крепёжная планка",
+          "barrelLengthWithNut": "Длина ствола с гайкой",
+          "barrelLengthWithoutNut": "Длина ствола без гайки",
+          "barrelTwistRate": "Шаг нарезов ствола",
+          "barrelWeightWithNut": "Масса ствола с гайкой",
+          "barrelWeightWithoutNut": "Масса ствола без гайки",
+          "firearmWeightWithPlasticSights": "Масса оружия с пластиковыми прицельными приспособлениями",
+          "firearmWeightWithoutPlasticSights": "Масса оружия без пластиковых прицельных приспособлений",
+          "weightWithEmptyMagazineAndSights": "Масса с пустым магазином и прицельными приспособлениями",
+          "lengthWithStockRetracted": "Общая длина с задвинутым прикладом",
+          "lengthWithStockExtended": "Длина с полностью выдвинутым прикладом",
+          "heightAtGrip": "Высота в области рукоятки",
+          "widthAtThickestPoint": "Максимальная ширина"
+        },
+        "specificationValues": {
+          "standardCapacity": "16 патронов (стандартная)",
+          "material": "Полимерная рамка; стальные затвор и ствол",
+          "multicaliber": "Мультикалибер .223 Rem / 5,56 × 45 N"
+        }
+      }
+    }
+  }
+}

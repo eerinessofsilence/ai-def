@@ -256,7 +256,8 @@ function RelatedProductsFallback() {
   );
 }
 
-export default function ProductDetail() {
+export type ProductPreviewData = ProductDetail;
+export default function ProductDetail({ previewData }: { previewData?: ProductDetail } = {}) {
   const { slug, lng } = useParams<{ slug?: string; lng?: string }>();
   const activeLanguage = resolveLanguage(lng);
   const { t } = useTranslation();
@@ -281,7 +282,7 @@ export default function ProductDetail() {
   const openContactModal = () => dispatchOpenContactModal();
 
   useEffect(() => {
-    if (!shouldLoadRelatedProducts) {
+    if (previewData || !shouldLoadRelatedProducts) {
       return;
     }
 
@@ -307,9 +308,15 @@ export default function ProductDetail() {
       });
 
     return () => controller.abort();
-  }, [activeLanguage, shouldLoadRelatedProducts, t]);
+  }, [activeLanguage, shouldLoadRelatedProducts, t, previewData]);
 
   useEffect(() => {
+    if (previewData) {
+      setProductDetail(previewData);
+      setDetailStatus("ready");
+      setDetailError(null);
+      return;
+    }
     if (!slug) {
       return;
     }
@@ -338,7 +345,7 @@ export default function ProductDetail() {
       });
 
     return () => controller.abort();
-  }, [activeLanguage, slug, t]);
+  }, [activeLanguage, slug, t, previewData]);
 
   const heroProduct = productDetail;
 
@@ -616,7 +623,7 @@ export default function ProductDetail() {
           className="h-px w-full"
           aria-hidden="true"
         />
-        {shouldRenderDeferredSections ? (
+        {shouldRenderDeferredSections || previewData ? (
           <>
             {productGallery.length > 0 ? (
               <Gallery

@@ -1,6 +1,7 @@
+import { PageContentProvider, usePageContent } from "../../components/PageContent";
 import { Download, ExternalLink, FileText } from "lucide-react";
 import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { usePageTranslation } from "../../components/PageContent";
 import StoreHeader from "../../components/store/StoreHeader";
 import StoreFooter from "../../components/store/StoreFooter";
 import { dispatchOpenContactModal } from "../../lib/contact-modal";
@@ -38,8 +39,11 @@ const DOCUMENTS = [
   },
 ];
 
-export default function PermitsCertificates() {
-  const { t } = useTranslation();
+export default function PermitsCertificates() { return <PageContentProvider site="arms" slug="permits-certificates"><PermitsCertificatesContent /></PageContentProvider>; }
+
+function PermitsCertificatesContent() {
+  const { asset } = usePageContent();
+  const { t } = usePageTranslation();
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -91,7 +95,7 @@ export default function PermitsCertificates() {
                 </div>
                 <div className="flex flex-wrap gap-3 pl-16">
                   <a
-                    href={document.href}
+                    href={asset(document.id, document.href)}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
@@ -103,7 +107,7 @@ export default function PermitsCertificates() {
                     <ExternalLink aria-hidden="true" size={16} />
                   </a>
                   <a
-                    href={document.href}
+                    href={asset(document.id, document.href)}
                     download
                     className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#14213b] transition-colors hover:bg-white/85 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={t("permitsCertificates.downloadDocument", {

@@ -1157,6 +1157,10 @@
       "cta": "Voir le catalogue"
     },
     "catalog": {
+      "loading": "Chargement du catalogue…",
+      "loadError": "Impossible de charger le catalogue. Veuillez réessayer.",
+      "empty": "Aucun produit n’est disponible pour le moment.",
+      "retry": "Réessayer",
       "kicker": "Catalogue",
       "title": "Parcourir par catégorie",
       "count": "{{count}} / {{total}} modèles",
