@@ -1,7 +1,10 @@
 import json
 
+from . import arms_admin
+
 from django import forms
 from django.contrib import admin
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 from django.utils import timezone
@@ -1265,6 +1268,31 @@ class CivilProductAdmin(HiddenModelTranslationTabsAdmin):
         )
 
 
+class ContactSiteFilter(admin.SimpleListFilter):
+    title = "Сайт (по источнику)"
+    parameter_name = "site"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("ai-def", "AI DEF"),
+            ("arms", "ARMS"),
+            ("unknown", "Источник не определён"),
+        )
+
+    def queryset(self, request, queryset):
+        arms = Q(source__startswith="arms:") | Q(
+            source__regex=r"^/([a-z]{2}/)?store(/|$)"
+        )
+        main = Q(source__startswith="ai-def:")
+        if self.value() == "arms":
+            return queryset.filter(arms)
+        if self.value() == "ai-def":
+            return queryset.filter(main)
+        if self.value() == "unknown":
+            return queryset.exclude(arms | main)
+        return queryset
+
+
 @admin.register(ContactRequest)
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = (
@@ -1281,6 +1309,7 @@ class ContactRequestAdmin(admin.ModelAdmin):
     list_display_links = ("created_at", "email")
     list_editable = ("status", "assigned_to")
     list_filter = (
+        ContactSiteFilter,
         "status",
         "assigned_to",
         "variant",

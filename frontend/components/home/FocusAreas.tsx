@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { usePageTranslation } from "../PageContent";
 
 interface FocusItem {
   icon: string;
@@ -110,7 +110,7 @@ const RadialConnectors = ({ itemCount }: { itemCount: number }) => {
 };
 
 export default function FocusAreas({ items }: FocusAreasProps) {
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
   const resolvedItems =
     items ??
     defaultItems.map((item) => ({

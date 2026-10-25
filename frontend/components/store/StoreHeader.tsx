@@ -9,7 +9,8 @@ import {
   SUPPORTED_LANGUAGES,
   type SupportedLanguage,
 } from "../../src/i18n";
-import { storeProducts } from "../../src/pages/store-products";
+import type { StoreProduct } from "../../src/pages/store-products";
+import { useStoreProducts } from "../../hooks/use-store-products";
 
 const languages: Record<SupportedLanguage, { image: string }> = {
   en: { image: "/languages/en.svg" },
@@ -22,6 +23,7 @@ const languages: Record<SupportedLanguage, { image: string }> = {
 };
 
 type StoreHeaderProps = {
+  products?: StoreProduct[];
   cartCount?: number;
   onCartClick?: () => void;
   onContactClick?: () => void;
@@ -30,7 +32,9 @@ type StoreHeaderProps = {
   readOnly?: boolean;
 };
 
-export default function StoreHeader({ cartCount = 0, onCartClick, onContactClick, detailPage = false, hideCart = false, readOnly = false }: StoreHeaderProps) {
+export default function StoreHeader({ products, cartCount = 0, onCartClick, onContactClick, detailPage = false, hideCart = false, readOnly = false }: StoreHeaderProps) {
+  const catalog = useStoreProducts(products === undefined);
+  const storeProducts = products ?? catalog.products;
   const { t } = useTranslation();
   const { lng } = useParams();
   const location = useLocation();

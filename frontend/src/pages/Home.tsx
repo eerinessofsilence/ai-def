@@ -1,3 +1,4 @@
+import { PageContentProvider } from "../../components/PageContent";
 import { lazy, startTransition, Suspense, useEffect, useState } from "react";
 import Hero from "../../components/home/Hero";
 import { useInViewOnce } from "../../hooks/use-in-view-once";
@@ -64,7 +65,9 @@ function HomeSectionsFallback() {
   );
 }
 
-export default function Home() {
+export default function Home() { return <PageContentProvider site="ai-def" slug="home"><HomeContent /></PageContentProvider>; }
+
+function HomeContent() {
   const { ref: deferredSectionsRef, inView } = useInViewOnce({
     rootMargin: "0px",
   });

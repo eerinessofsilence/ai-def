@@ -3,6 +3,7 @@ from __future__ import annotations
 from html import escape
 import json
 import logging
+import re
 from typing import Any, Dict, List
 
 from django.conf import settings
@@ -11,7 +12,6 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
 from django.db import transaction
 from django.http import Http404, JsonResponse
-from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
@@ -136,11 +136,11 @@ def _get_request_language(request) -> str:
 def _get_image_alt(image: ProductImage, lang: str) -> str:
     translations = list(image.translations.all())
     for translation in translations:
-        if translation.lang == lang:
+        if translation.lang == lang and translation.alt:
             return translation.alt
     if lang != DEFAULT_LANGUAGE:
         for translation in translations:
-            if translation.lang == DEFAULT_LANGUAGE:
+            if translation.lang == DEFAULT_LANGUAGE and translation.alt:
                 return translation.alt
     if image.alt:
         return image.alt
@@ -360,11 +360,11 @@ def _serialize_product_detail(request, product: Product) -> Dict[str, Any]:
 def _get_civil_image_alt(image: CivilProductImage, lang: str) -> str:
     translations = list(image.translations.all())
     for translation in translations:
-        if translation.lang == lang:
+        if translation.lang == lang and translation.alt:
             return translation.alt
     if lang != DEFAULT_LANGUAGE:
         for translation in translations:
-            if translation.lang == DEFAULT_LANGUAGE:
+            if translation.lang == DEFAULT_LANGUAGE and translation.alt:
                 return translation.alt
     if image.alt:
         return image.alt
@@ -923,10 +923,10 @@ def _contact_display_country(contact_request: ContactRequest) -> str:
 def _contact_admin_url(
     contact_request: ContactRequest, request=None
 ) -> str:
-    admin_path = reverse(
-        "admin:main_contactrequest_change",
-        args=[contact_request.id],
-    )
+    source = contact_request.source or ""
+    site = "arms" if source.startswith("arms:") or re.match(r"^/([a-z]{2}/)?store(/|$)", source) else "ai-def"
+    base = getattr(settings, "CMS_FRONTEND_URL", "/cms/").rstrip("/")
+    admin_path = f"{base}/{site}/inquiries/{contact_request.id}"
     if request is None:
         return admin_path
     return request.build_absolute_uri(admin_path)
@@ -981,7 +981,7 @@ def _build_contact_notification_message(
         f"Source page: {contact_request.source or '-'}",
         f"IP address: {contact_request.ip_address or '-'}",
         f"User agent: {contact_request.user_agent or '-'}",
-        f"View in admin: {admin_url}",
+        f"Open in CMS: {admin_url}",
     ]
     return "\n".join(lines)
 
@@ -1042,7 +1042,7 @@ def _build_contact_notification_html(
       <p style="margin:0 0 8px;"><strong>Source page:</strong> {source_page}</p>
       <p style="margin:0 0 8px;"><strong>IP address:</strong> {ip_address}</p>
       <p style="margin:0 0 8px;"><strong>User agent:</strong> {user_agent}</p>
-      <p style="margin:0;"><strong>View in admin:</strong> <a href="{admin_url}">{admin_url}</a></p>
+      <p style="margin:0;"><strong>Open in CMS:</strong> <a href="{admin_url}">{admin_url}</a></p>
     </div>
   </body>
 </html>

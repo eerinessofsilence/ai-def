@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { usePageTranslation, usePageContent } from "../PageContent";
 import { dispatchOpenContactModal } from "../../lib/contact-modal";
 
 type HeroMediaSlide = {
@@ -36,7 +36,7 @@ type HeroMediaProps = {
 };
 
 function HeroMedia({ fetchPriority, index, isActive, slide }: HeroMediaProps) {
-  const { t } = useTranslation();
+  const { t } = usePageTranslation();
   const altText = t("main.hero.slideAlt", { index: index + 1 });
 
   if (slide.type === "video") {
@@ -68,18 +68,20 @@ function HeroMedia({ fetchPriority, index, isActive, slide }: HeroMediaProps) {
 }
 
 export default function Hero() {
+  const { asset } = usePageContent();
+  const slides = backgroundSlides.map((slide, index) => ({ ...slide, src: asset(`hero${index}`, slide.src) }));
   const openContactModal = () => dispatchOpenContactModal();
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [nextSlide, setNextSlide] = useState<number | null>(null);
   const [isFading, setIsFading] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const { t } = useTranslation();
-  const currentMedia = backgroundSlides[currentSlide] ?? backgroundSlides[0];
+  const { t } = usePageTranslation();
+  const currentMedia = slides[currentSlide] ?? slides[0];
   const nextSlideAltIndex = nextSlide !== null ? nextSlide + 1 : 1;
   const nextMedia =
     nextSlide !== null
-      ? (backgroundSlides[nextSlide] ?? backgroundSlides[0])
+      ? (slides[nextSlide] ?? slides[0])
       : null;
 
   useEffect(() => {

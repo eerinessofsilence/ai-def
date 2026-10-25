@@ -3,13 +3,15 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowDown, ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslation } from "react-i18next";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import SpotlightCard from "../../components/store/SpotlightCard";
 import StoreFooter from "../../components/store/StoreFooter";
 import StoreHeader from "../../components/store/StoreHeader";
 import TechText from "../../components/store/TechText";
 import { buildLocalizedPath, resolveLanguage } from "../i18n";
-import { storeProducts, type StoreProduct, type StoreVariant } from "./store-products";
+import type { SupportedLanguage } from "../i18n";
+import { type StoreProduct, type StoreVariant } from "./store-products";
+import { useStoreProducts } from "../../hooks/use-store-products";
 import "./Store.css";
 
 const ContactForm = lazy(() =>
@@ -18,10 +20,6 @@ const ContactForm = lazy(() =>
   })),
 );
 
-const storeHeroStories = storeProducts.map((product) => ({
-  category: product.category,
-  productId: product.id,
-}));
 const HERO_STORY_DURATION = 5000;
 
 function ProductImage({ product, hero = false, className = "" }: {
@@ -32,7 +30,7 @@ function ProductImage({ product, hero = false, className = "" }: {
   return (
     <img
       src={product.image}
-      alt={`${product.brand} ${product.name}`}
+      alt={product.coverAlt || `${product.brand} ${product.name}`}
       width={product.width}
       height={product.height}
       loading={hero ? "eager" : "lazy"}
@@ -47,70 +45,62 @@ function ProductImage({ product, hero = false, className = "" }: {
 function ProductCard({
   product,
   index,
-  onSelect,
+  href,
   description,
   categoryLabel,
   actionLabel,
 }: {
   product: StoreProduct;
   index: number;
-  onSelect: () => void;
+  href: string;
   description: string;
   categoryLabel: string;
   actionLabel: string;
 }) {
   return (
-    <SpotlightCard
-      role="button"
-      tabIndex={0}
-      onClick={onSelect}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          onSelect();
-        }
-      }}
-      className="store-product-card group h-full cursor-pointer overflow-hidden rounded-[28px] border border-white/10 outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-    >
-      <div className="relative flex h-full min-h-[26rem] flex-col p-6 md:min-h-[29rem] md:p-8">
-        <div className="relative z-10">
-          <p className="store-kicker text-white/45">{String(index + 1).padStart(2, "0")} / {categoryLabel}</p>
-        </div>
-        <div className="store-product-card-media relative flex flex-1 items-center justify-center py-7">
-          <div aria-hidden="true" className="store-product-card-wordmark">
-            <span>{product.name}</span>
-            <span>{product.name}</span>
-            <span>{product.name}</span>
+    <Link to={href} className="group block h-full rounded-[28px] outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+      <SpotlightCard className="store-product-card h-full overflow-hidden rounded-[28px] border border-white/10">
+        <div className="relative flex h-full min-h-[26rem] flex-col p-6 md:min-h-[29rem] md:p-8">
+          <div className="relative z-10">
+            <p className="store-kicker text-white/45">{String(index + 1).padStart(2, "0")} / {categoryLabel}</p>
           </div>
-          <ProductImage product={product} className="relative z-10 max-h-52 w-full max-w-md transition-transform duration-500 group-hover:scale-[1.035] md:max-h-60" />
-        </div>
-        <div className="relative z-10 border-t border-white/10 pt-5">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h3 className="text-3xl font-semibold tracking-[-0.045em] md:text-4xl">{product.name}</h3>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-white/58">{description}</p>
+          <div className="store-product-card-media relative flex flex-1 items-center justify-center py-7">
+            <div aria-hidden="true" className="store-product-card-wordmark">
+              <span>{product.name}</span>
+              <span>{product.name}</span>
+              <span>{product.name}</span>
             </div>
-            <span className="store-product-card-action mb-1 shrink-0 text-xs text-white/60 transition-colors group-hover:text-white">{actionLabel}<ChevronRight aria-hidden="true" className="h-4 w-4" /></span>
+            <ProductImage product={product} className="relative z-10 max-h-52 w-full max-w-md transition-transform duration-500 group-hover:scale-[1.035] md:max-h-60" />
+          </div>
+          <div className="relative z-10 border-t border-white/10 pt-5">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <h3 className="text-3xl font-semibold tracking-[-0.045em] md:text-4xl">{product.name}</h3>
+                <p className="mt-2 max-w-sm text-sm leading-6 text-white/58">{description}</p>
+              </div>
+              <span className="store-product-card-action mb-1 shrink-0 text-xs text-white/60 transition-colors group-hover:text-white">{actionLabel}<ChevronRight aria-hidden="true" className="h-4 w-4" /></span>
+            </div>
           </div>
         </div>
-      </div>
-    </SpotlightCard>
+      </SpotlightCard>
+    </Link>
   );
 }
 
-function StoreProductPage({
+export function StoreProductPage({
   product,
   relatedProducts,
-  onSelectProduct,
   onEnquire,
+  previewLanguage,
 }: {
   product: StoreProduct;
   relatedProducts: StoreProduct[];
-  onSelectProduct: (product: StoreProduct) => void;
   onEnquire: (product: StoreProduct, variant: StoreVariant) => void;
+  previewLanguage?: SupportedLanguage;
 }) {
   const { t } = useTranslation();
   const { lng } = useParams();
+  const currentLanguage = previewLanguage || resolveLanguage(lng);
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const gallery = product.variants.flatMap((variant) =>
@@ -121,8 +111,8 @@ function StoreProductPage({
   const modelName = activeVariant.modelName ?? product.name;
   const specifications = [...product.specifications, ...activeVariant.specifications];
   const imageSrc = activeSlide.image;
-  const imageAlt = `${product.brand} ${t(activeVariant.labelKey)}`;
-  const storePath = buildLocalizedPath(resolveLanguage(lng), "/store");
+  const imageAlt = (imageSrc && activeVariant.imageAlts?.[imageSrc]) || `${product.brand} ${activeVariant.label}`;
+  const storePath = buildLocalizedPath(currentLanguage, "/store");
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -131,7 +121,7 @@ function StoreProductPage({
   }, [modelName, t]);
 
   const localizeSpecificationValue = (value: string) => {
-    if (resolveLanguage(lng) !== "ru") return value;
+    if (currentLanguage !== "ru") return value;
     return value
       .replace(/\bmm\b/g, "мм")
       .replace(/\bg\b/g, "г")
@@ -147,8 +137,8 @@ function StoreProductPage({
     { label: t("store.details.manufacturer"), value: product.brand },
     { label: t("store.details.category"), value: t(`store.categories.${product.category}`) },
     ...specifications.map((specification) => ({
-      label: t(specification.labelKey),
-      value: specification.valueKey ? t(specification.valueKey, { count: Number(specification.value) }) : localizeSpecificationValue(specification.value),
+      label: specification.label,
+      value: localizeSpecificationValue(specification.value),
     })),
   ];
   const renderVariantSelector = (placement: "mobile" | "desktop") => (
@@ -158,7 +148,7 @@ function StoreProductPage({
         {product.variants.map((variant) => (
           <label key={variant.id} className="relative cursor-pointer">
             <input type="radio" name={`variant-${product.id}-${placement}`} value={variant.id} checked={activeVariant.id === variant.id} onChange={() => setActiveIndex(gallery.findIndex((slide) => slide.variant.id === variant.id))} className="peer sr-only" />
-            <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{t(variant.labelKey)}</span>
+            <span className="block rounded-xl border border-white/15 px-3 py-1.5 text-xs leading-5 text-white/65 transition-colors peer-checked:border-sky-200/50 peer-checked:bg-sky-200/10 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white/40">{variant.label}</span>
           </label>
         ))}
       </div>
@@ -188,12 +178,12 @@ function StoreProductPage({
             ) : null}
             {imageSrc ? <button type="button" onClick={() => setFullscreenOpen(true)} aria-label={t("store.details.openFullscreen")} className="store-round-button absolute top-4 right-4 bg-[#10213a]/80 backdrop-blur"><Maximize2 aria-hidden="true" className="h-4 w-4" /></button> : null}
           </div>
-          <p aria-live="polite" className="mt-3 text-sm text-white/65">{t(activeVariant.labelKey)}</p>
+          <p aria-live="polite" className="mt-3 text-sm text-white/65">{activeVariant.label}</p>
           {renderVariantSelector("mobile")}
           {gallery.length > 1 ? (
             <div className="mt-4 flex gap-3 overflow-x-auto pb-1 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
               {gallery.map(({ image, variant }, index) => (
-                <button key={image ?? variant.id} type="button" onClick={() => setActiveIndex(index)} aria-label={`${t("store.details.selectPhoto", { current: index + 1 })} · ${t(variant.labelKey)}`} aria-pressed={activeIndex === index} className={`store-product-surface w-24 shrink-0 overflow-hidden rounded-xl border p-2 transition-colors lg:w-auto ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
+                <button key={image ?? variant.id} type="button" onClick={() => setActiveIndex(index)} aria-label={`${t("store.details.selectPhoto", { current: index + 1 })} · ${variant.label}`} aria-pressed={activeIndex === index} className={`store-product-surface w-24 shrink-0 overflow-hidden rounded-xl border p-2 transition-colors lg:w-auto ${activeIndex === index ? "border-[#14243d]/50" : "border-[#14243d]/15 hover:border-[#14243d]/35"}`}>
                   {image ? <img src={image} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" /> : <span className="grid aspect-[4/3] place-items-center text-xs text-[#14243d]/70">{t("store.details.photoPending")}</span>}
                 </button>
               ))}
@@ -220,7 +210,7 @@ function StoreProductPage({
             <p className="store-kicker">{t(`store.categories.${product.category}`)}</p>
           </div>
           <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">{modelName}</h1>
-          <p className="mt-4 text-base leading-6 text-white/65">{t(`store.descriptions.${product.id}`)}</p>
+          <p className="mt-4 text-base leading-6 text-white/65">{product.description}</p>
           {renderVariantSelector("desktop")}
           <button type="button" onClick={() => onEnquire(product, activeVariant)} className="store-button mt-8 w-full">
             {t("store.actions.enquire")}
@@ -240,12 +230,12 @@ function StoreProductPage({
         </div>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {relatedProducts.map((relatedProduct) => (
-            <button key={relatedProduct.id} type="button" onClick={() => onSelectProduct(relatedProduct)} className="store-card rounded-3xl border border-white/10 bg-white/[0.025] p-5 text-left transition-colors hover:border-white/30 hover:bg-white/[0.05]">
+            <Link key={relatedProduct.id} to={buildLocalizedPath(currentLanguage, `/store/${relatedProduct.id}`)} className="store-card block rounded-3xl border border-white/10 bg-white/[0.025] p-5 text-left transition-colors hover:border-white/30 hover:bg-white/[0.05]">
 
               <div className="store-product-surface mt-3 flex aspect-[4/3] items-center justify-center rounded-2xl p-5"><ProductImage product={relatedProduct} className="max-h-44 w-full" /></div>
               <p className="mt-5 text-[10px] tracking-widest text-white/45 uppercase">{t(`store.categories.${relatedProduct.category}`)}</p>
               <span className="mt-1 flex items-center justify-between gap-4 text-xl font-semibold">{relatedProduct.name}<ChevronRight aria-hidden="true" className="h-5 w-5 text-white/45" /></span>
-            </button>
+            </Link>
           ))}
         </div>
       </section>
@@ -254,7 +244,7 @@ function StoreProductPage({
           <Dialog.Overlay className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-sm" />
           <Dialog.Content className="fixed inset-0 z-[160] flex items-center justify-center p-4 outline-none md:p-8">
             <Dialog.Title className="sr-only">{`${product.brand} ${modelName} ${t("store.details.galleryLabel")}`}</Dialog.Title>
-            <Dialog.Description className="sr-only">{t(activeVariant.labelKey)}</Dialog.Description>
+            <Dialog.Description className="sr-only">{activeVariant.label}</Dialog.Description>
             <Dialog.Close aria-label={t("store.details.closeFullscreen")} className="store-round-button absolute top-4 right-4 z-10 bg-white/10 text-white hover:bg-white/20"><X aria-hidden="true" className="h-5 w-5" /></Dialog.Close>
             <div className="store-product-surface max-h-[90dvh] max-w-[92vw] rounded-3xl p-4 md:p-8">
               {imageSrc ? <img src={imageSrc} alt={imageAlt} className="max-h-[82dvh] max-w-[86vw] object-contain" /> : <p className="p-12 text-center text-sm text-[#14243d]/70">{t("store.details.photoPending")}</p>}
@@ -275,8 +265,11 @@ function StoreProductPage({
 
 export default function Store() {
   const { t } = useTranslation();
+  const { products: storeProducts, loading, error, retry } = useStoreProducts();
+  const storeHeroStories = storeProducts.map((product) => ({ category: product.category, productId: product.id }));
   const { lng, productId, categoryId } = useParams();
-  const navigate = useNavigate();
+  const productPath = (product: StoreProduct) =>
+    buildLocalizedPath(resolveLanguage(lng), `/store/${product.id}`);
   const reduceMotion = useReducedMotion();
   const [activeHeroStoryIndex, setActiveHeroStoryIndex] = useState(0);
   const [heroStoryHovered, setHeroStoryHovered] = useState(false);
@@ -285,17 +278,14 @@ export default function Store() {
   const [contactOpen, setContactOpen] = useState(false);
   const [contactSelection, setContactSelection] = useState<{ product: StoreProduct; variant: StoreVariant } | null>(null);
   const contactOpener = useRef<HTMLElement | null>(null);
-  const activeHeroStory = storeHeroStories[activeHeroStoryIndex];
-  const heroProduct = storeProducts.find((product) => product.id === activeHeroStory.productId)!;
+  const activeHeroStory = storeHeroStories[activeHeroStoryIndex] ?? storeHeroStories[0];
+  const heroProduct = storeProducts.find((product) => product.id === activeHeroStory?.productId);
   const detailProduct = storeProducts.find((product) => product.id === productId);
   const categoryProduct = storeProducts.find((product) => product.category === categoryId);
   const visibleRelatedProducts = detailProduct
     ? storeProducts.filter((product) => product.id !== detailProduct.id)
     : [];
   const heroTitle = t("store.hero.title");
-  const openProduct = (product: StoreProduct) => {
-    navigate(buildLocalizedPath(resolveLanguage(lng), `/store/${product.id}`));
-  };
   const openContact = () => {
     setContactSelection(null);
     contactOpener.current = document.activeElement instanceof HTMLElement
@@ -318,12 +308,12 @@ export default function Store() {
     return () => { document.title = previousTitle; };
   }, [detailProduct, t]);
   useEffect(() => {
-    if (reduceMotion || heroStoryPaused || productId || categoryId) return;
+    if (reduceMotion || heroStoryPaused || productId || categoryId || !storeHeroStories.length) return;
     const timeout = window.setTimeout(() => {
       setActiveHeroStoryIndex((index) => (index + 1) % storeHeroStories.length);
     }, HERO_STORY_DURATION);
     return () => window.clearTimeout(timeout);
-  }, [activeHeroStoryIndex, categoryId, heroStoryPaused, productId, reduceMotion]);
+  }, [activeHeroStoryIndex, categoryId, heroStoryPaused, productId, reduceMotion, storeHeroStories.length]);
   const reveal = {
     initial: reduceMotion ? false as const : { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
@@ -331,15 +321,25 @@ export default function Store() {
     transition: { duration: reduceMotion ? 0 : 0.55 },
   };
 
+  if (loading || error || !heroProduct) {
+    return <div className="store-page min-h-screen text-white">
+      <StoreHeader products={storeProducts} readOnly />
+      <main className="container py-40" aria-live="polite">
+        <p className="text-white/65">{t(loading ? "store.catalog.loading" : error ? "store.catalog.loadError" : "store.catalog.empty")}</p>
+        {error ? <button type="button" onClick={retry} className="store-button mt-6">{t("store.catalog.retry")}</button> : null}
+      </main>
+      <StoreFooter />
+    </div>;
+  }
+
   return (
     <div className="store-page text-white">
-      <StoreHeader readOnly onContactClick={openContact} detailPage={Boolean(productId || categoryId)} />
+      <StoreHeader products={storeProducts} readOnly onContactClick={openContact} detailPage={Boolean(productId || categoryId)} />
 
       {detailProduct ? <StoreProductPage
         key={detailProduct.id}
         product={detailProduct}
         relatedProducts={visibleRelatedProducts}
-        onSelectProduct={openProduct}
         onEnquire={openProductContact}
       /> : productId ? (
         <main id="store-top" className="container pt-36 pb-24 text-white md:pt-44">
@@ -409,15 +409,15 @@ export default function Store() {
                   </button>
                 ))}
               </div>
-              <button
-                onClick={() => openProduct(heroProduct)}
+              <Link
+                to={productPath(heroProduct)}
                 aria-label={t("store.actions.viewNamed", { name: heroProduct.name })}
                 className="store-hero-product store-product-surface relative flex h-64 cursor-pointer items-center justify-center rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 lg:h-80"
               >
                 <motion.div key={activeHeroStoryIndex} initial={reduceMotion ? false : { opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : 0.35 }} className="flex h-full w-full items-center justify-center">
                   <ProductImage product={heroProduct} hero className="max-h-64 w-full" />
                 </motion.div>
-              </button>
+              </Link>
               <div className="relative mt-6 flex items-center justify-between gap-4 border-t border-white/15 pt-5">
                 <div><p className="text-xs tracking-widest text-white/45 uppercase">{t(`store.categories.${activeHeroStory.category}`)}</p><p className="mt-1 text-xl font-semibold">{heroProduct?.name ?? t(`store.categories.${activeHeroStory.category}`)}</p></div>
                 <span className="text-xs font-medium tracking-widest text-white/45">{String(activeHeroStoryIndex + 1).padStart(2, "0")} / {String(storeHeroStories.length).padStart(2, "0")}</span>
@@ -436,8 +436,8 @@ export default function Store() {
                 <ProductCard
                   product={product}
                   index={index}
-                  onSelect={() => openProduct(product)}
-                  description={t(`store.descriptions.${product.id}`)}
+                  href={productPath(product)}
+                  description={product.description}
                   categoryLabel={t(`store.categories.${product.category}`)}
                   actionLabel={t("store.actions.details")}
                 />
@@ -471,7 +471,7 @@ export default function Store() {
                 showDetails={false}
                 productSelections={contactSelection ? [{
                   value: `${contactSelection.product.id}-${contactSelection.variant.id}`,
-                  label: t(contactSelection.variant.labelKey),
+                  label: contactSelection.variant.label,
                 }] : undefined}
               />
             </Suspense>

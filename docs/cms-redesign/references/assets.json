@@ -1,0 +1,65 @@
+{
+  "purpose": "Design references, not product assets",
+  "assets": [
+    {
+      "id": "R1",
+      "title": "CMS Design",
+      "author": "Jurgen Ploeger",
+      "page_url": "https://dribbble.com/shots/10475418-CMS-Design",
+      "image_url": "https://cdn.dribbble.com/userupload/26227486/file/original-6e4f9cab74498a38371fb1c43899dbbb.png?resize=1504x1128&vertical=center",
+      "local_path": "01-cms-design/reference.png",
+      "content_type": "image/png",
+      "bytes": 476292,
+      "sha256": "4a132d96d10e691a5b12a35ab83fcc1625433e75a4e5f56dc1478a4ec42c3be5",
+      "retrieved_on": "2026-10-23"
+    },
+    {
+      "id": "R2",
+      "title": "CMS edit — Untitled UI",
+      "author": "Jordan Hughes",
+      "page_url": "https://dribbble.com/shots/26333078-CMS-edit-Untitled-UI",
+      "image_url": "https://cdn.dribbble.com/userupload/44285554/file/c5021c7c2650a13bb9c590df2fdf36f8.jpg?resize=2400x1800&vertical=center",
+      "local_path": "02-untitled-ui/reference.jpg",
+      "content_type": "image/jpeg",
+      "bytes": 1134598,
+      "sha256": "0dfe64915cdb669ed6177dba3e7423a7c6678d44e28c9b3bc9246e003de8c431",
+      "retrieved_on": "2026-10-23"
+    },
+    {
+      "id": "R3",
+      "title": "Video CMS for Uscreen",
+      "author": "Danilo Tanic / FineTune",
+      "page_url": "https://dribbble.com/shots/24405676-Video-CMS-for-Uscreen",
+      "image_url": "https://cdn.dribbble.com/userupload/15256917/file/original-ab62bbeb70196e04d69155a5c269a054.png?resize=2400x1921&vertical=center",
+      "local_path": "03-uscreen/reference.png",
+      "content_type": "image/png",
+      "bytes": 635527,
+      "sha256": "e088fce6dec01143aa9d45f99f4a0ae6debac7718fe58a0c46dad42fc0a0654f",
+      "retrieved_on": "2026-10-23"
+    },
+    {
+      "id": "R4",
+      "title": "Contentstack CMS Design System — Media Cards (Finalized)",
+      "author": "Max Burnside",
+      "page_url": "https://dribbble.com/shots/15606377-Contentstack-CMS-Design-System-Media-Cards-Finalized",
+      "image_url": "https://cdn.dribbble.com/userupload/31619959/file/original-931be835567cd303ba3c1c627b7e7e1e.png?resize=2400x1799&vertical=center",
+      "local_path": "04-contentstack-media/reference.png",
+      "content_type": "image/png",
+      "bytes": 1100224,
+      "sha256": "134d647ddbbf3c1126134f1258a635f37db8694710eee1ff7e3f6bc719b0d4e5",
+      "retrieved_on": "2026-10-23"
+    },
+    {
+      "id": "R5",
+      "title": "W2K CMS — Article localization review editor",
+      "author": "Thuan Nguyen",
+      "page_url": "https://dribbble.com/shots/6574067-W2K-CMS-Article-localization-review-editor",
+      "image_url": "https://cdn.dribbble.com/userupload/42316230/file/original-8d7104a096796d7908a3aa695c19a4d1.png?resize=1600x1200&vertical=center",
+      "local_path": "05-w2k-localization/reference.png",
+      "content_type": "image/png",
+      "bytes": 1157078,
+      "sha256": "fbffb3c1684dcb056f7b0aafb3d20c00e9f1e7684c22fcf64299c7044409e3ee",
+      "retrieved_on": "2026-10-23"
+    }
+  ]
+}

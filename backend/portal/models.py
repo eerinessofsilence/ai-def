@@ -11,6 +11,7 @@ def default_tags():
     return [""]
 
 class PortalProduct(models.Model):       
+    available = models.BooleanField(default=True)
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)

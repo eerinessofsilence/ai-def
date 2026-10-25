@@ -1157,6 +1157,10 @@
       "cta": "View catalog"
     },
     "catalog": {
+      "loading": "Loading catalogue…",
+      "loadError": "We couldn’t load the catalogue. Please try again.",
+      "empty": "No products are available at the moment.",
+      "retry": "Try again",
       "kicker": "Catalog",
       "title": "Browse by category",
       "count": "{{count}} / {{total}} models",

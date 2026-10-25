@@ -291,7 +291,7 @@ def _serialize_product_detail(
 @require_GET
 def portal_product_list_api(request):
     products = (
-        PortalProduct.objects.select_related("category")
+        PortalProduct.objects.filter(available=True).select_related("category")
         .prefetch_related("images")
         .order_by("order", "-created_at", "name")
     )
@@ -319,7 +319,7 @@ def portal_product_detail_api(request, slug: str):
                 "module_placements__module__module_characteristics",
                 "text_blocks",
             )
-            .get(slug=slug)
+            .get(slug=slug, available=True)
         )
     except PortalProduct.DoesNotExist as exc:
         raise Http404("Product not found") from exc

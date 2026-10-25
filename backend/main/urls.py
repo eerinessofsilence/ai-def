@@ -1,4 +1,5 @@
 from django.urls import path
+from .arms_api import arms_product_list_api
 
 from .api import (
     blog_post_list_api,
@@ -13,6 +14,7 @@ from .api import (
 app_name = 'main'
 
 urlpatterns = [
+    path('api/arms/products/', arms_product_list_api, name='arms-product-list'),
     path('api/contact/', contact_request_api, name='contact-request'),
     path('api/blog/posts/', blog_post_list_api, name='blog-post-list'),
     path('api/blog/posts/<slug:slug>/', blog_post_detail_api, name='blog-post-detail'),
