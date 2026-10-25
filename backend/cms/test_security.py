@@ -127,16 +127,54 @@ class CMSSecurityTests(TestCase):
         self.assertTrue(self.user.check_password("Example-security-password-643!"))
         self.assertTrue(self.client.get("/api/cms/session/").json()["authenticated"])
 
-    def test_image_upload_persists_real_webp_dimensions_and_site_ownership(self):
+    def test_public_auth_token_is_revoked_on_logout_and_does_not_replace_cms_session(self):
+        client = Client()
+        response = client.post("/api/auth/login/", {"email": self.user.email, "password": "Example-security-password-643!"}, content_type="application/json")
+        self.assertEqual(response.status_code, 200, response.content)
+        token = response.json()["token"]
+        self.assertNotIn("password", response.json()["user"])
+        headers = {"HTTP_AUTHORIZATION": "Token " + token}
+        self.assertEqual(client.get("/api/auth/me/", **headers).json()["email"], self.user.email)
+        self.assertFalse(client.get("/api/cms/session/", **headers).json()["authenticated"])
+        self.assertEqual(client.post("/api/auth/logout/", **headers).status_code, 204)
+        self.assertEqual(client.get("/api/auth/me/", **headers).status_code, 401)
+
+    def test_supported_image_uploads_preserve_dimensions_alpha_and_site_ownership(self):
+        for format, extension in (("JPEG", "jpg"), ("PNG", "png"), ("WEBP", "webp")):
+            with self.subTest(format=format):
+                buffer = io.BytesIO()
+                source = Image.new("RGB" if format == "JPEG" else "RGBA", (24, 16), "navy" if format == "JPEG" else (0, 0, 128, 0))
+                source.save(buffer, format=format)
+                response = self.client.post("/api/cms/ai-def/uploads/", {"file": SimpleUploadedFile("photo." + extension, buffer.getvalue()), "kind": "image"})
+                self.assertEqual(response.status_code, 201, response.content)
+                asset = MediaAsset.objects.get(pk=response.json()["ref"]["asset_id"])
+                self.assertEqual((asset.site, asset.width, asset.height, asset.uploaded_by_id), ("ai-def", 24, 16, self.user.pk))
+                with asset.file.open("rb") as file, Image.open(file) as image:
+                    self.assertEqual(image.format, "WEBP")
+                    self.assertEqual(image.size, (24, 16))
+                    if format != "JPEG":
+                        self.assertEqual(image.getpixel((0, 0))[3], 0)
+
+    def test_jpeg_upload_applies_exif_orientation_before_recording_dimensions(self):
+        buffer = io.BytesIO()
+        source = Image.new("RGB", (24, 16), "navy")
+        exif = source.getexif()
+        exif[274] = 6
+        source.save(buffer, format="JPEG", exif=exif)
+        response = self.client.post("/api/cms/ai-def/uploads/", {"file": SimpleUploadedFile("rotated.jpg", buffer.getvalue()), "kind": "image"})
+        self.assertEqual(response.status_code, 201, response.content)
+        self.assertEqual((response.json()["width"], response.json()["height"]), (16, 24))
+        asset = MediaAsset.objects.get(pk=response.json()["ref"]["asset_id"])
+        with asset.file.open("rb") as file, Image.open(file) as image:
+            self.assertEqual(image.size, (16, 24))
+            self.assertIsNone(image.getexif().get(274))
+
+    def test_truncated_image_with_valid_header_cannot_create_an_asset(self):
         buffer = io.BytesIO()
         Image.new("RGB", (24, 16), "navy").save(buffer, format="PNG")
-        response = self.client.post("/api/cms/ai-def/uploads/", {"file": SimpleUploadedFile("photo.png", buffer.getvalue(), "image/png"), "kind": "image"})
-        self.assertEqual(response.status_code, 201, response.content)
-        asset = MediaAsset.objects.get(pk=response.json()["ref"]["asset_id"])
-        self.assertEqual((asset.site, asset.width, asset.height, asset.uploaded_by_id), ("ai-def", 24, 16, self.user.pk))
-        with asset.file.open("rb") as file, Image.open(file) as image:
-            self.assertEqual(image.format, "WEBP")
-            self.assertEqual(image.size, (24, 16))
+        response = self.client.post("/api/cms/ai-def/uploads/", {"file": SimpleUploadedFile("truncated.png", buffer.getvalue()[:40]), "kind": "image"})
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(MediaAsset.objects.count(), 0)
 
     def test_document_and_video_uploads_reject_spoofed_signatures_without_rows(self):
         for kind, name, payload in (("document", "guide.pdf", b"<script>bad</script>"), ("video", "clip.mp4", b"not a video"), ("image", "image.svg", b"<svg></svg>"), ("unsupported", "file.bin", b"file")):
